@@ -23,8 +23,10 @@ public class EntityManagerProducer {
     @Produces
     @RequestScoped
     public EntityManager createEM(){
-        return Persistence.createEntityManagerFactory("NewPersistenceUnit", new HashMap()).createEntityManager();
+        return Persistence.createEntityManagerFactory("NewPersistenceUnit", new HashMap())
+                .createEntityManager();//TODO this is only for the time of testing, it must be removed
         //return entityManagerFactory.createEntityManager();//this was commented because under tests it does not run on container
+        //and entityManagerFactory will not be injected
     }
     public void disposeEM(@Disposes EntityManager entityManager){
         if(entityManager.isOpen())entityManager.close();

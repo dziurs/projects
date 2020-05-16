@@ -23,6 +23,9 @@ public abstract class GenericAbstractDAO<T> {
 
         protected abstract T findByID(int id);
 
+        public void joinTransaction (){
+            if(!entityManager.isJoinedToTransaction())entityManager.joinTransaction();
+        }
 
         public void create(T entity) {
             getEntityManager().persist(entity);
