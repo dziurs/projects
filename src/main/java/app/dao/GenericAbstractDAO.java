@@ -1,4 +1,6 @@
-package app.model.dao;
+package app.dao;
+
+import app.interceptor.DAOTransaction;
 
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -18,25 +20,29 @@ public abstract class GenericAbstractDAO<T> {
         }
 
         protected EntityManager getEntityManager(){
-            return entityManager;
+            return this.entityManager;
         }
 
-        protected abstract T findByID(int id);
+        protected abstract List<T> findByID(int id);
 
         public void joinTransaction (){
             if(!entityManager.isJoinedToTransaction())entityManager.joinTransaction();
         }
 
+        @DAOTransaction
         public void create(T entity) {
             getEntityManager().persist(entity);
+            getEntityManager().flush();
         }
-
+        @DAOTransaction
         public void update(T entity) {
             getEntityManager().merge(entity);
+            getEntityManager().flush();
         }
-
+        @DAOTransaction
         public void delete(T entity) {
             getEntityManager().remove(getEntityManager().merge(entity));
+            getEntityManager().flush();
         }
 
         public T find(Object id) {

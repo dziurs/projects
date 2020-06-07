@@ -1,6 +1,7 @@
 package app.model.entity;
 
 import app.model.enums.BuildingType;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,6 +25,10 @@ public class Review implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
+    @Column(name = "ver", nullable = false)
+    @Version
+    private long version;
 
     @Column(name = "title", nullable = false, length = 300)
     private String title;
@@ -53,13 +58,14 @@ public class Review implements Serializable {
     @Column(name="image", nullable = false, length = 300)
     private String image_url;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull
+    @ManyToOne(fetch = FetchType.EAGER)
     private Developer developer;
 
     @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "review")
     private List<Meeting> meetings = new ArrayList<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     @JoinTable(name = "review_user",joinColumns = @JoinColumn(name = "review_id",foreignKey = @ForeignKey(name = "key_review"), nullable = false),
             inverseJoinColumns = @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "key_user"), nullable = false))
     private Set<User> users = new HashSet<User>();
@@ -68,6 +74,9 @@ public class Review implements Serializable {
         return id;
     }
 
+    public long getVersion() {
+        return version;
+    }
 
     public String getTitle() {
         return title;
@@ -210,16 +219,16 @@ public class Review implements Serializable {
     }
     public List<Meeting> getMeeting(User user){
         if(user==null) throw new NullPointerException("user parameter is null");
-        List<Meeting> meetings = new ArrayList<>();
+        List<Meeting> meetingList = new ArrayList<>();
         Iterator<Meeting> iterator = meetings.iterator();
         while (iterator.hasNext()){
             Meeting meeting = iterator.next();
             User meetingUser = meeting.getUser();
             if (meetingUser.getEmail().equals(user.getEmail())){
-                meetings.add(meeting);
+                meetingList.add(meeting);
             }
         }
-        return meetings;
+        return meetingList;
     }
 
     @Override

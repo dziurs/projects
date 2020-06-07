@@ -1,4 +1,4 @@
-package app.model.dao;
+package app.dao;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;

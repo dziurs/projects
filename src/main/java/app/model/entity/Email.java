@@ -16,6 +16,10 @@ public class Email implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "ver", nullable = false)
+    @Version
+    private long version;
+
     @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
 
@@ -27,6 +31,9 @@ public class Email implements Serializable {
     }
     public Integer getId() {
         return id;
+    }
+    public long getVersion() {
+        return version;
     }
     public String getEmail() {
         return email;

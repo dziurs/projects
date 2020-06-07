@@ -1,4 +1,5 @@
-package app.model.dao;
+package app.dao;
+
 
 import app.model.entity.Email;
 import org.jboss.weld.junit5.EnableWeld;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class EmailDAOTest {
 
     @WeldSetup
-    WeldInitiator weldInitiator = WeldInitiator.from(EntityManagerProducer.class,EmailDAO.class).activate(RequestScoped.class).build();
+    WeldInitiator weldInitiator = WeldInitiator.from(EntityManagerProducer.class, EmailDAO.class).activate(RequestScoped.class).build();
     @Inject
     public EmailDAO emailDAO; //injected by CDI
 
@@ -70,10 +71,10 @@ public class EmailDAOTest {
         entityManager.getTransaction().begin();
         emailDAO.create(email);
         entityManager.getTransaction().commit();
-        Email byID = emailDAO.findByID(1);
+        List<Email> byID = emailDAO.findByID(1);
         assertNotNull(byID);
-        assertEquals(byID,email);
-        assertEquals(byID.getEmail(),email.getEmail());
+        assertEquals(byID.get(0),email);
+        assertEquals(byID.get(0).getEmail(),email.getEmail());
     }
 
     @Test
@@ -81,36 +82,36 @@ public class EmailDAOTest {
         entityManager.getTransaction().begin();
         emailDAO.create(email);
         entityManager.getTransaction().commit();
-        Email byEmail = emailDAO.findByEmail(MAINEMAIL);
+        List<Email> byEmail = emailDAO.findByEmail(MAINEMAIL);
         assertNotNull(byEmail);
-        assertEquals(email, byEmail);
-        assertEquals(email.getEmail(),byEmail.getEmail());
+        assertEquals(email, byEmail.get(0));
+        assertEquals(email.getEmail(),byEmail.get(0).getEmail());
     }
     @Test
     public void update(){
         entityManager.getTransaction().begin();
         emailDAO.create(email);
-        entityManager.getTransaction().commit();
-        Email firstReadEmail = emailDAO.findByID(1);
+        List<Email> firstReadEmail = emailDAO.findByID(1);
         assertNotNull(firstReadEmail);
-        assertEquals(email, firstReadEmail);
-        firstReadEmail.setEmail("emailpozmianie@test.pl");
-        emailDAO.update(firstReadEmail);
-        Email secondReadEmail = emailDAO.findByID(1);
-        assertEquals("emailpozmianie@test.pl",secondReadEmail.getEmail());
-        assertEquals(firstReadEmail.getId(),secondReadEmail.getId(), "Actual object has the same id ");
-        assertNotEquals(email.getEmail().getBytes(),secondReadEmail.getEmail().getBytes(),"Actual object has the same id but different property email");
+        assertEquals(email, firstReadEmail.get(0));
+        firstReadEmail.get(0).setEmail("emailpozmianie@test.pl");
+        emailDAO.update(firstReadEmail.get(0));
+        List<Email> secondReadEmail = emailDAO.findByID(1);
+        entityManager.getTransaction().commit();
+        assertEquals("emailpozmianie@test.pl",secondReadEmail.get(0).getEmail());
+        assertEquals(firstReadEmail.get(0).getId(),secondReadEmail.get(0).getId(), "Actual object has the same id ");
+        assertNotEquals(email.getEmail().getBytes(),secondReadEmail.get(0).getEmail().getBytes(),"Actual object has the same id but different property email");
     }
     @Test
     public void delete(){
         entityManager.getTransaction().begin();
         emailDAO.create(email);
         entityManager.getTransaction().commit();
-        Email firstReadEmail = emailDAO.findByID(1);
+        List<Email> firstReadEmail = emailDAO.findByID(1);
         assertNotNull(firstReadEmail);
-        assertEquals(email, firstReadEmail);
+        assertEquals(email, firstReadEmail.get(0));
         entityManager.getTransaction().begin();
-        emailDAO.delete(firstReadEmail);
+        emailDAO.delete(firstReadEmail.get(0));
         entityManager.getTransaction().commit();
         List<Email> list = emailDAO.readAll();
         assertEquals(0,list.size());
@@ -150,6 +151,8 @@ public class EmailDAOTest {
         entityManager.getTransaction().commit();
         long count = emailDAO.count();
         assertTrue(count==4);
+        entityManager.getTransaction().begin();
+        List<Email> byEmail = emailDAO.findByEmail("aaaaaa@tatatta.pl");
+        assertEquals(byEmail.size(),0);
     }
-
 }

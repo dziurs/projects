@@ -1,4 +1,4 @@
-package app.model.dao;
+package app.dao;
 
 import app.model.entity.User;
 
@@ -17,15 +17,15 @@ public class UserDAO extends GenericAbstractDAO {
     }
 
     @Override
-    public User findByID(int id) {
+    public List<User> findByID(int id) {
         TypedQuery<User> namedQuery = entityManager.createNamedQuery("User.findById", User.class);
         namedQuery.setParameter("id", id);
-        return namedQuery.getSingleResult();
+        return namedQuery.getResultList();
     }
-    public User findByEmail(String email){
+    public List<User> findByEmail(String email){
         TypedQuery<User> namedQuery = entityManager.createNamedQuery("User.findByEmail", User.class);
         namedQuery.setParameter("email", email);
-        return namedQuery.getSingleResult();
+        return namedQuery.getResultList();
     }
     public List<User> findByName (String name){
         TypedQuery<User> namedQuery = entityManager.createNamedQuery("User.findByName", User.class);

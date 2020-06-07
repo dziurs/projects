@@ -1,4 +1,4 @@
-package app.model.dao;
+package app.dao;
 
 import app.model.entity.Review;
 import app.model.entity.Meeting;
@@ -21,10 +21,10 @@ public class MeetingDAO extends GenericAbstractDAO {
 
 
     @Override
-    public Meeting findByID(int id) {
+    public List<Meeting> findByID(int id) {
         TypedQuery<Meeting> namedQuery = entityManager.createNamedQuery("Meeting.findById", Meeting.class);
         namedQuery.setParameter("id", id);
-        return namedQuery.getSingleResult();
+        return namedQuery.getResultList();
     }
     public List<Meeting> findByDate(Date date){
         TypedQuery<Meeting> namedQuery = entityManager.createNamedQuery("Meeting.findByDate", Meeting.class);

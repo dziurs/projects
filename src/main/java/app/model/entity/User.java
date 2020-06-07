@@ -23,6 +23,10 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "ver", nullable = false)
+    @Version
+    private long version;
+
     @Column(name = "name",nullable = false, length = 100)
     private String name;
 
@@ -40,6 +44,13 @@ public class User implements Serializable {
     @ManyToMany(mappedBy = "users",fetch = FetchType.LAZY)
     private Set<Review> reviews = new HashSet<>();
 
+    public Integer getId() {
+        return id;
+    }
+
+    public long getVersion() {
+        return version;
+    }
 
     public void setName(String name) {
         this.name = name;
@@ -51,10 +62,6 @@ public class User implements Serializable {
 
     public void setEmail(Email email) {
         this.email = email;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getName() {

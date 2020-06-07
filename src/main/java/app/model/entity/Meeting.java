@@ -19,15 +19,19 @@ public class Meeting implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "ver", nullable = false)
+    @Version
+    private long version;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date", nullable = false, length = 100)
     private Date date;
 
     @Column(name = "addedByUser", nullable = false, length = 10)
-    private boolean addedByUser;
+    private boolean addedByUser = false;
 
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "user_id", unique = true)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -35,6 +39,10 @@ public class Meeting implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public long getVersion() {
+        return version;
     }
 
     public Date getDate() {

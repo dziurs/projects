@@ -1,4 +1,4 @@
-package app.model.dao;
+package app.dao;
 
 import app.model.entity.Developer;
 
@@ -18,15 +18,15 @@ public class DeveloperDAO extends GenericAbstractDAO {
 
 
     @Override
-    public Developer findByID(int id) {
+    public List<Developer> findByID(int id) {
         TypedQuery<Developer> namedQuery = entityManager.createNamedQuery("Developer.findById", Developer.class);
         namedQuery.setParameter("id", id);
-        return namedQuery.getSingleResult();
+        return namedQuery.getResultList();
     }
-    public Developer findByEmail(String email){
+    public List<Developer> findByEmail(String email){
         TypedQuery<Developer> namedQuery = entityManager.createNamedQuery("Developer.findByEmail", Developer.class);
         namedQuery.setParameter("email", email);
-        return namedQuery.getSingleResult();
+        return namedQuery.getResultList();
     }
     public List<Developer> findByName (String name){
         TypedQuery<Developer> namedQuery = entityManager.createNamedQuery("Developer.findByName", Developer.class);

@@ -1,10 +1,11 @@
-package app.model.dao;
+package app.dao;
 
 import app.model.entity.Email;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Transactional(value = Transactional.TxType.MANDATORY)
 public class EmailDAO extends GenericAbstractDAO {
@@ -15,15 +16,15 @@ public class EmailDAO extends GenericAbstractDAO {
     }
 
     @Override
-    public Email findByID(int id){
+    public List<Email> findByID(int id){
         TypedQuery<Email> namedQuery = entityManager.createNamedQuery("Email.findById", Email.class);
         namedQuery.setParameter("id", id);
-        return namedQuery.getSingleResult();
+        return namedQuery.getResultList();
     }
 
-    public Email findByEmail(String email){
+    public List<Email> findByEmail(String email){
         TypedQuery<Email> namedQuery = entityManager.createNamedQuery("Email.findByEmail", Email.class);
         namedQuery.setParameter("email", email);
-        return namedQuery.getSingleResult();
+        return namedQuery.getResultList();
     }
 }

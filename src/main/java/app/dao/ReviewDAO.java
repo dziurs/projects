@@ -1,4 +1,4 @@
-package app.model.dao;
+package app.dao;
 
 import app.model.entity.Review;
 import app.model.enums.BuildingType;
@@ -18,10 +18,10 @@ public class ReviewDAO extends GenericAbstractDAO {
     }
 
     @Override
-    public Review findByID(int id) {
+    public List<Review> findByID(int id) {
         TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findById", Review.class);
         namedQuery.setParameter("id", id);
-        return namedQuery.getSingleResult();
+        return namedQuery.getResultList();
     }
     public List<Review> findByTitle (String title){
         TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findByTitle", Review.class);

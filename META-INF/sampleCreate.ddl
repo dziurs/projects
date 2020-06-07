@@ -49564,3 +49564,4163 @@
        add constraint key_review 
        foreign key (review_id) 
        references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    create table buildingsales_developers (
+       id integer not null auto_increment,
+        company_name varchar(255) not null,
+        firstname varchar(255) not null,
+        name varchar(255) not null,
+        user_type varchar(255) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_emails (
+       id integer not null auto_increment,
+        email varchar(100) not null,
+        ver bigint not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_meetings (
+       id integer not null auto_increment,
+        addedByUser bit not null,
+        date datetime(6) not null,
+        ver bigint not null,
+        review_id integer,
+        user_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_reviews (
+       id integer not null auto_increment,
+        area integer not null,
+        building_type varchar(20) not null,
+        city varchar(50) not null,
+        garage bit not null,
+        image varchar(300) not null,
+        livingSpace integer not null,
+        post_code varchar(6) not null,
+        street varchar(100) not null,
+        title varchar(300) not null,
+        ver bigint not null,
+        developer_id integer,
+        primary key (id)
+    ) engine=InnoDB
+
+    create table buildingsales_users (
+       id integer not null auto_increment,
+        firstName varchar(100) not null,
+        name varchar(100) not null,
+        user_type varchar(20) not null,
+        ver bigint not null,
+        email_id integer not null,
+        primary key (id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint UK_cimln8h9nv2btchsy55okjvk1 unique (email_id)
+
+    alter table buildingsales_emails 
+       add constraint UK_ocyf8hwvbl7vqghhdrpxtstiu unique (email)
+
+    alter table buildingsales_users 
+       add constraint UK_8iu4mmtkyc4ejrcs6dbotdt98 unique (email_id)
+
+    create table review_user (
+       review_id integer not null,
+        user_id integer not null,
+        primary key (review_id, user_id)
+    ) engine=InnoDB
+
+    alter table buildingsales_developers 
+       add constraint FK7509ltrr15lxlssi4nl5pv0ux 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table buildingsales_meetings 
+       add constraint FK4s3v4c83u4h1rxl3eat4a0b5o 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
+
+    alter table buildingsales_meetings 
+       add constraint FKqyc8lscri185rvb91ippwindg 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table buildingsales_reviews 
+       add constraint FK47p1vy4c1j0writuqjpmfgle5 
+       foreign key (developer_id) 
+       references buildingsales_developers (id)
+
+    alter table buildingsales_users 
+       add constraint FKi7vjl2ruuvxo2pblq6uh425lo 
+       foreign key (email_id) 
+       references buildingsales_emails (id)
+
+    alter table review_user 
+       add constraint key_user 
+       foreign key (user_id) 
+       references buildingsales_users (id)
+
+    alter table review_user 
+       add constraint key_review 
+       foreign key (review_id) 
+       references buildingsales_reviews (id)
