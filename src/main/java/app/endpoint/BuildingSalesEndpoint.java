@@ -17,9 +17,7 @@ import app.model.entity.User;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @RequestScoped
 @Transactional(Transactional.TxType.REQUIRES_NEW)
@@ -72,6 +70,34 @@ public class BuildingSalesEndpoint {
             User user = users.get(0);
             meetingManager.acceptMeeting(user,meeting);
         }
+    }
+    @DAOTransaction
+    public List<ReviewDTO> getUsersReviews(UserDTO userDTO) throws BuildingSalesAppException {
+        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        List<User> users = userDAO.findByEmail(userDTO.getEmail());
+        if(users.size()!=1)  throw new BuildingSalesAppException("Cant find user");
+        else {
+            User user = users.get(0);
+            Set<Review> reviews = user.getReviews();
+            List<Review> list = new ArrayList(reviews);
+            reviewIterator(list,reviewDTOList);
+        }
+        return reviewDTOList;
+    }
+    @DAOTransaction List<MeetingDTO> getMeeting(UserDTO userDTO) throws BuildingSalesAppException {
+        List<User> users = userDAO.findByEmail(userDTO.getEmail());
+        List<MeetingDTO> meetingDTOList = new ArrayList<>();
+        User user;
+        if(users.size()!=1)  throw new BuildingSalesAppException("Cant find user");
+        else user = users.get(0);
+        List<Meeting> meetingListByUser = meetingDAO.findByUser(user);
+        Iterator<Meeting> iterator = meetingListByUser.iterator();
+        while (iterator.hasNext()){
+            Meeting nextMeeting = iterator.next();
+            MeetingDTO meetingDTO = ConverterEntityToDTO.convertMeetingToMeetingDTO(nextMeeting);
+            meetingDTOList.add(meetingDTO);
+        }
+        return meetingDTOList;
     }
 
 }

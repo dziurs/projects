@@ -11,11 +11,10 @@ public class DAOInterceptor {
 
     public DAOInterceptor() {
     }
-
     @AroundInvoke
-    public void dataBaseAction(InvocationContext context) throws BuildingSalesAppException {
+    public Object dataBaseAction(InvocationContext context) throws BuildingSalesAppException {
         try{
-            context.proceed();
+           return context.proceed();
         }catch(Exception e){
             throw new BuildingSalesAppException("You are working with outdated data");
         }

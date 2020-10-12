@@ -27,7 +27,7 @@ class MeetingTest {
         developer = new Developer();
         Email emailDeveloper = new Email("developer@wp.pl");
         developer = new Developer();
-        developer.setName("Nowak");
+        developer.setSurname("Nowak");
         developer.setFirstName("Janusz");
         developer.setEmail(emailDeveloper);
         developer.setCompanyName("Firma Budowlana NOW-BUD");

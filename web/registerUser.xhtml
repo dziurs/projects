@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-type"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>${msg["page.buildingsales.main.titlepage"]}</title>
+    <h:outputScript name="js/bootstrap.min.js"/>
+    <h:outputStylesheet name="css/bootstrap.min.css"/>
+
+</h:head>
+<h:body>
+    <ui:composition template="index.xhtml">
+        <ui:define name="content_left">
+            <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.register.user.content.left.title"]}</h2>
+        </ui:define>
+        <ui:define name="content">
+            <h:form>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.developer.content.form.label.developer.surname"]}</span>
+                    </div>
+                    <p:inputText class="form-control" value="" required="true" a:placeholder= "${msg['page.buildingsales.register.developer.content.form.surname.placeholder']}"/>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.developer.content.form.label.developer.name"]}</span>
+                    </div>
+                    <p:inputText class="form-control" value="" required="true" a:placeholder= "${msg['page.buildingsales.register.developer.content.form.name.placeholder']}"/>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.developer.content.form.label.developer.email"]}</span>
+                    </div>
+                    <p:inputText class="form-control" value="" required="true" validatorMessage="email is wrong" a:placeholder= "${msg['page.buildingsales.register.developer.content.form.email.placeholder']}">
+                        <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                    </p:inputText>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.content.form.label.password"]}</span>
+                    </div>
+                    <p:password class="form-control" value="" required="true" feedback="true"
+                                promptLabel="${msg['page.buildingsales.register.content.form.label.password']}"
+                                weakLabel="${msg['primefaces.label.weak']}"
+                                goodLabel="${msg['primefaces.label.good']}"
+                                strongLabel="${msg['primefaces.label.strong']}"
+                                a:placeholder= "${msg['page.buildingsales.register.content.form.password.placeholder']}"/>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.developer.content.form.label.password.repeat"]}</span>
+                    </div>
+                    <p:password class="form-control" value="" required="true" feedback="true"
+                                promptLabel="${msg['page.buildingsales.register.content.form.label.password']}"
+                                weakLabel="${msg['primefaces.label.weak']}"
+                                goodLabel="${msg['primefaces.label.good']}"
+                                strongLabel="${msg['primefaces.label.strong']}"
+                                a:placeholder= "${msg['page.buildingsales.register.content.form.password.repeat.placeholder']}"/>
+                </div>
+                <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.register.user.content.form.button']}" styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff " />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

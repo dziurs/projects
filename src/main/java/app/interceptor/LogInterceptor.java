@@ -14,16 +14,16 @@ public class LogInterceptor {
     public LogInterceptor() {
     }
     @AroundInvoke
-    public void loggerAction(InvocationContext context) throws BuildingSalesAppException {
+    public Object loggerAction(InvocationContext context) throws BuildingSalesAppException {
         String className = context.getMethod().getClass().getName();
         String methodName = context.getMethod().getName();
         Logger logger = Logger.getLogger(className + " " + methodName);
-        try{
-            logger.log(Level.INFO, "registration of the use of the business method "+methodName+
-                    " from the class "+className);
-            context.proceed();
-        }catch(Exception e){
-            throw new BuildingSalesAppException("Can't invoke business method");
+        logger.log(Level.INFO, "registration of the use of the business method " + methodName + " from the class " + className);
+        try {
+            return context.proceed();
+        }catch (Exception e){
+            logger.log(Level.SEVERE, "can't invoke bussines method");
+            throw new BuildingSalesAppException("Error during invoke business method by interceptor");
         }
     }
 }

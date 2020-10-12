@@ -24,7 +24,7 @@ public class Meeting implements Serializable {
     private long version;
 
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "date", nullable = false, length = 100)
+    @Column(name = "date", nullable = false)
     private Date date;
 
     @Column(name = "addedByUser", nullable = false, length = 10)

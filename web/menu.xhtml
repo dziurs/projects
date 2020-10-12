@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition>
+    <p:menubar styleClass="navbar navbar-expand-sm bg-primary navbar-dark justify-content-center mt-4 mb-3 pb-0" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
+        <p:menuitem value="${msg['page.buildingsales.main.top.header.login']}" outcome="index.xhtml" icon="pi pi-cog" styleClass="nav-link text-white"/>
+        <p:menuitem value="${msg['page.buildingsales.main.top.header.registerDeveloper']}" outcome="registerDeveloper.xhtml" icon="pi pi-cog" styleClass="nav-link text-white" />
+        <p:menuitem value="${msg['page.buildingsales.main.top.header.registerUser']}" outcome="registerUser.xhtml" icon="pi pi-cog" styleClass="nav-link text-white" />
+    </p:menubar>
+</ui:composition>
+</html>

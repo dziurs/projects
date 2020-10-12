@@ -14,7 +14,7 @@ class DeveloperTest {
     public void initObjects(){
         email = new Email("developer@wp.pl");
         developer = new Developer();
-        developer.setName("Nowak");
+        developer.setSurname("Nowak");
         developer.setFirstName("Janusz");
         developer.setEmail(email);
         developer.setCompanyName("Firma Budowlana NOW-BUD");
@@ -29,7 +29,7 @@ class DeveloperTest {
         entityManager.close();
         assertEquals(list.size(),1);
         Developer readedDeveloper = list.get(0);
-        assertEquals(readedDeveloper.getName(), "Nowak");
+        assertEquals(readedDeveloper.getSurname(), "Nowak");
         assertEquals(readedDeveloper.getFirstName(), "Janusz");
         assertEquals(readedDeveloper.getEmail().getEmail(),"developer@wp.pl");
         assertEquals(readedDeveloper.getCompanyName(), "Firma Budowlana NOW-BUD");

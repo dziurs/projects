@@ -30,7 +30,7 @@ class UserAndReviewTest {
         Email emailDeveloper = new Email("develop@o2.pl");
         developer = new Developer();
         developer.setEmail(emailDeveloper);
-        developer.setName("Nowak");
+        developer.setSurname("Nowak");
         developer.setFirstName("Piotr");
         developer.setCompanyName("BUD-DOM");
         review = new Review();

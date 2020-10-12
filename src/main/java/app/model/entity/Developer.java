@@ -11,7 +11,7 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "Developer.findAll", query = "SELECT d FROM Developer d")
         , @NamedQuery(name = "Developer.findById", query = "SELECT d FROM Developer d WHERE d.id = :id")
-        , @NamedQuery(name = "Developer.findByName", query = "SELECT d FROM Developer d WHERE d.name = :name")
+        , @NamedQuery(name = "Developer.findByName", query = "SELECT d FROM Developer d WHERE d.surname = :name")
         , @NamedQuery(name = "Developer.findByFirstName", query = "SELECT d FROM Developer d WHERE d.firstName = :firstName")
         , @NamedQuery(name = "Developer.findByUserType", query = "SELECT d FROM Developer d WHERE d.userType = :userType")
         , @NamedQuery(name = "Developer.findByEmail", query = "SELECT d FROM Developer d WHERE d.email = :email")})
@@ -27,8 +27,8 @@ public class Developer implements Serializable {
     @Version
     private long version;
 
-    @Column(name = "name",nullable = false)
-    private String name;
+    @Column(name = "surname",nullable = false)
+    private String surname;
 
     @Column(name = "firstname", nullable = false)
     private String firstName;
@@ -55,12 +55,12 @@ public class Developer implements Serializable {
         return version;
     }
 
-    public String getName() {
-        return name;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSurname(String name) {
+        this.surname = name;
     }
 
     public String getFirstName() {
@@ -111,7 +111,7 @@ public class Developer implements Serializable {
         Developer developer = (Developer) o;
 
         //if (!id.equals(developer.id)) return false;
-        if (!name.equals(developer.name)) return false;
+        if (!surname.equals(developer.surname)) return false;
         if (!firstName.equals(developer.firstName)) return false;
         if (!companyName.equals(developer.companyName)) return false;
         return email.equals(developer.email);
@@ -120,7 +120,7 @@ public class Developer implements Serializable {
     @Override
     public int hashCode() {
         int result = 0;//id.hashCode();
-        result = 31 * result + name.hashCode();
+        result = 31 * result + surname.hashCode();
         result = 31 * result + firstName.hashCode();
         result = 31 * result + companyName.hashCode();
         result = 31 * result + email.hashCode();

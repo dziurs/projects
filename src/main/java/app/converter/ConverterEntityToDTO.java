@@ -17,7 +17,7 @@ public class ConverterEntityToDTO {
         return new UserDTO(user.getName(), user.getFirstName(), user.getEmail().getEmail());
     }
     public static DeveloperDTO convertDeveloperToDeveloperDTO(Developer developer){
-        return new DeveloperDTO(developer.getName(),developer.getFirstName(),developer.getCompanyName(),developer.getEmail().getEmail());
+        return new DeveloperDTO(developer.getSurname(),developer.getFirstName(),developer.getCompanyName(),developer.getEmail().getEmail());
     }
     public static MeetingDTO convertMeetingToMeetingDTO(Meeting meeting){
         return new MeetingDTO(meeting.getId(),meeting.getDate(),meeting.isAddedByUser(),
