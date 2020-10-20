@@ -21,7 +21,7 @@ class MeetingTest {
     public void initObjects(){
         email = new Email("antek_nowak@wp.pl");
         user = new User();
-        user.setName("Nowak");
+        user.setSurname("Nowak");
         user.setFirstName("Antek");
         user.setEmail(email);
         developer = new Developer();
@@ -62,7 +62,7 @@ class MeetingTest {
         entityManager.close();
         assertEquals(list.size(),1);
         Meeting readedMeeting = list.get(0);
-        assertEquals(readedMeeting.getUser().getName(), "Nowak");
+        assertEquals(readedMeeting.getUser().getSurame(), "Nowak");
         assertEquals(readedMeeting.getUser().getFirstName(), "Antek");
         assertEquals(readedMeeting.getReview().getDeveloper().getEmail().getEmail(),"developer@wp.pl");
         assertEquals(readedMeeting.getReview().getTitle(), "testowe ogłoszenie");

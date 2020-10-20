@@ -28,8 +28,8 @@ public class UserDAO extends GenericAbstractDAO {
         return namedQuery.getResultList();
     }
     public List<User> findByName (String name){
-        TypedQuery<User> namedQuery = entityManager.createNamedQuery("User.findByName", User.class);
-        namedQuery.setParameter("name", name);
+        TypedQuery<User> namedQuery = entityManager.createNamedQuery("User.findBySurname", User.class);
+        namedQuery.setParameter("surname", name);
         return namedQuery.getResultList();
     }
     public List<User> findByFirstName (String firstName){

@@ -29,8 +29,8 @@ public class DeveloperDAO extends GenericAbstractDAO {
         return namedQuery.getResultList();
     }
     public List<Developer> findByName (String name){
-        TypedQuery<Developer> namedQuery = entityManager.createNamedQuery("Developer.findByName", Developer.class);
-        namedQuery.setParameter("name", name);
+        TypedQuery<Developer> namedQuery = entityManager.createNamedQuery("Developer.findBySurname", Developer.class);
+        namedQuery.setParameter("surname", name);
         return namedQuery.getResultList();
     }
     public List<Developer> findByFirstName (String firstName){

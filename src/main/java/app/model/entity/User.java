@@ -12,10 +12,10 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
         , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
-        , @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.name = :name")
+        , @NamedQuery(name = "User.findBySurname", query = "SELECT u FROM User u WHERE u.surname = :surname")
         , @NamedQuery(name = "User.findByFirstName", query = "SELECT u FROM User u WHERE u.firstName = :firstName")
         , @NamedQuery(name = "User.findByUserType", query = "SELECT u FROM User u WHERE u.userType = :userType")
-        , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")})
+        , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email.email = :email")})
 public class User implements Serializable {
 
 
@@ -27,8 +27,8 @@ public class User implements Serializable {
     @Version
     private long version;
 
-    @Column(name = "name",nullable = false, length = 100)
-    private String name;
+    @Column(name = "surname",nullable = false, length = 100)
+    private String surname;
 
     @Column(name = "firstName", nullable = false, length = 100)
     private String firstName;
@@ -52,8 +52,8 @@ public class User implements Serializable {
         return version;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public void setFirstName(String firstName) {
@@ -64,8 +64,8 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getSurame() {
+        return surname;
     }
 
     public String getFirstName() {
@@ -96,7 +96,7 @@ public class User implements Serializable {
         User user = (User) o;
 
         //if (!id.equals(user.id)) return false;
-        if (!name.equals(user.name)) return false;
+        if (!surname.equals(user.surname)) return false;
         if (!firstName.equals(user.firstName)) return false;
         return email.equals(user.email);
     }
@@ -104,7 +104,7 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         int result = 0; //id.hashCode();
-        result = 31 * result + name.hashCode();
+        result = 31 * result + surname.hashCode();
         result = 31 * result + firstName.hashCode();
         result = 31 * result + email.hashCode();
         return result;

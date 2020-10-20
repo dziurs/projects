@@ -14,5 +14,35 @@
             <var>msg</var>
         </resource-bundle>
     </application>
-  
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>index</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>activate</from-outcome>
+            <to-view-id>/accounts/activateUser.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>registerDeveloper</from-outcome>
+            <to-view-id>/accounts/registerDeveloper.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>registerUser</from-outcome>
+            <to-view-id>/accounts/registerUser.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>successDeveloper</from-outcome>
+            <to-view-id>/accounts/developerSuccess.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>successUser</from-outcome>
+            <to-view-id>/accounts/userSuccess.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

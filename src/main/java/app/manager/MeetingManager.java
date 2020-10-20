@@ -26,7 +26,7 @@ public class MeetingManager {
             meetingDAO.update(meeting);
             reviewDAO.update(review);
         }else {
-            throw new BuildingSalesAppException("meeting had accepted by other user");
+            throw new BuildingSalesAppException("meeting was accepted by another user");
         }
 
     }

@@ -67,15 +67,15 @@ class UserAndReviewTest {
         reviewThree.setImage_url("/images/działka.png");
         reviewThree.setDeveloper(developer);
         user = new User();
-        user.setName("Kuświk");
+        user.setSurname("Kuświk");
         user.setFirstName("Radek");
         user.setEmail(email);
         userTwo = new User();
-        userTwo.setName("Gierłowska");
+        userTwo.setSurname("Gierłowska");
         userTwo.setFirstName("Monika");
         userTwo.setEmail(email2);
         userThree = new User();
-        userThree.setName("Wysocka");
+        userThree.setSurname("Wysocka");
         userThree.setFirstName("Barbara");
         userThree.setEmail(email3);
         review.addUser(user);
@@ -110,20 +110,20 @@ class UserAndReviewTest {
         Iterator<User> iterator = users.iterator();
         while (iterator.hasNext()){
             User user = iterator.next();
-            String name = user.getName();
+            String name = user.getSurame();
             String firstName = user.getFirstName();
             String email = user.getEmail().getEmail();
             switch (name){
                 case "Kuświk" : {
-                    assertEquals(this.user.getName(),name);
+                    assertEquals(this.user.getSurame(),name);
                     break;
                 }
                 case "Gierłowska" : {
-                    assertEquals(this.userTwo.getName(),name);
+                    assertEquals(this.userTwo.getSurame(),name);
                     break;
                 }
                 case "Wysocka" : {
-                    assertEquals(this.userThree.getName(),name);
+                    assertEquals(this.userThree.getSurame(),name);
                     break;
                 }
             }

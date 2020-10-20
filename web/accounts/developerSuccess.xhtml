@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+<h:head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-type"/>
+    <meta http-equiv="refresh" content="0; URL=/accounts/registerDeveloper.xhtml"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>${msg["page.buildingsales.main.titlepage"]}</title>
+    <h:outputScript name="js/bootstrap.min.js"/>
+    <h:outputStylesheet name="css/bootstrap.min.css"/>
+    <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+</h:head>
+
+<h:body>
+    <ui:composition template="../index.xhtml">
+        <ui:define name="content_left">
+            <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.registered.developer.contentleft.title"]}</h2>
+        </ui:define>
+        <ui:define name="content">
+            <h:form id="RegisteredDeveloper">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.registered.developer.content.form.label.developer.surname"]}</span>
+                </div>
+                <h:outputText id="surname" class="form-control" value="#{registerDeveloper.developerDTO.surname}"/>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.registered.developer.content.form.label.developer.name"]}</span>
+                </div>
+                <h:outputText id="name" class="form-control" value="#{registerDeveloper.developerDTO.firstName}"/>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.registered.developer.content.form.label.developer.companyname"]}</span>
+                </div>
+                <h:outputText id="company" class="form-control" value="#{registerDeveloper.developerDTO.companyName}"/>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.registered.developer.content.form.label.developer.email"]}</span>
+                </div>
+                <h:outputText id="email" class="form-control" value="#{registerDeveloper.developerDTO.email}"/>
+            </div>
+                <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.registered.developer.content.form.button']}" action="#{registerDeveloper.registered()}"
+                                 styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</h:body>
+
+</html>

@@ -3,11 +3,12 @@
     <persistence-unit name="NewPersistenceUnit" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>java:app/jdbc/BuildingSalesDS</jta-data-source>
+        <class>app.security.Account</class>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <shared-cache-mode>ALL</shared-cache-mode>
         <properties>
             <property name="eclipselink.logging.level" value="FINE"/>
-            <property name="javax.persistence.schema-generation.database.action" value="create"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
         </properties>
 
     </persistence-unit>

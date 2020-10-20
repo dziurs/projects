@@ -16,61 +16,87 @@
     <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
 </h:head>
 <h:body>
-    <ui:composition template="index.xhtml">
+    <ui:composition template="../index.xhtml">
+
         <ui:define name="content_left">
             <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.register.developer.content.left.title"]}</h2>
         </ui:define>
+
         <ui:define name="content">
-            <h:form>
+            <h:form id="RegisterDeveloper">
                 <div class="input-group mb-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.developer.content.form.label.developer.surname"]}</span>
                     </div>
-                    <p:inputText class="form-control" value="" required="true" a:placeholder= "${msg['page.buildingsales.register.developer.content.form.surname.placeholder']}"/>
+                    <p:inputText id="surname" class="form-control" value="#{registerDeveloper.developerDTO.surname}" required="true" validatorMessage="${msg['page.buildingsales.register.developer.content.form.developer.error']}"
+                                 a:placeholder= "${msg['page.buildingsales.register.developer.content.form.surname.placeholder']}">
+                        <f:validateLength minimum="3" maximum="250"/>
+                    </p:inputText>
+                    <p:message for="surname" />
                 </div>
                 <div class="input-group mb-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.developer.content.form.label.developer.name"]}</span>
                     </div>
-                    <p:inputText class="form-control" value="" required="true" a:placeholder= "${msg['page.buildingsales.register.developer.content.form.name.placeholder']}"/>
+                    <p:inputText id="name" class="form-control" value="#{registerDeveloper.developerDTO.firstName}" required="true" validatorMessage="${msg['page.buildingsales.register.developer.content.form.developer.error']}"
+                                 a:placeholder= "${msg['page.buildingsales.register.developer.content.form.name.placeholder']}">
+                        <f:validateLength maximum="250" minimum="3"/>
+                    </p:inputText>
+                    <p:message for="name"/>
                 </div>
                 <div class="input-group mb-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.developer.content.form.label.developer.companyname"]}</span>
                     </div>
-                    <p:inputText class="form-control" value="" required="true" a:placeholder= "${msg['page.buildingsales.register.developer.content.form.companyname.placeholder']}"/>
+                    <p:inputText id="company" class="form-control" value="#{registerDeveloper.developerDTO.companyName}" required="true" validatorMessage="${msg['page.buildingsales.register.developer.content.form.developer.error']}"
+                                 a:placeholder= "${msg['page.buildingsales.register.developer.content.form.companyname.placeholder']}">
+                        <f:validateLength minimum="3" maximum="250"/>
+                    </p:inputText>
+                    <p:message for="company"/>
                 </div>
                 <div class="input-group mb-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.developer.content.form.label.developer.email"]}</span>
                     </div>
-                    <p:inputText class="form-control" value="" required="true" validatorMessage="email is wrong" a:placeholder= "${msg['page.buildingsales.register.developer.content.form.email.placeholder']}">
-                        <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                    <p:inputText id="email" class="form-control" value="#{registerDeveloper.developerDTO.email}" required="true" validatorMessage="${msg['page.buildingsales.register.developer.content.form.email.error']}"
+                                 a:placeholder= "${msg['page.buildingsales.register.developer.content.form.email.placeholder']}">
+                        <f:validateRegex pattern="#{registerDeveloper.regex}" />
                     </p:inputText>
+                    <p:message for="email"/>
                 </div>
                 <div class="input-group mb-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.content.form.label.password"]}</span>
                     </div>
-                    <p:password class="form-control" value="" required="true" feedback="true"
+                    <p:password id="password" class="form-control" value="#{registerDeveloper.password}" required="true" feedback="true"
                                 promptLabel="${msg['page.buildingsales.register.content.form.label.password']}"
                                 weakLabel="${msg['primefaces.label.weak']}"
                                 goodLabel="${msg['primefaces.label.good']}"
                                 strongLabel="${msg['primefaces.label.strong']}"
-                                a:placeholder= "${msg['page.buildingsales.register.content.form.password.placeholder']}"/>
+                                a:placeholder= "${msg['page.buildingsales.register.content.form.password.placeholder']}"
+                                validatorMessage="${msg['page.buildingsales.register.developer.content.form.password']}">
+                        <f:validateLength minimum="8" maximum="20"/>
+                    </p:password>
+                    <p:message for="password"/>
                 </div>
-                <div class="input-group mb-4">
+                <div id="div" class="input-group mb-4">
                     <div class="input-group-prepend">
                         <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.register.developer.content.form.label.password.repeat"]}</span>
                     </div>
-                    <p:password class="form-control" value="" required="true" feedback="true"
+                    <p:password id="passwordRepeat" class="form-control" value="#{registerDeveloper.passwordRepeat}" required="true" feedback="true"
                                 promptLabel="${msg['page.buildingsales.register.content.form.label.password']}"
                                 weakLabel="${msg['primefaces.label.weak']}"
                                 goodLabel="${msg['primefaces.label.good']}"
                                 strongLabel="${msg['primefaces.label.strong']}"
-                                a:placeholder= "${msg['page.buildingsales.register.content.form.password.repeat.placeholder']}"/>
+                                a:placeholder= "${msg['page.buildingsales.register.content.form.password.repeat.placeholder']}"
+                                validatorMessage="${msg['page.buildingsales.register.developer.content.form.password']}">
+                        <f:validateLength minimum="8" maximum="20"/>
+                    </p:password>
+                    <p:message for="passwordRepeat" />
                 </div>
-                <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.register.developer.content.form.button']}" styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff " />
+                <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.register.developer.content.form.button']}" action="#{registerDeveloper.register()}"
+                                 styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "
+                                 validateClient="true" />
             </h:form>
         </ui:define>
     </ui:composition>

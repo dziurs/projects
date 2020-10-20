@@ -1,27 +1,40 @@
-package app.endpoint;
+package app.endpoints;
 
+import app.converter.ConverterDTOToEntity;
 import app.converter.ConverterEntityToDTO;
-import app.dao.MeetingDAO;
-import app.dao.ReviewDAO;
-import app.dao.UserDAO;
+import app.dao.*;
+import app.dto.DeveloperDTO;
 import app.dto.MeetingDTO;
 import app.dto.ReviewDTO;
 import app.dto.UserDTO;
 import app.exception.BuildingSalesAppException;
+import app.exception.EndpointException;
 import app.interceptor.DAOTransaction;
 import app.manager.MeetingManager;
+import app.model.entity.Developer;
 import app.model.entity.Meeting;
 import app.model.entity.Review;
 import app.model.entity.User;
+import app.security.Account;
+import app.security.Crypter;
 
-import javax.enterprise.context.RequestScoped;
+import javax.annotation.security.PermitAll;
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 import java.util.*;
 
-@RequestScoped
+@Stateless
+@Local
+@PermitAll
 @Transactional(Transactional.TxType.REQUIRES_NEW)
-public class BuildingSalesEndpoint {
+public class BuildingSalesEndpoint implements Serializable {
+
+    private final String roleUser = "USER";
+    private final String roleDeveloper = "DEVELOPER";
 
     @Inject
     private MeetingManager meetingManager;
@@ -35,15 +48,60 @@ public class BuildingSalesEndpoint {
     @Inject
     private UserDAO userDAO;
 
-    @DAOTransaction
+    @Inject
+    private DeveloperDAO developerDAO;
+
+    @Inject
+    private AccountDAO accountDAO;
+
+
+    public void registerDeveloper(DeveloperDTO developerDTO,String password) throws NoSuchAlgorithmException, EndpointException {
+        List<Account> emailList = accountDAO.findByEmail(developerDTO.getEmail());
+        if(emailList.size()==0) {
+        Account account = new Account();
+        account.setLogin(developerDTO.getEmail());
+        account.setActivate(false);
+        account.setPid(new Random().nextInt(100000));
+        account.setPassword(Crypter.crypt(password));
+        account.setRole(roleDeveloper);
+        Developer developer = ConverterDTOToEntity.convertDeveloperDTOToDeveloper(developerDTO, developerDAO);
+        developerDAO.create(developer);
+        accountDAO.create(account);
+        }else {
+          throw new EndpointException("This e-mail address was used by another user");
+        }
+    }
+    public int registerUser(UserDTO userDTO,String password) throws NoSuchAlgorithmException, EndpointException {
+        List<Account> emailList = accountDAO.findByEmail(userDTO.getEmail());
+        if(emailList.size()==0) {
+            Account account = new Account();
+            account.setLogin(userDTO.getEmail());
+            account.setActivate(false);
+            int pid = new Random().nextInt(100000);
+            account.setPid(pid);
+            account.setPassword(Crypter.crypt(password));
+            account.setRole(roleUser);
+            User user = ConverterDTOToEntity.convertUserDTOToUser(userDTO, userDAO);
+            userDAO.create(user);
+            accountDAO.create(account);
+            return pid;
+        }else {
+            throw new EndpointException("This e-mail address was used by another user");
+        }
+    }
+//    public boolean findEmail(String email){
+//        List<Account> byEmail = accountDAO.findByEmail(email);
+//        if(byEmail.size()==0) return false;
+//        else return true;
+//    }
+//
     public List<ReviewDTO> getAllReviews(){
         List<Review> listFromDataBase = reviewDAO.readAll();
         List<ReviewDTO> listDTO = new ArrayList<>();
         reviewIterator(listFromDataBase,listDTO);
         return listDTO;
     }
-    @DAOTransaction
-    public List<ReviewDTO> getTenReviews(int minRange){
+    public List<ReviewDTO> getTenReviews(int minRange){ //brak count
         List<ReviewDTO> listTenDTOReviews = new ArrayList<>();
         if(minRange>=0) {
             List<Review> tenReviews = reviewDAO.readRange(minRange, minRange + 9);
@@ -71,7 +129,6 @@ public class BuildingSalesEndpoint {
             meetingManager.acceptMeeting(user,meeting);
         }
     }
-    @DAOTransaction
     public List<ReviewDTO> getUsersReviews(UserDTO userDTO) throws BuildingSalesAppException {
         List<ReviewDTO> reviewDTOList = new ArrayList<>();
         List<User> users = userDAO.findByEmail(userDTO.getEmail());
@@ -84,7 +141,7 @@ public class BuildingSalesEndpoint {
         }
         return reviewDTOList;
     }
-    @DAOTransaction List<MeetingDTO> getMeeting(UserDTO userDTO) throws BuildingSalesAppException {
+    public List<MeetingDTO> getMeeting(UserDTO userDTO) throws BuildingSalesAppException {
         List<User> users = userDAO.findByEmail(userDTO.getEmail());
         List<MeetingDTO> meetingDTOList = new ArrayList<>();
         User user;

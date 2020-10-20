@@ -14,14 +14,14 @@ public class ConverterEntityToDTO {
     private ConverterEntityToDTO() {
     }
     public static UserDTO convertUserToUserDTO(User user){
-        return new UserDTO(user.getName(), user.getFirstName(), user.getEmail().getEmail());
+        return new UserDTO(user.getSurame(), user.getFirstName(), user.getEmail().getEmail());
     }
     public static DeveloperDTO convertDeveloperToDeveloperDTO(Developer developer){
         return new DeveloperDTO(developer.getSurname(),developer.getFirstName(),developer.getCompanyName(),developer.getEmail().getEmail());
     }
     public static MeetingDTO convertMeetingToMeetingDTO(Meeting meeting){
         return new MeetingDTO(meeting.getId(),meeting.getDate(),meeting.isAddedByUser(),
-                ConverterEntityToDTO.convertUserToUserDTO(meeting.getUser()),ConverterEntityToDTO.convertReviewToReviewDTO(meeting.getReview()));
+                ConverterEntityToDTO.convertUserToUserDTO(meeting.getUser()));
     }
     public static ReviewDTO convertReviewToReviewDTO(Review review){
         return new ReviewDTO(review.getId(),review.getTitle(),review.getArea(),review.getBuildingType(),review.getLivingSpace(),

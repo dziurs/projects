@@ -16,7 +16,7 @@ class UserTest {
     public void initObjects(){
         email = new Email("test@wp.pl");
         user = new User();
-        user.setName("Kowalski");
+        user.setSurname("Kowalski");
         user.setFirstName("Jan");
         user.setEmail(email);
     }
@@ -30,7 +30,7 @@ class UserTest {
         entityManager.close();
         assertEquals(list.size(),1);
         User readedUser = list.get(0);
-        assertEquals(readedUser.getName(), "Kowalski");
+        assertEquals(readedUser.getSurame(), "Kowalski");
         assertEquals(readedUser.getFirstName(), "Jan");
         assertEquals(readedUser.getEmail().getEmail(),"test@wp.pl");
     }

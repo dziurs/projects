@@ -11,10 +11,10 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = "Developer.findAll", query = "SELECT d FROM Developer d")
         , @NamedQuery(name = "Developer.findById", query = "SELECT d FROM Developer d WHERE d.id = :id")
-        , @NamedQuery(name = "Developer.findByName", query = "SELECT d FROM Developer d WHERE d.surname = :name")
+        , @NamedQuery(name = "Developer.findBySurname", query = "SELECT d FROM Developer d WHERE d.surname = :surname")
         , @NamedQuery(name = "Developer.findByFirstName", query = "SELECT d FROM Developer d WHERE d.firstName = :firstName")
         , @NamedQuery(name = "Developer.findByUserType", query = "SELECT d FROM Developer d WHERE d.userType = :userType")
-        , @NamedQuery(name = "Developer.findByEmail", query = "SELECT d FROM Developer d WHERE d.email = :email")})
+        , @NamedQuery(name = "Developer.findByEmail", query = "SELECT d FROM Developer d WHERE d.email.email = :email")})
 
 public class Developer implements Serializable {
 

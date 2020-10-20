@@ -12,4 +12,40 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+    <context-param>
+        <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>domain</param-name>
+        <param-value>https://localhost:8080</param-value>
+    </context-param>
+    <context-param>
+        <param-name>appEmail</param-name>
+        <param-value>buildingSalesApp@gmail.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>param</param-name>
+        <param-value>-6368499382688112971</param-value>
+    </context-param>
+    <context-param>
+        <param-name>serveSMTP</param-name>
+        <param-value>smtp.gmail.com</param-value>
+    </context-param>
+    <context-param>
+        <param-name>port</param-name>
+        <param-value>587</param-value>
+    </context-param>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>accounts</web-resource-name>
+            <url-pattern>/accounts/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+        </web-resource-collection>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
 </web-app>

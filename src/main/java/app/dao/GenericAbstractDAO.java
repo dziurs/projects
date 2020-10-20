@@ -1,7 +1,5 @@
 package app.dao;
 
-import app.interceptor.DAOTransaction;
-
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -29,17 +27,14 @@ public abstract class GenericAbstractDAO<T> {
             if(!entityManager.isJoinedToTransaction())entityManager.joinTransaction();
         }
 
-        @DAOTransaction
         public void create(T entity) {
             getEntityManager().persist(entity);
             getEntityManager().flush();
         }
-        @DAOTransaction
         public void update(T entity) {
             getEntityManager().merge(entity);
             getEntityManager().flush();
         }
-        @DAOTransaction
         public void delete(T entity) {
             getEntityManager().remove(getEntityManager().merge(entity));
             getEntityManager().flush();

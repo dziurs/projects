@@ -1,17 +1,20 @@
 package app.dto;
 
 public class UserDTO {
-    private String name;
+    private String surname;
     private String firstName;
     private String email;
 
-    public UserDTO(String name, String firstName, String email) {
-        this.name = name;
+    public UserDTO(String surname, String firstName, String email) {
+        this.surname = surname;
         this.firstName = firstName;
         this.email = email;
     }
-    public String getName() {
-        return name;
+
+    public UserDTO() {
+    }
+    public String getSurname() {
+        return surname;
     }
 
     public String getFirstName() {
@@ -20,5 +23,17 @@ public class UserDTO {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

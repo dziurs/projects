@@ -4,6 +4,8 @@ import app.dto.DeveloperDTO;
 import app.model.enums.BuildingType;
 
 public class ReviewDTO {
+    /* if You create ReviewDTO from web page input, set 'id' less than zero, in the other case ConverterDTOToEntity
+    should not work correctly */
 
     private Integer id;
     private String title;
@@ -29,6 +31,10 @@ public class ReviewDTO {
         this.postCode = postCode;
         this.image_url = image_url;
         this.developer = developer;
+    }
+
+    public ReviewDTO() {
+        this.id = -1;
     }
 
     public Integer getId() {
@@ -74,4 +80,48 @@ public class ReviewDTO {
     public DeveloperDTO getDeveloper() {
         return developer;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setArea(int area) {
+        this.area = area;
+    }
+
+    public void setBuildingType(BuildingType buildingType) {
+        this.buildingType = buildingType;
+    }
+
+    public void setLivingSpace(int livingSpace) {
+        this.livingSpace = livingSpace;
+    }
+
+    public void setGarage(boolean garage) {
+        this.garage = garage;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
+    }
+
+    public void setDeveloper(DeveloperDTO developer) {
+        this.developer = developer;
+    }
+
+//    public void setId(Integer id) {
+//        this.id = id;
+//    }
 }
