@@ -22,11 +22,6 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-outcome>activate</from-outcome>
-            <to-view-id>/accounts/activateUser.xhtml</to-view-id>
-            <redirect/>
-        </navigation-case>
-        <navigation-case>
             <from-outcome>registerDeveloper</from-outcome>
             <to-view-id>/accounts/registerDeveloper.xhtml</to-view-id>
             <redirect/>

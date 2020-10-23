@@ -36,7 +36,7 @@ public class EmailSendingEndpoint {
         appContext = domain.concat(externalContext.getApplicationContextPath());
     }
 
-    public void senEmail(String toUser, String link) throws EmailSendingException {
+    public void sendEmail(String toUser, String link) throws EmailSendingException {
         emailService.sendEmail(email,param,serveSMTP,port,link,toUser);
     }
 

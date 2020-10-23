@@ -35,11 +35,8 @@ public class RegisterDeveloperController implements Serializable {
 
     public String register(){
 
-
-
         if(!passwordCheck()){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-                    bundle.getString("register.developer.controller.password.check"),bundle.getString("register.developer.controller.password.detail")));
+            addWarningMessage(bundle.getString("register.developer.controller.password.check"),bundle.getString("register.developer.controller.password.detail"));
             return "";
         }
         if(conversation.isTransient())conversation.begin();
@@ -48,23 +45,36 @@ public class RegisterDeveloperController implements Serializable {
     public String registered(){
         try {
             endpoint.registerDeveloper(developerDTO, password);
+            if(!conversation.isTransient()) conversation.end();
+            addMessage(bundle.getString("register.developer.controller.success"),bundle.getString("register.developer.controller.success.detail"));
+            saveMessageInFlashScope();
+            return "index";
         }catch (NoSuchAlgorithmException e){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    bundle.getString("register.developer.controller.password.convert"),bundle.getString("register.developer.controller.detail")));
+            if(!conversation.isTransient()) conversation.end();
+            addWarningMessage(bundle.getString("register.developer.controller.password.convert"),bundle.getString("register.developer.controller.detail"));
+            saveMessageInFlashScope();
             return "registerDeveloper";
         }catch (EndpointException e){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    bundle.getString("register.developer.controller.email.check"),bundle.getString("register.developer.controller.detail")));
+            if(!conversation.isTransient()) conversation.end();
+            addWarningMessage(bundle.getString("register.developer.controller.email.check"),bundle.getString("register.developer.controller.detail"));
+            saveMessageInFlashScope();
             return "registerDeveloper";
         }
-        if(!conversation.isTransient()) conversation.end();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                bundle.getString("register.developer.controller.success"),bundle.getString("register.developer.controller.success.detail")));
-        return "index";
     }
+    private void addWarningMessage(String message, String detail){
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, message,detail));
+    }
+    private void addMessage(String message, String detail){
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message,detail));
+    }
+    private void saveMessageInFlashScope(){
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+    }
+
     public DeveloperDTO getDeveloperDTO() {
         return developerDTO;
     }
+
     public void setDeveloperDTO(DeveloperDTO developerDTO) {
         this.developerDTO = developerDTO;
     }

@@ -7,15 +7,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
-<h:head>
-    <meta content="text/html; charset=UTF-8" http-equiv="Content-type"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>${msg["page.buildingsales.main.titlepage"]}</title>
-    <h:outputScript name="js/bootstrap.min.js"/>
-    <h:outputStylesheet name="css/bootstrap.min.css"/>
 
-</h:head>
-<h:body>
     <ui:composition template="../index.xhtml">
         <ui:define name="content_left">
             <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.register.user.content.left.title"]}</h2>
@@ -91,6 +83,4 @@
             </h:form>
         </ui:define>
     </ui:composition>
-</h:body>
-
 </html>

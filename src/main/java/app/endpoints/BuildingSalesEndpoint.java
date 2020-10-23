@@ -54,6 +54,8 @@ public class BuildingSalesEndpoint implements Serializable {
     @Inject
     private AccountDAO accountDAO;
 
+    private ResourceBundle bundle = ResourceBundle.getBundle("i18n/messages");
+
 
     public void registerDeveloper(DeveloperDTO developerDTO,String password) throws NoSuchAlgorithmException, EndpointException {
         List<Account> emailList = accountDAO.findByEmail(developerDTO.getEmail());
@@ -87,6 +89,21 @@ public class BuildingSalesEndpoint implements Serializable {
             return pid;
         }else {
             throw new EndpointException("This e-mail address was used by another user");
+        }
+    }
+    public void activateUserAccount(String login, String pid) throws BuildingSalesAppException {
+        List<Account> list = accountDAO.findByEmail(login);
+        if(list.size()==1){
+            Account account = list.get(0);
+            int pidFromDatabase = account.getPid();
+            if(pid.equals(String.valueOf(pidFromDatabase))){
+                account.setActivate(true);
+            }
+            else {
+                throw new BuildingSalesAppException("Account pid not match");
+            }
+        }else {
+            throw new BuildingSalesAppException("Account not found");
         }
     }
 //    public boolean findEmail(String email){

@@ -3,19 +3,22 @@ package app.web;
 import app.dto.UserDTO;
 import app.endpoints.BuildingSalesEndpoint;
 import app.endpoints.EmailSendingEndpoint;
+import app.exception.BuildingSalesAppException;
+import app.exception.EmailSendingException;
 import app.exception.EndpointException;
 import javax.enterprise.context.Conversation;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 
-@RequestScoped
+@ConversationScoped
 @Named(value = "registerUser")
-public class RegisterUserController {
+public class RegisterUserController implements Serializable {
 
     @Inject
     private BuildingSalesEndpoint endpoint;
@@ -32,6 +35,8 @@ public class RegisterUserController {
 
     private String password;
 
+    private StringBuilder builder;
+
     private String passwordRepeat;
 
     private String emailParam;
@@ -42,40 +47,69 @@ public class RegisterUserController {
 
     public String register(){
         if(!password.equals(this.getPasswordRepeat())){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
-                    bundle.getString("register.developer.controller.password.check"),bundle.getString("register.developer.controller.password.detail")));
+            addMessage(bundle.getString("register.developer.controller.password.check"),bundle.getString("register.developer.controller.password.detail"),FacesMessage.SEVERITY_WARN);
             return "";
         }
         if(conversation.isTransient())conversation.begin();
         return "successUser";
     }
+    private String emailSending() throws EmailSendingException {
+        emailSendingEndpoint.sendEmail(getUserDTO().getEmail(), builder.toString());
+        if (!conversation.isTransient()) conversation.end();
+        addMessage(bundle.getString("register.user.controller.success"),bundle.getString("register.user.controller.success.detail"), FacesMessage.SEVERITY_INFO);
+        saveMessageInFlashScope();
+        return "index";
+    }
+    private void addMessage(String message, String detail, FacesMessage.Severity f){
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(f, message,detail));
+    }
+    private void saveMessageInFlashScope(){
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+    }
+
     public String registered() {
         try {
-            int pid = endpoint.registerUser(userDTO, password);
-            StringBuilder builder = new StringBuilder(emailSendingEndpoint.getAppContext());
-            builder.append("/activate?emailparam=");
+            int pid = endpoint.registerUser(getUserDTO(), getPassword());
+            builder = new StringBuilder(emailSendingEndpoint.getAppContext());
+            builder.append("/accounts/activateUser.xhtml?emailparam=");
             builder.append(userDTO.getEmail());
             builder.append("&pidparam=");
             builder.append(pid);
+            return emailSending();
 
         } catch (NoSuchAlgorithmException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    bundle.getString("register.developer.controller.password.convert"), bundle.getString("register.developer.controller.detail")));
+            if (!conversation.isTransient()) conversation.end();
+            addMessage(bundle.getString("register.developer.controller.password.convert"), bundle.getString("register.developer.controller.detail"), FacesMessage.SEVERITY_ERROR);
+            saveMessageInFlashScope();
             return "registerUser";
         } catch (EndpointException e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                    bundle.getString("register.developer.controller.email.check"), bundle.getString("register.developer.controller.detail")));
+            if (!conversation.isTransient()) conversation.end();
+            addMessage(bundle.getString("register.developer.controller.email.check"), bundle.getString("register.developer.controller.detail"), FacesMessage.SEVERITY_ERROR);
+            saveMessageInFlashScope();
             return "registerUser";
+        } catch (EmailSendingException e) {
+            try {
+                return emailSending();
+            } catch (EmailSendingException ex) {
+                if (!conversation.isTransient()) conversation.end();
+                addMessage(bundle.getString("register.user.controller.email.sending.error"), bundle.getString("register.user.controller.email.sending.error.detail"), FacesMessage.SEVERITY_ERROR);
+                saveMessageInFlashScope();
+                return "index";
+            }
         }
-        if (!conversation.isTransient()) conversation.end();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
-                bundle.getString("register.developer.controller.success"), bundle.getString("register.user.controller.success.detail")));
-        return "index";
     }
+
     public String validateUser(){
-        //TODO w endpoint dodać metodę która zweryfikuje email i pid w Account,
-        // wczytać po emailu i z encji wyjąć pid, jak equals to account.setActivate
-        return "index";
+        try {
+            endpoint.activateUserAccount(getEmailParam(), getPidParam());
+            addMessage(bundle.getString("activate.user.done"),bundle.getString("activate.user.done.detail"), FacesMessage.SEVERITY_INFO);
+            saveMessageInFlashScope();
+            return "index";
+        }catch (BuildingSalesAppException e){
+            addMessage(bundle.getString("activate.user.error"), bundle.getString("register.user.controller.email.sending.error.detail"), FacesMessage.SEVERITY_WARN);
+            saveMessageInFlashScope();
+            return "index";
+        }
     }
 
     public String getRegex() {
