@@ -1,8 +1,13 @@
 package app.exception;
+import javax.ejb.ApplicationException;
 
-public class BuildingSalesAppException extends Exception{
+@ApplicationException(rollback=true)
+abstract public class BuildingSalesAppException extends Exception{
 
-    public BuildingSalesAppException(String message) {
+    protected BuildingSalesAppException(String message) {
         super(message);
+    }
+    protected BuildingSalesAppException(String message, Throwable cause){
+        super(message,cause);
     }
 }

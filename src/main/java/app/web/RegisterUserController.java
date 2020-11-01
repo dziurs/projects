@@ -5,7 +5,9 @@ import app.endpoints.BuildingSalesEndpoint;
 import app.endpoints.EmailSendingEndpoint;
 import app.exception.BuildingSalesAppException;
 import app.exception.EmailSendingException;
-import app.exception.EndpointException;
+import app.exception.AccountException;
+import app.exception.GeneralAplicationException;
+
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
@@ -15,6 +17,8 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ConversationScoped
 @Named(value = "registerUser")
@@ -43,7 +47,8 @@ public class RegisterUserController implements Serializable {
 
     private String pidParam;
 
-    private ResourceBundle bundle = ResourceBundle.getBundle("i18n/messages");
+    private ResourceBundle bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
+            FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     public String register(){
         if(!password.equals(this.getPasswordRepeat())){
@@ -77,22 +82,26 @@ public class RegisterUserController implements Serializable {
             builder.append(pid);
             return emailSending();
 
-        } catch (NoSuchAlgorithmException e) {
+        } catch (GeneralAplicationException e) {
             if (!conversation.isTransient()) conversation.end();
             addMessage(bundle.getString("register.developer.controller.password.convert"), bundle.getString("register.developer.controller.detail"), FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
             return "registerUser";
-        } catch (EndpointException e) {
+        } catch (AccountException e) {
             if (!conversation.isTransient()) conversation.end();
-            addMessage(bundle.getString("register.developer.controller.email.check"), bundle.getString("register.developer.controller.detail"), FacesMessage.SEVERITY_ERROR);
+            addMessage(bundle.getString(e.getMessage()), bundle.getString("register.developer.controller.detail"), FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
             return "registerUser";
-        } catch (EmailSendingException e) {
+        }catch(BuildingSalesAppException e){
+            Logger.getLogger(RegisterUserController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji 'registered' wyjatku typu: ", e.getClass());
+            return "registerUser";
+        }
+        catch (EmailSendingException e) {
             try {
                 return emailSending();
             } catch (EmailSendingException ex) {
                 if (!conversation.isTransient()) conversation.end();
-                addMessage(bundle.getString("register.user.controller.email.sending.error"), bundle.getString("register.user.controller.email.sending.error.detail"), FacesMessage.SEVERITY_ERROR);
+                addMessage(bundle.getString(ex.getMessage()), bundle.getString("register.user.controller.email.sending.error.detail"), FacesMessage.SEVERITY_ERROR);
                 saveMessageInFlashScope();
                 return "index";
             }
@@ -105,8 +114,8 @@ public class RegisterUserController implements Serializable {
             addMessage(bundle.getString("activate.user.done"),bundle.getString("activate.user.done.detail"), FacesMessage.SEVERITY_INFO);
             saveMessageInFlashScope();
             return "index";
-        }catch (BuildingSalesAppException e){
-            addMessage(bundle.getString("activate.user.error"), bundle.getString("register.user.controller.email.sending.error.detail"), FacesMessage.SEVERITY_WARN);
+        }catch (EmailSendingException e){
+            addMessage(bundle.getString(e.getMessage()), bundle.getString("register.user.controller.email.sending.error.detail"), FacesMessage.SEVERITY_WARN);
             saveMessageInFlashScope();
             return "index";
         }

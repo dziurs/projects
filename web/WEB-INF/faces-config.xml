@@ -39,5 +39,15 @@
             <from-outcome>successUser</from-outcome>
             <to-view-id>/accounts/userSuccess.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>addReview</from-outcome>
+            <to-view-id>/developer/addReview.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>login</from-outcome>
+            <to-view-id>/login/login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

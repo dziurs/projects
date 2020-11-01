@@ -2,7 +2,10 @@ package app.web;
 
 import app.dto.DeveloperDTO;
 import app.endpoints.BuildingSalesEndpoint;
-import app.exception.EndpointException;
+import app.exception.AccountException;
+import app.exception.BuildingSalesAppException;
+import app.exception.GeneralAplicationException;
+
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
 import javax.faces.application.FacesMessage;
@@ -12,6 +15,8 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ConversationScoped
 @Named(value = "registerDeveloper")
@@ -31,7 +36,8 @@ public class RegisterDeveloperController implements Serializable {
 
     private final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
 
-    private ResourceBundle bundle = ResourceBundle.getBundle("i18n/messages");
+    private ResourceBundle bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
+            FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     public String register(){
 
@@ -49,15 +55,18 @@ public class RegisterDeveloperController implements Serializable {
             addMessage(bundle.getString("register.developer.controller.success"),bundle.getString("register.developer.controller.success.detail"));
             saveMessageInFlashScope();
             return "index";
-        }catch (NoSuchAlgorithmException e){
+        }catch (GeneralAplicationException e){
             if(!conversation.isTransient()) conversation.end();
             addWarningMessage(bundle.getString("register.developer.controller.password.convert"),bundle.getString("register.developer.controller.detail"));
             saveMessageInFlashScope();
             return "registerDeveloper";
-        }catch (EndpointException e){
+        }catch (AccountException e){
             if(!conversation.isTransient()) conversation.end();
-            addWarningMessage(bundle.getString("register.developer.controller.email.check"),bundle.getString("register.developer.controller.detail"));
+            addWarningMessage(bundle.getString(e.getMessage()),bundle.getString("register.developer.controller.detail"));
             saveMessageInFlashScope();
+            return "registerDeveloper";
+        }catch (BuildingSalesAppException e){
+            Logger.getLogger(RegisterDeveloperController.class.getName()).log(Level.SEVERE, "Zgłoszenie w metodzie akcji 'registered' wyjatku typu: ", e.getClass());
             return "registerDeveloper";
         }
     }

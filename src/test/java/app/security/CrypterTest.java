@@ -1,5 +1,7 @@
 package app.security;
 
+import app.exception.BuildingSalesAppException;
+import app.exception.GeneralAplicationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +17,7 @@ class CrypterTest {
     }
 
     @Test
-    void crypt() {
+    void crypt() throws BuildingSalesAppException {
         String password = new String("radek");
         String passwordRepeat = "Radek";
         String  newPassword = "AntekMonika";
@@ -34,7 +36,7 @@ class CrypterTest {
             assertTrue(crypt1.length()==64);
             assertTrue(crypt2.length()==64);
             assertTrue(crypt3.length()==64);
-        }catch (NoSuchAlgorithmException e) {
+        }catch (GeneralAplicationException e) {
             e.printStackTrace();
         }
     }

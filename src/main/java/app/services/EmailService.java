@@ -44,7 +44,7 @@ public class EmailService {
             Transport.send(message);
 
         } catch (MessagingException ex) {
-            throw new EmailSendingException("Error during sending email");
+            throw new EmailSendingException(EmailSendingException.EMAIL_ERROR);
         }
 
     }

@@ -1,11 +1,14 @@
 package app.dao;
 
+import app.exception.AppDataBaseException;
+import app.exception.BuildingSalesAppException;
 import app.model.entity.Review;
 import app.model.entity.Meeting;
 import app.model.entity.User;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.OptimisticLockException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 import java.util.Date;
@@ -19,6 +22,15 @@ public class MeetingDAO extends GenericAbstractDAO {
         super(Meeting.class, entityManager);
     }
 
+
+    @Override
+    public void update(Object entity) throws BuildingSalesAppException {
+        try{
+            super.update(entity);
+        }catch (OptimisticLockException e){
+            throw new AppDataBaseException(e);
+        }
+    }
 
     @Override
     public List<Meeting> findByID(int id) {

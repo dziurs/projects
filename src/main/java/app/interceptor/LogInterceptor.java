@@ -1,6 +1,7 @@
 package app.interceptor;
 
 import app.exception.BuildingSalesAppException;
+import app.exception.GeneralAplicationException;
 
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
@@ -23,7 +24,7 @@ public class LogInterceptor {
             return context.proceed();
         }catch (Exception e){
             logger.log(Level.SEVERE, "can't invoke bussines method");
-            throw new BuildingSalesAppException("Error during invoke business method by interceptor");
+            throw new GeneralAplicationException(GeneralAplicationException.INTERCEPTOR);// czy zwracać exception???
         }
     }
 }

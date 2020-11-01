@@ -1,6 +1,7 @@
 package app.dao;
 
 
+import app.exception.BuildingSalesAppException;
 import app.model.entity.Email;
 import org.jboss.weld.junit5.EnableWeld;
 import org.jboss.weld.junit5.WeldInitiator;
@@ -57,7 +58,7 @@ public class EmailDAOTest {
         System.out.println(entityManager);
     }
     @Test
-    public void create(){
+    public void create() throws BuildingSalesAppException {
         entityManager.getTransaction().begin();
         emailDAO.create(email);
         entityManager.getTransaction().commit();
@@ -67,7 +68,7 @@ public class EmailDAOTest {
 
     }
     @Test
-    public void findByID() {
+    public void findByID() throws BuildingSalesAppException {
         entityManager.getTransaction().begin();
         emailDAO.create(email);
         entityManager.getTransaction().commit();
@@ -78,7 +79,7 @@ public class EmailDAOTest {
     }
 
     @Test
-    public void findByEmail() {
+    public void findByEmail() throws BuildingSalesAppException {
         entityManager.getTransaction().begin();
         emailDAO.create(email);
         entityManager.getTransaction().commit();
@@ -88,7 +89,7 @@ public class EmailDAOTest {
         assertEquals(email.getEmail(),byEmail.get(0).getEmail());
     }
     @Test
-    public void update(){
+    public void update() throws BuildingSalesAppException {
         entityManager.getTransaction().begin();
         emailDAO.create(email);
         List<Email> firstReadEmail = emailDAO.findByID(1);
@@ -103,7 +104,7 @@ public class EmailDAOTest {
         assertNotEquals(email.getEmail().getBytes(),secondReadEmail.get(0).getEmail().getBytes(),"Actual object has the same id but different property email");
     }
     @Test
-    public void delete(){
+    public void delete() throws BuildingSalesAppException {
         entityManager.getTransaction().begin();
         emailDAO.create(email);
         entityManager.getTransaction().commit();
@@ -117,7 +118,7 @@ public class EmailDAOTest {
         assertEquals(0,list.size());
     }
     @Test
-    public void readRange(){
+    public void readRange() throws BuildingSalesAppException {
         entityManager.getTransaction().begin();
         emailDAO.create(email);
         emailDAO.create(emailSecond);
@@ -142,7 +143,7 @@ public class EmailDAOTest {
         assertTrue(emailThird.getId()==3);
     }
     @Test
-    public void countEntities(){
+    public void countEntities() throws BuildingSalesAppException {
         entityManager.getTransaction().begin();
         emailDAO.create(email);
         emailDAO.create(emailSecond);

@@ -54,7 +54,7 @@ public class ConverterDTOToEntity {
             return m;
         }
     }
-    public static Review convertReviewDTOToReview(ReviewDTO review, ReviewDAO reviewDAO, DeveloperDAO developerDAO){
+    public static Review convertReviewDTOToReview(ReviewDTO review, ReviewDAO reviewDAO){
         Integer id = review.getId();
         if(id>0){
             List<Review> byID = reviewDAO.findByID(id);
@@ -68,8 +68,9 @@ public class ConverterDTOToEntity {
             r.setCity(review.getCity());
             r.setStreet(review.getStreet());
             r.setPostCode(review.getPostCode());
-            r.setImage_url(review.getImage_url());
-            r.setDeveloper(ConverterDTOToEntity.convertDeveloperDTOToDeveloper(review.getDeveloper(),developerDAO));
+            r.setBuildingType(review.getBuildingType());
+            //r.setImage_url(review.getImage_url());
+            //r.setDeveloper(ConverterDTOToEntity.convertDeveloperDTOToDeveloper(review.getDeveloper(),developerDAO));
             return r;
         }
     }

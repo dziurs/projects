@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="../index.xhtml">
+
+    <ui:define name="content_left">
+        <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.add.review.content.left.title"]}</h2>
+    </ui:define>
+
+    <ui:define name="content">
+        <f:subview id="review" rendered="#{reviewController.trigger}">
+        <h:form id="addreview">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 310px">${msg["page.buildingsales.add.review.content.form.label.title"]}</span>
+                </div>
+                <p:inputText id="title" class="form-control" value="#{reviewController.reviewDTO.title}" required="true" validatorMessage="${msg['page.buildingsales.add.review.content.form.label.title.validation']}"
+                             a:placeholder= "${msg['page.buildingsales.add.review.content.form.label.title.placeholder']}">
+                    <f:validateLength minimum="3" maximum="250"/>
+                </p:inputText>
+                <p:message for="title" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 310px">${msg["page.buildingsales.add.review.content.form.label.area"]}</span>
+                </div>
+                <p:inputText id="area" class="form-control" value="#{reviewController.area}" required="true" validatorMessage="${msg['page.buildingsales.add.review.content.form.label.area.validation']}"
+                             a:placeholder= "${msg['page.buildingsales.add.review.content.form.label.area.placeholder']}">
+                    <f:validateLength minimum="1" maximum="10"/>
+                    <f:validateRegex pattern="#{reviewController.intRegex}" />
+                </p:inputText>
+                <p:message for="area" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 310px">${msg["page.buildingsales.add.review.content.form.type"]}</span>
+                </div>
+                <h:selectOneMenu id="buildingType" value="#{reviewController.reviewDTO.buildingType}" class="form-control" >
+                    <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.land']}" itemValue="Land" />
+                    <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.flat']}" itemValue="Flat" />
+                    <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.house']}" itemValue="House"/>
+                </h:selectOneMenu>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 310px">${msg["page.buildingsales.add.review.content.form.label.livingspace"]}</span>
+                </div>
+                <p:inputText id="livingSpace" class="form-control" value="#{reviewController.livingSpace}" required="true" validatorMessage="${msg['page.buildingsales.add.review.content.form.label.livingspace.validation']}"
+                             a:placeholder= "${msg['page.buildingsales.add.review.content.form.label.livingspace.placeholder']}">
+                    <f:validateLength minimum="1" maximum="10"/>
+                    <f:validateRegex pattern="#{reviewController.intRegex}" />
+                </p:inputText>
+                <p:message for="livingSpace" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 310px">${msg["page.buildingsales.add.review.content.form.label.garage"]}</span>
+                </div>
+                <h:selectOneMenu id="garage" value="#{reviewController.reviewDTO.garage}" class="form-control" required="true">
+                    <f:selectItem itemLabel="${msg['page.buildingsales.add.review.content.form.label.garage.yes']}" itemValue="true" />
+                    <f:selectItem itemLabel="${msg['page.buildingsales.add.review.content.form.label.garage.no']}" itemValue="false" />
+                </h:selectOneMenu>
+                <p:message for="garage" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 310px">${msg["page.buildingsales.add.review.content.form.label.city"]}</span>
+                </div>
+                <p:inputText id="city" class="form-control" value="#{reviewController.reviewDTO.city}" required="true" validatorMessage="${msg['page.buildingsales.add.review.content.form.label.city.validation']}"
+                             a:placeholder= "${msg['page.buildingsales.add.review.content.form.label.city.placeholder']}">
+                    <f:validateLength minimum="1" maximum="50"/>
+                </p:inputText>
+                <p:message for="city" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 310px">${msg["page.buildingsales.add.review.content.form.label.street"]}</span>
+                </div>
+                <p:inputText id="street" class="form-control" value="#{reviewController.reviewDTO.street}" required="true" validatorMessage="${msg['page.buildingsales.add.review.content.form.label.street.validation']}"
+                             a:placeholder= "${msg['page.buildingsales.add.review.content.form.label.street.placeholder']}">
+                    <f:validateLength minimum="1" maximum="100"/>
+                </p:inputText>
+                <p:message for="street" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 310px">${msg["page.buildingsales.add.review.content.form.label.postcode"]}</span>
+                </div>
+                <p:inputText id="postcode" class="form-control" value="#{reviewController.reviewDTO.postCode}" required="true" validatorMessage="${msg['page.buildingsales.add.review.content.form.label.postcode.validation']}"
+                             a:placeholder= "${msg['page.buildingsales.add.review.content.form.label.postcode.placeholder']}">
+                    <f:validateRegex pattern="#{reviewController.postCodeRegex}" />
+                </p:inputText>
+                <p:message for="postcode" />
+            </div>
+            <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.add.review.content.form.button']}" action="#{reviewController.addReview}"
+                             styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "
+                             validateClient="true" ajax="false"/>
+        </h:form>
+        </f:subview>
+
+        <f:subview id="upload" rendered="#{not reviewController.trigger}">
+        <h:form enctype="multipart/form-data">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 310px">${msg["page.buildingsales.add.review.content.form.label.chosefile"]}</span>
+                </div>
+                <h:inputFile  id="file" label="#{msg['page.buildingsales.add.review.content.form.chose.button']}" styleClass="btn btn-primary form-control text-white"
+                              value="#{reviewController.file}" required="true" validator="fileValidator"/>
+                <p:message for="file" />
+            </div>
+            <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.add.review.content.form.upload.button']}" action="#{reviewController.upload}"
+                             styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "
+                             validateClient="true" ajax="false"/>
+
+        </h:form>
+        </f:subview>
+    </ui:define>
+</ui:composition>
+
+
+</html>

@@ -23,6 +23,10 @@ public class ReviewDAO extends GenericAbstractDAO {
         namedQuery.setParameter("id", id);
         return namedQuery.getResultList();
     }
+    public Review merge(Review review){
+        Review merge = getEntityManager().merge(review);
+        return merge;
+    }
     public List<Review> findByTitle (String title){
         TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findByTitle", Review.class);
         namedQuery.setParameter("title", title);

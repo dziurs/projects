@@ -33,7 +33,7 @@ public class Review implements Serializable {
     @Column(name = "title", nullable = false, length = 300)
     private String title;
 
-    @Column(name = "area", nullable = false, length = 100)
+    @Column(name = "area", nullable = false, length = 10)
     private int area;
 
     @Column(name="building_type", nullable = false, length = 20)
@@ -43,7 +43,7 @@ public class Review implements Serializable {
     @Column(name = "livingSpace", nullable = false, length = 10)
     private int livingSpace;
 
-    @Column(name = "garage", nullable = false, length = 20)
+    @Column(name = "garage", nullable = false, length = 10)
     private boolean garage;
 
     @Column(name = "city", nullable = false, length = 50)
@@ -55,7 +55,7 @@ public class Review implements Serializable {
     @Column(name = "post_code", nullable = false , length = 6)
     private String postCode;
 
-    @Column(name="image", nullable = false, length = 300)
+    @Column(name="image", nullable = true, length = 300)
     private String image_url;
 
     @NotNull
@@ -262,7 +262,6 @@ public class Review implements Serializable {
         result = 31 * result + city.hashCode();
         result = 31 * result + street.hashCode();
         result = 31 * result + postCode.hashCode();
-        result = 31 * result + image_url.hashCode();
         result = 31 * result + developer.hashCode();
         return result;
     }

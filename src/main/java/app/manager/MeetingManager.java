@@ -2,6 +2,7 @@ package app.manager;
 
 import app.dao.MeetingDAO;
 import app.dao.ReviewDAO;
+import app.exception.AppDataBaseException;
 import app.exception.BuildingSalesAppException;
 import app.model.entity.Meeting;
 import app.model.entity.Review;
@@ -26,7 +27,7 @@ public class MeetingManager {
             meetingDAO.update(meeting);
             reviewDAO.update(review);
         }else {
-            throw new BuildingSalesAppException("meeting was accepted by another user");
+            throw new AppDataBaseException();
         }
 
     }

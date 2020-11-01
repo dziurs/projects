@@ -7,11 +7,18 @@
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
+        <multipart-config>
+            <location>E:\var\webapp\uploads</location>
+            <max-file-size>1048576</max-file-size>
+            <max-request-size>2097152</max-request-size>
+            <file-size-threshold>102400</file-size-threshold>
+        </multipart-config>
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
+
     <context-param>
         <param-name>primefaces.CLIENT_SIDE_VALIDATION</param-name>
         <param-value>true</param-value>
@@ -19,6 +26,14 @@
     <context-param>
         <param-name>domain</param-name>
         <param-value>http://localhost:8080</param-value>
+    </context-param>
+    <context-param>
+        <param-name>uploads</param-name>
+        <param-value>/uploads</param-value>
+    </context-param>
+    <context-param>
+        <param-name>resourceBundle.path</param-name>
+        <param-value>i18n.messages</param-value>
     </context-param>
     <context-param>
         <param-name>appEmail</param-name>
@@ -36,6 +51,30 @@
         <param-name>port</param-name>
         <param-value>587</param-value>
     </context-param>
+
+    <session-config>
+        <session-timeout>
+            10
+        </session-timeout>
+    </session-config>
+
+    <error-page>
+        <error-code>403</error-code>
+        <location>/error/error403.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/error404.xhtml</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/error/error.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.RuntimeException</exception-type>
+        <location>/error/error.xhtml</location>
+    </error-page>
+
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>accounts</web-resource-name>
@@ -54,4 +93,36 @@
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>
         </user-data-constraint>
     </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>developer_resources</web-resource-name>
+            <url-pattern>/developer/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>DELETE</http-method>
+            <http-method>CONNECT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Developer</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-role>
+        <role-name>User</role-name>
+    </security-role>
+    <security-role>
+        <role-name>Developer</role-name>
+    </security-role>
+    <security-role>
+        <role-name>Administrator</role-name>
+    </security-role>
 </web-app>
