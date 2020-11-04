@@ -44,6 +44,14 @@ public class AccountDAO extends GenericAbstractDAO<Account> {
             throw new AccountException(AccountException.KEY_OPTIMISTIC_LOCK,e);
         }
     }
+    @Override
+    public void delete(Account entity) throws BuildingSalesAppException {
+        try{
+            super.delete(entity);
+        }catch (OptimisticLockException e){
+            throw new AccountException(AccountException.KEY_OPTIMISTIC_LOCK,e);
+        }
+    }
 
     @Override
     protected List<Account> findByID(int id) {
@@ -55,6 +63,11 @@ public class AccountDAO extends GenericAbstractDAO<Account> {
     public List<Account> findByEmail(String email) {
         TypedQuery<Account> namedQuery = entityManager.createNamedQuery("Account.findByEmail", Account.class);
         namedQuery.setParameter("login", email);
+        return namedQuery.getResultList();
+    }
+    public List<Account> findByRole(String role) {
+        TypedQuery<Account> namedQuery = entityManager.createNamedQuery("Account.findByRole", Account.class);
+        namedQuery.setParameter("role", role);
         return namedQuery.getResultList();
     }
 }

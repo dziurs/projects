@@ -43,6 +43,13 @@ public class UserDAO extends GenericAbstractDAO <User>{
             throw new AccountException(AccountException.KEY_OPTIMISTIC_LOCK,e);
         }
     }
+    public void delete(User entity) throws BuildingSalesAppException {
+        try{
+            super.delete(entity);
+        }catch (OptimisticLockException e){
+            throw new AccountException(AccountException.KEY_OPTIMISTIC_LOCK,e);
+        }
+    }
     @Override
     public List<User> findByID(int id) {
         TypedQuery<User> namedQuery = entityManager.createNamedQuery("User.findById", User.class);

@@ -30,14 +30,17 @@ public abstract class GenericAbstractDAO<T> {
         }
 
         public void create(T entity) throws BuildingSalesAppException {
+            joinTransaction();
             getEntityManager().persist(entity);
             getEntityManager().flush();
         }
         public void update(T entity) throws BuildingSalesAppException{
+            joinTransaction();
             getEntityManager().merge(entity);
             getEntityManager().flush();
         }
-        public void delete(T entity) {
+        public void delete(T entity) throws BuildingSalesAppException{
+            joinTransaction();
             getEntityManager().remove(getEntityManager().merge(entity));
             getEntityManager().flush();
         }
@@ -47,12 +50,14 @@ public abstract class GenericAbstractDAO<T> {
         }
 
         public List<T> readAll() {
+            joinTransaction();
             CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
             cq.select(cq.from(entity));
             return getEntityManager().createQuery(cq).getResultList();
         }
 
         public List<T> readRange(int rangeMin , int rangeMax) {
+            joinTransaction();
             CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
             cq.select(cq.from(entity));
             Query q = getEntityManager().createQuery(cq);
@@ -62,6 +67,7 @@ public abstract class GenericAbstractDAO<T> {
         }
 
         public long count() {
+            joinTransaction();
             CriteriaQuery cq = getEntityManager().getCriteriaBuilder().createQuery();
             Root<T> rt = cq.from(entity);
             Expression<Long> longExpression = getEntityManager().getCriteriaBuilder().count(rt);

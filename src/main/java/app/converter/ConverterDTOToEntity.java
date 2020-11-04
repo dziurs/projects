@@ -1,14 +1,12 @@
 package app.converter;
 
-import app.dao.DeveloperDAO;
-import app.dao.MeetingDAO;
-import app.dao.ReviewDAO;
-import app.dao.UserDAO;
-import app.dto.DeveloperDTO;
-import app.dto.MeetingDTO;
-import app.dto.ReviewDTO;
-import app.dto.UserDTO;
+import app.dao.*;
+import app.dto.*;
+import app.exception.AccountException;
+import app.exception.BuildingSalesAppException;
 import app.model.entity.*;
+import app.security.Account;
+
 import java.util.List;
 
 public class ConverterDTOToEntity {
@@ -73,5 +71,11 @@ public class ConverterDTOToEntity {
             //r.setDeveloper(ConverterDTOToEntity.convertDeveloperDTOToDeveloper(review.getDeveloper(),developerDAO));
             return r;
         }
+    }
+    public static Account convertAccountDTOToAccount (AccountDTO accountDTO, AccountDAO accountDAO) throws BuildingSalesAppException {
+        List<Account> list = accountDAO.findByEmail(accountDTO.getLogin());
+        if(list.size()==0){
+            throw new AccountException(AccountException.KEY_OPTIMISTIC_LOCK);
+        }else return list.get(0);
     }
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="../index.xhtml">
+    <ui:define name="content_left">
+        <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.delete.account.content.left.title"]}</h2>
+    </ui:define>
+    <ui:define name="content">
+        <h:form>
+            <h:dataTable styleClass="table table-dark table-striped"  var="account" value="#{deleteUserAccountController.accountList}">
+                <h:column>
+                    <f:facet name="header">Role</f:facet>
+                    <h:outputText value="#{account.role}" />
+                </h:column>
+
+                <h:column >
+                    <f:facet name="header">Login</f:facet>
+                    <h:outputText value="#{account.login}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Pid</f:facet>
+                    <h:outputText value="#{account.pid}" />
+                </h:column>
+
+                <h:column>
+                    <f:facet name="header">Status</f:facet>
+                    <h:outputText value="#{account.activate}" />
+                </h:column>
+                <h:column>
+                    <f:facet name="header">#{msg['page.buildingsales.delete.account.form.label.table']}</f:facet>
+                    <p:commandLink value="#{msg['page.buildingsales.delete.account.form.button']}"
+                                   action="#{deleteUserAccountController.delete(account)}"
+                                   icon="pi pi-star" styleClass="btn btn btn-light form-control" immediate="true"/>
+                </h:column>
+
+            </h:dataTable>
+        </h:form>
+
+    </ui:define>
+</ui:composition>
+</html>

@@ -49,5 +49,25 @@
             <to-view-id>/login/login.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>activateAccount</from-outcome>
+            <to-view-id>/admin/activateAccount.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>activateUserAccount</from-outcome>
+            <to-view-id>/admin/activateUserAccount.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>deleteAccount</from-outcome>
+            <to-view-id>/admin/deleteAccount.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>deleteUserAccount</from-outcome>
+            <to-view-id>/admin/deleteUserAccount.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

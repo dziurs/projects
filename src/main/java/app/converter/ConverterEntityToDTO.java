@@ -1,13 +1,11 @@
 package app.converter;
 
-import app.dto.DeveloperDTO;
-import app.dto.MeetingDTO;
-import app.dto.ReviewDTO;
-import app.dto.UserDTO;
+import app.dto.*;
 import app.model.entity.Developer;
 import app.model.entity.Meeting;
 import app.model.entity.Review;
 import app.model.entity.User;
+import app.security.Account;
 
 public class ConverterEntityToDTO {
 
@@ -27,5 +25,13 @@ public class ConverterEntityToDTO {
         return new ReviewDTO(review.getId(),review.getTitle(),review.getArea(),review.getBuildingType(),review.getLivingSpace(),
         review.isGarage(),review.getCity(),review.getStreet(),review.getPostCode(),review.getImage_url(),
                 ConverterEntityToDTO.convertDeveloperToDeveloperDTO(review.getDeveloper()));
+    }
+    public static AccountDTO convertAccountToAccountDTO (Account account){
+        AccountDTO accountDTO = new AccountDTO();
+        accountDTO.setLogin(account.getLogin());
+        accountDTO.setActivate(account.isActivate());
+        accountDTO.setPid(account.getPid());
+        accountDTO.setRole(account.getRole());
+        return accountDTO;
     }
 }

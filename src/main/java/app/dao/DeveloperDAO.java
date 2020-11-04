@@ -43,6 +43,14 @@ public class DeveloperDAO extends GenericAbstractDAO <Developer>{
             throw new AccountException(AccountException.KEY_OPTIMISTIC_LOCK,e);
         }
     }
+    public void delete(Developer entity) throws BuildingSalesAppException {
+        try{
+            super.delete(entity);
+        }catch (OptimisticLockException e){
+            throw new AccountException(AccountException.KEY_OPTIMISTIC_LOCK,e);
+        }
+    }
+
     @Override
     public List<Developer> findByID(int id) {
         TypedQuery<Developer> namedQuery = entityManager.createNamedQuery("Developer.findById", Developer.class);

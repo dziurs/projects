@@ -6,7 +6,8 @@ import java.util.Objects;
 
 @Entity
 @NamedQueries({@NamedQuery(name = "Account.findById", query = "SELECT a FROM Account a WHERE a.id = :id"),
-        @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.login = :login")})
+        @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.login = :login"),
+        @NamedQuery(name = "Account.findByRole", query = "SELECT a FROM Account a WHERE a.role = :role")})
 
 @Table(name = "buildingsales_accounts", schema = "buildingsales")
 public class Account implements Serializable {
