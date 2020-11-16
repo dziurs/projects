@@ -23,7 +23,7 @@ public class ConverterEntityToDTO {
     }
     public static ReviewDTO convertReviewToReviewDTO(Review review){
         return new ReviewDTO(review.getId(),review.getTitle(),review.getArea(),review.getBuildingType(),review.getLivingSpace(),
-        review.isGarage(),review.getCity(),review.getStreet(),review.getPostCode(),review.getImage_url(),
+        review.isGarage(),review.getCity(),review.getStreet(),review.getPostCode(),review.getImage(),
                 ConverterEntityToDTO.convertDeveloperToDeveloperDTO(review.getDeveloper()));
     }
     public static AccountDTO convertAccountToAccountDTO (Account account){

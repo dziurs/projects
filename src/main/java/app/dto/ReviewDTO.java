@@ -16,10 +16,10 @@ public class ReviewDTO {
     private String city;
     private String street;
     private String postCode;
-    private String image_url;
+    private byte[] image;
     private DeveloperDTO developer;
 
-    public ReviewDTO(Integer id, String title, int area, BuildingType buildingType, int livingSpace, boolean garage, String city, String street, String postCode, String image_url, DeveloperDTO developer) {
+    public ReviewDTO(Integer id, String title, int area, BuildingType buildingType, int livingSpace, boolean garage, String city, String street, String postCode, byte[] image, DeveloperDTO developer) {
         this.id = id;
         this.title = title;
         this.area = area;
@@ -29,7 +29,7 @@ public class ReviewDTO {
         this.city = city;
         this.street = street;
         this.postCode = postCode;
-        this.image_url = image_url;
+        this.image = image;
         this.developer = developer;
     }
 
@@ -73,8 +73,8 @@ public class ReviewDTO {
         return postCode;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public byte[] getImage() {
+        return image;
     }
 
     public DeveloperDTO getDeveloper() {
@@ -113,15 +113,12 @@ public class ReviewDTO {
         this.postCode = postCode;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public void setDeveloper(DeveloperDTO developer) {
         this.developer = developer;
     }
 
-//    public void setId(Integer id) {
-//        this.id = id;
-//    }
 }

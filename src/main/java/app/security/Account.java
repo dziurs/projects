@@ -1,5 +1,7 @@
 package app.security;
 
+import app.model.enums.UserType;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -33,7 +35,8 @@ public class Account implements Serializable {
     private int pid;
 
     @Column (nullable = false, updatable = false, length = 20)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private UserType role;
 
     public Integer getId() {
         return id;
@@ -71,11 +74,11 @@ public class Account implements Serializable {
         this.pid = pid;
     }
 
-    public String getRole() {
+    public UserType getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(UserType role) {
         this.role = role;
     }
     @Override

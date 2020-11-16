@@ -111,14 +111,17 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text bg-secondary text-white" style="width: 310px">${msg["page.buildingsales.add.review.content.form.label.chosefile"]}</span>
                 </div>
-                <h:inputFile  id="file" label="#{msg['page.buildingsales.add.review.content.form.chose.button']}" styleClass="btn btn-primary form-control text-white"
-                              value="#{reviewController.file}" required="true" validator="fileValidator"/>
-                <p:message for="file" />
-            </div>
-            <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.add.review.content.form.upload.button']}" action="#{reviewController.upload}"
-                             styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "
-                             validateClient="true" ajax="false"/>
+                <h:outputLabel for="file" styleClass="btn btn-primary form-control text-white" value="#{msg['page.buildingsales.add.review.content.form.chose.button']}"
+                               style="border-radius: 2px;"/>
+                <h:inputFile  id="file" label="#{msg['page.buildingsales.add.review.content.form.chose.button']}" style="display: none"
+                              value="#{reviewController.file}" required="true" validator="fileValidator" autocomplete="on"
 
+                >
+                    <f:ajax listener="#{reviewController.fileHandler}" render="@all"/>
+                </h:inputFile>
+                <p:message for="file" />
+
+            </div>
         </h:form>
         </f:subview>
     </ui:define>

@@ -2,6 +2,8 @@ package app.security;
 
 import app.endpoints.BuildingSalesEndpoint;
 import app.exception.BuildingSalesAppException;
+import app.model.enums.UserType;
+
 import javax.inject.Inject;
 import javax.security.enterprise.credential.Credential;
 import javax.security.enterprise.credential.UsernamePasswordCredential;
@@ -22,7 +24,8 @@ public class AppIdentityStore implements IdentityStore {
             UsernamePasswordCredential usernamePasswordCredential = (UsernamePasswordCredential) credential;
             try {
                 Account account = endpoint.findAccountByLogin(usernamePasswordCredential.getCaller());
-                String role = account.getRole();
+                UserType userType = account.getRole();
+                String role = userType.name();
                 //if(account.isActivate()){TODO potem usuń komentarz na bloku if
                 if (usernamePasswordCredential.compareTo(account.getLogin(), account.getPassword())) {
                     return new CredentialValidationResult(account.getLogin(), new HashSet<>(Arrays.asList(role)));

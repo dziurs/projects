@@ -1,5 +1,8 @@
 package app.model.entity;
 
+import app.model.audit.Audit;
+import app.model.audit.AuditListener;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,7 +16,8 @@ import java.util.Date;
         , @NamedQuery(name = "Meeting.findByAddedByUser", query = "SELECT m FROM Meeting m WHERE m.addedByUser = :added")
         , @NamedQuery(name = "Meeting.findByUser", query = "SELECT m FROM Meeting m WHERE m.user = :user")
         , @NamedQuery(name = "Meeting.findByReview", query = "SELECT m FROM Meeting m WHERE m.review = :review")})
-public class Meeting implements Serializable {
+@EntityListeners(value = AuditListener.class)
+public class Meeting implements Serializable, Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,6 +40,20 @@ public class Meeting implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Review review;
+
+    @Column
+    private String creationUserLogin;
+
+    @Column
+    private String modificationUserLogin;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date creationDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date modificationDate;
 
     public Integer getId() {
         return id;
@@ -95,5 +113,44 @@ public class Meeting implements Serializable {
         result = 31 * result + date.hashCode();
         result = 31 * result + review.hashCode();
         return result;
+    }
+    @Override
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    @Override
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    @Override
+    public Date getModificationDate() {
+        return modificationDate;
+    }
+
+    @Override
+    public void setModificationDate(Date modificationDate) {
+        this.modificationDate = modificationDate;
+    }
+
+    @Override
+    public String getCreationUserLogin() {
+        return creationUserLogin;
+    }
+
+    @Override
+    public void setCreationUserLogin(String creationUserLogin) {
+        this.creationUserLogin = creationUserLogin;
+    }
+
+    @Override
+    public String getModificationUserLogin() {
+        return modificationUserLogin;
+    }
+
+    @Override
+    public void setModificationUserLogin(String modificationUserLogin) {
+        this.modificationUserLogin = modificationUserLogin;
     }
 }

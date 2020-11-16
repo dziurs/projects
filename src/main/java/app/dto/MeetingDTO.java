@@ -21,6 +21,7 @@ public class MeetingDTO {
     }
 
     public MeetingDTO() {
+        this.id = -1;
     }
 
     public Integer getId() {

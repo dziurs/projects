@@ -67,7 +67,7 @@ public class ConverterDTOToEntity {
             r.setStreet(review.getStreet());
             r.setPostCode(review.getPostCode());
             r.setBuildingType(review.getBuildingType());
-            //r.setImage_url(review.getImage_url());
+            r.setImage(review.getImage());
             //r.setDeveloper(ConverterDTOToEntity.convertDeveloperDTOToDeveloper(review.getDeveloper(),developerDAO));
             return r;
         }

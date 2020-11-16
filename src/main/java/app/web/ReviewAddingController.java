@@ -9,10 +9,14 @@ import app.exception.ImegeFileIOException;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.ResourceBundle;
@@ -36,6 +40,8 @@ public class ReviewAddingController implements Serializable {
 
     private Part file;
 
+    private String fileName = "none";
+
     private Principal principal;
 
     @PostConstruct
@@ -57,7 +63,9 @@ public class ReviewAddingController implements Serializable {
         reviewDTO.setLivingSpace(Integer.parseInt(livingSpace));
         setTrigger(false);
         try {
-            endpoint.addReview(principal,file,reviewDTO);
+            InputStream inputStream = file.getInputStream();
+            reviewDTO.setImage(inputStream.readAllBytes());
+            endpoint.addReview(principal,reviewDTO);
         }catch (GeneralAplicationException e){
             addMessage(e.getMessage(),null,FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
@@ -71,13 +79,17 @@ public class ReviewAddingController implements Serializable {
             addMessage(bundle.getString(e.getMessage()),null,FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
         }
+        catch (IOException e){
+            addMessage(bundle.getString("file.upload.error"),bundle.getString("file.upload.error.detail"),FacesMessage.SEVERITY_ERROR);
+            saveMessageInFlashScope();
+        }
         addMessage(bundle.getString("page.buildingsales.add.review.message.success"),
                 bundle.getString("page.buildingsales.add.review.message.success.detail"),FacesMessage.SEVERITY_INFO);
         saveMessageInFlashScope();
         return "addReview";
 
     }
-    public void upload() {
+    public void fileHandler(AjaxBehaviorEvent event){
         setTrigger(true);
         addMessage(bundle.getString("file.uploaded"),bundle.getString("file.uploaded.detail"), FacesMessage.SEVERITY_INFO);
     }
@@ -130,5 +142,13 @@ public class ReviewAddingController implements Serializable {
 
     public String getIntRegex() {
         return intRegex;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }

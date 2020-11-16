@@ -1,8 +1,11 @@
 package app.model.entity;
 
+import app.model.audit.Audit;
+import app.model.audit.AuditListener;
 import app.model.enums.UserType;
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,8 +18,8 @@ import java.util.Set;
         , @NamedQuery(name = "Developer.findByFirstName", query = "SELECT d FROM Developer d WHERE d.firstName = :firstName")
         , @NamedQuery(name = "Developer.findByUserType", query = "SELECT d FROM Developer d WHERE d.userType = :userType")
         , @NamedQuery(name = "Developer.findByEmail", query = "SELECT d FROM Developer d WHERE d.email.email = :email")})
-
-public class Developer implements Serializable {
+@EntityListeners(value = AuditListener.class)
+public class Developer implements Serializable, Audit {
 
 
     @Id
@@ -38,7 +41,7 @@ public class Developer implements Serializable {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", nullable = false)
-    private final UserType userType = UserType.Seller;
+    private final UserType userType = UserType.DEVELOPER;
 
     @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name = "email_id", unique = true, nullable = false)
@@ -46,6 +49,20 @@ public class Developer implements Serializable {
 
     @OneToMany(mappedBy = "developer", cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, orphanRemoval = true)
     private Set<Review> reviews = new HashSet<>();
+
+    @Column
+    private String creationUserLogin;
+
+    @Column
+    private String modificationUserLogin;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date creationDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date modificationDate;
 
     public int getId() {
         return id;
@@ -125,5 +142,44 @@ public class Developer implements Serializable {
         result = 31 * result + companyName.hashCode();
         result = 31 * result + email.hashCode();
         return result;
+    }
+    @Override
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    @Override
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    @Override
+    public Date getModificationDate() {
+        return modificationDate;
+    }
+
+    @Override
+    public void setModificationDate(Date modificationDate) {
+        this.modificationDate = modificationDate;
+    }
+
+    @Override
+    public String getCreationUserLogin() {
+        return creationUserLogin;
+    }
+
+    @Override
+    public void setCreationUserLogin(String creationUserLogin) {
+        this.creationUserLogin = creationUserLogin;
+    }
+
+    @Override
+    public String getModificationUserLogin() {
+        return modificationUserLogin;
+    }
+
+    @Override
+    public void setModificationUserLogin(String modificationUserLogin) {
+        this.modificationUserLogin = modificationUserLogin;
     }
 }

@@ -69,5 +69,20 @@
             <to-view-id>/admin/deleteUserAccount.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>myReviews</from-outcome>
+            <to-view-id>/developer/myReviews.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>reviewDisplaySite</from-outcome>
+            <to-view-id>/review/displayReview.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addMeetingToReview</from-outcome>
+            <to-view-id>/review/addMeeting.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

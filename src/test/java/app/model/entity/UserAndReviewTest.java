@@ -42,7 +42,7 @@ class UserAndReviewTest {
         review.setCity("Kalisz");
         review.setStreet("Łódzka 59");
         review.setPostCode("62-800");
-        review.setImage_url("/images/mojdom.png");
+        review.setImage(new byte[10]);
         review.setDeveloper(developer);
         reviewTwo = new Review();
         reviewTwo.setTitle("Mieszkanie na Hożej w Kaliszu");
@@ -53,7 +53,7 @@ class UserAndReviewTest {
         reviewTwo.setCity("Kalisz");
         reviewTwo.setStreet("Moniuszki 1");
         reviewTwo.setPostCode("62-800");
-        reviewTwo.setImage_url("/images/mojemieszkanie.png");
+        reviewTwo.setImage(new byte[10]);
         reviewTwo.setDeveloper(developer);
         reviewThree = new Review();
         reviewThree.setTitle("Działka we wsi Warszówka");
@@ -64,7 +64,7 @@ class UserAndReviewTest {
         reviewThree.setCity("Kalisz");
         reviewThree.setStreet("Malownicza 8");
         reviewThree.setPostCode("62-800");
-        reviewThree.setImage_url("/images/działka.png");
+        reviewThree.setImage(new byte[10]);
         reviewThree.setDeveloper(developer);
         user = new User();
         user.setSurname("Kuświk");

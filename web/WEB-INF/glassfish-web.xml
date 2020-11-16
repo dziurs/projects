@@ -17,5 +17,5 @@
     </security-role-mapping>
     <!-- to ustawienie powoduje, że payara stawia alternatywny serwer z dostępem do katalogu e:/var/webapp/uploads
     potrzebne jest to podczas uploadu plików, gdyż w głównym kontekscie aplikacji, podczas redeploy cały katalog jest usuwany. -->
-    <property name="alternatedocroot_1" value="from=/uploads/* dir=e:/var/webapp" />
+   <!-- <property name="alternatedocroot_1" value="from=/uploads/* dir=e:/var/webapp" />-->
 </glassfish-web-app>

@@ -40,7 +40,7 @@ class MeetingTest {
         review.setCity("Kalisz");
         review.setStreet("Lechosławska 6");
         review.setPostCode("62-800");
-        review.setImage_url("sample/image.jpg");
+        review.setImage(new byte[10]);
         review.setDeveloper(developer);
         meeting = new Meeting();
         meeting.setDate(new Date());

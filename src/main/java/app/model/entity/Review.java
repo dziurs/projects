@@ -1,5 +1,7 @@
 package app.model.entity;
 
+import app.model.audit.Audit;
+import app.model.audit.AuditListener;
 import app.model.enums.BuildingType;
 import com.sun.istack.NotNull;
 
@@ -19,8 +21,8 @@ import java.util.*;
         , @NamedQuery(name = "Review.findByGarage", query = "SELECT r FROM Review r WHERE r.garage = :garage")
         , @NamedQuery(name = "Review.findByCity", query = "SELECT r FROM Review r WHERE r.city = :city")
 })
-
-public class Review implements Serializable {
+@EntityListeners(value = AuditListener.class)
+public class Review implements Serializable, Audit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,8 +57,10 @@ public class Review implements Serializable {
     @Column(name = "post_code", nullable = false , length = 6)
     private String postCode;
 
-    @Column(name="image", nullable = true, length = 300)
-    private String image_url;
+    @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name="image", columnDefinition = "MEDIUMBLOB", length = 1048576, nullable = false)
+    private byte[] image;
 
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
@@ -69,6 +73,20 @@ public class Review implements Serializable {
     @JoinTable(name = "review_user",joinColumns = @JoinColumn(name = "review_id",foreignKey = @ForeignKey(name = "key_review"), nullable = false),
             inverseJoinColumns = @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "key_user"), nullable = false))
     private Set<User> users = new HashSet<User>();
+
+    @Column
+    private String creationUserLogin;
+
+    @Column
+    private String modificationUserLogin;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date creationDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    private Date modificationDate;
 
     public Integer getId() {
         return id;
@@ -150,12 +168,12 @@ public class Review implements Serializable {
         this.postCode = postCode;
     }
 
-    public String getImage_url() {
-        return image_url;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public Developer getDeveloper() {
@@ -247,7 +265,7 @@ public class Review implements Serializable {
         if (!city.equals(review.city)) return false;
         if (!street.equals(review.street)) return false;
         if (!postCode.equals(review.postCode)) return false;
-        if (!image_url.equals(review.image_url)) return false;
+        if (!image.equals(review.image)) return false;
         return developer.equals(review.developer);
     }
 
@@ -264,5 +282,44 @@ public class Review implements Serializable {
         result = 31 * result + postCode.hashCode();
         result = 31 * result + developer.hashCode();
         return result;
+    }
+    @Override
+    public Date getCreationDate() {
+        return creationDate;
+    }
+
+    @Override
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    @Override
+    public Date getModificationDate() {
+        return modificationDate;
+    }
+
+    @Override
+    public void setModificationDate(Date modificationDate) {
+        this.modificationDate = modificationDate;
+    }
+
+    @Override
+    public String getCreationUserLogin() {
+        return creationUserLogin;
+    }
+
+    @Override
+    public void setCreationUserLogin(String creationUserLogin) {
+        this.creationUserLogin = creationUserLogin;
+    }
+
+    @Override
+    public String getModificationUserLogin() {
+        return modificationUserLogin;
+    }
+
+    @Override
+    public void setModificationUserLogin(String modificationUserLogin) {
+        this.modificationUserLogin = modificationUserLogin;
     }
 }

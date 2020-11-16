@@ -1,4 +1,4 @@
-package app.manager;
+package app.managers;
 
 import app.dao.MeetingDAO;
 import app.dao.ReviewDAO;
@@ -7,9 +7,15 @@ import app.exception.BuildingSalesAppException;
 import app.model.entity.Meeting;
 import app.model.entity.Review;
 import app.model.entity.User;
+
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.List;
 
+@Stateless
+@Local
 @Transactional(value = Transactional.TxType.MANDATORY)
 public class MeetingManager {
     @Inject
@@ -30,5 +36,8 @@ public class MeetingManager {
             throw new AppDataBaseException();
         }
 
+    }
+    public List<Meeting> getMeetingList(Review review){
+        return meetingDAO.findByReview(review);
     }
 }

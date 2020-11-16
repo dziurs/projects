@@ -1,5 +1,5 @@
 package app.model.enums;
 
 public enum UserType {
-    Client, Seller, Admin
+    USER, DEVELOPER, ADMIN
 }

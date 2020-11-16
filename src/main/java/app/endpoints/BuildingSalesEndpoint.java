@@ -3,29 +3,20 @@ package app.endpoints;
 import app.converter.ConverterDTOToEntity;
 import app.converter.ConverterEntityToDTO;
 import app.dao.*;
-import app.dto.DeveloperDTO;
-import app.dto.MeetingDTO;
-import app.dto.ReviewDTO;
-import app.dto.UserDTO;
+import app.dto.*;
 import app.exception.*;
-import app.interceptor.DAOTransaction;
-import app.manager.MeetingManager;
+import app.managers.*;
 import app.model.entity.Developer;
 import app.model.entity.Meeting;
 import app.model.entity.Review;
 import app.model.entity.User;
 import app.security.Account;
-import app.security.Crypter;
-
 import javax.annotation.security.PermitAll;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.servlet.http.Part;
 import javax.transaction.Transactional;
-import java.io.IOException;
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.security.Principal;
 import java.util.*;
 
@@ -35,11 +26,14 @@ import java.util.*;
 @Transactional(Transactional.TxType.REQUIRES_NEW)
 public class BuildingSalesEndpoint implements Serializable {
 
-    private final String roleUser = "USER";
-    private final String roleDeveloper = "DEVELOPER";
+    @Inject
+    private AccountManager accountManager;
 
     @Inject
     private MeetingManager meetingManager;
+
+    @Inject
+    private ReviewManager reviewManager;
 
     @Inject
     private ReviewDAO reviewDAO;
@@ -60,74 +54,54 @@ public class BuildingSalesEndpoint implements Serializable {
 
 
     public void registerDeveloper(DeveloperDTO developerDTO,String password) throws BuildingSalesAppException {
-        Account account = new Account();
-        account.setLogin(developerDTO.getEmail());
-        account.setActivate(false);
-        account.setPid(new Random().nextInt(100000));
-        account.setPassword(Crypter.crypt(password));
-        account.setRole(roleDeveloper);
         Developer developer = ConverterDTOToEntity.convertDeveloperDTOToDeveloper(developerDTO, developerDAO);
-        developerDAO.create(developer);
-        accountDAO.create(account);
+        accountManager.registerDeveloper(developer,password);
+
     }
     public int registerUser(UserDTO userDTO,String password) throws BuildingSalesAppException {
-            Account account = new Account();
-            account.setLogin(userDTO.getEmail());
-            account.setActivate(false);
-            int pid = new Random().nextInt(100000);
-            account.setPid(pid);
-            account.setPassword(Crypter.crypt(password));
-            account.setRole(roleUser);
-            User user = ConverterDTOToEntity.convertUserDTOToUser(userDTO, userDAO);
-            userDAO.create(user);
-            accountDAO.create(account);
-            return pid;
+        User user = ConverterDTOToEntity.convertUserDTOToUser(userDTO, userDAO);
+        int pid = accountManager.registerUser(user, password);
+        return pid;
     }
+
     public void activateUserAccount(String login, String pid) throws EmailSendingException {
-        List<Account> list = accountDAO.findByEmail(login);
-        if(list.size()==1){
-            Account account = list.get(0);
-            int pidFromDatabase = account.getPid();
-            if(pid.equals(String.valueOf(pidFromDatabase))){
-                account.setActivate(true);
-            }
-            else {
-                throw new EmailSendingException(EmailSendingException.EMAIL_OR_PID_ERROR);
-            }
-        }else {
-            throw new EmailSendingException(EmailSendingException.EMAIL_OR_PID_ERROR);
-        }
+        accountManager.activateUserAccount(login,pid);
     }
+
     public Account findAccountByLogin(String login) throws BuildingSalesAppException {
         List<Account> byEmail = accountDAO.findByEmail(login);
         if(byEmail.size()==0) throw new AccountException(AccountException.LOGIN);
         else return byEmail.get(0);
     }
-    public void addReview (Principal principal, Part file, ReviewDTO reviewDTO) throws BuildingSalesAppException{
+
+    public void addReview (Principal principal, ReviewDTO reviewDTO) throws BuildingSalesAppException{
         if(principal==null) throw new GeneralAplicationException(GeneralAplicationException.PRINCIPAL);
         List<Developer> list = developerDAO.findByEmail(principal.getName());
         if(list.size()==0) throw new AccountException(AccountException.LOGIN);
         Developer developer = list.get(0);
         Review review = ConverterDTOToEntity.convertReviewDTOToReview(reviewDTO, reviewDAO);
-        review.setDeveloper(developer);
-        developer.addReview(review);
-        reviewDAO.create(review);
-        developerDAO.update(developer);
-        Review merge = reviewDAO.merge(review);
-        Integer id = merge.getId();
-        String fileName = file.getSubmittedFileName();
-        int length = fileName.length();
-        fileName = fileName.substring(length-4,length);
-        fileName = String.valueOf(id).concat(fileName);
-        try {
-            file.write(fileName);
-            merge.setImage_url(fileName);
-            reviewDAO.update(merge);
-        }catch (IOException e){
-            throw new ImegeFileIOException(ImegeFileIOException.IMAGE_FILE, e);
-        }
-
+        reviewManager.addReview(developer,review);
     }
+    public List<ReviewDTO> getDeveloperReviews(String developerLogin){
+        return reviewManager.getDeveloperReviews(developerLogin);
+    }
+
+    public void reviewDelete(ReviewDTO reviewDTO)throws BuildingSalesAppException{
+        Integer id = reviewDTO.getId();
+        List<Review> reviews = reviewDAO.findByID(id);
+        if(reviews.size()==0) throw new GeneralAplicationException(GeneralAplicationException.REVIEW);
+        Review review = reviews.get(0);
+        reviewManager.reviewDelete(review);
+    }
+    public List<MeetingDTO> getMeetingList(ReviewDTO reviewDTO) throws BuildingSalesAppException {
+        List<Review> list = reviewDAO.findByID(reviewDTO.getId());
+        if(list.size()==0) throw new GeneralAplicationException(GeneralAplicationException.REVIEW);
+        Review review = list.get(0);
+        List<Meeting> meetingList = meetingManager.getMeetingList(review);
+        List<MeetingDTO> meetingDTOList = meetingIterator(meetingList);
+        return meetingDTOList;
+    }
+
 
     public List<ReviewDTO> getAllReviews(){
         List<Review> listFromDataBase = reviewDAO.readAll();
@@ -143,13 +117,23 @@ public class BuildingSalesEndpoint implements Serializable {
         }
         return listTenDTOReviews;
     }
-    public void reviewIterator(List<Review> listOfEntity, List<ReviewDTO> listOfDTO){
+    private void reviewIterator(List<Review> listOfEntity, List<ReviewDTO> listOfDTO){
         Iterator<Review> iterator = listOfEntity.iterator();
         while (iterator.hasNext()) {
             Review next = iterator.next();
             ReviewDTO reviewDTO = ConverterEntityToDTO.convertReviewToReviewDTO(next);
             listOfDTO.add(reviewDTO);
         }
+    }
+    private List<MeetingDTO> meetingIterator(List<Meeting> listOfEntity){
+        List<MeetingDTO> meetingDTOList = new ArrayList<>();
+        Iterator<Meeting> iterator = listOfEntity.iterator();
+        while (iterator.hasNext()) {
+            Meeting next = iterator.next();
+            MeetingDTO meetingDTO = ConverterEntityToDTO.convertMeetingToMeetingDTO(next);
+            meetingDTOList.add(meetingDTO);
+        }
+        return meetingDTOList;
     }
 //    @DAOTransaction
 //    public void acceptMeetingEndpoint(UserDTO userDTO, MeetingDTO meetingDTO) throws BuildingSalesAppException {
