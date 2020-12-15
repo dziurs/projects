@@ -1,11 +1,9 @@
 package app.security;
 
 import app.exception.BuildingSalesAppException;
-import app.exception.GeneralAplicationException;
+import app.exception.GeneralApplicationException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.security.NoSuchAlgorithmException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -36,7 +34,7 @@ class CrypterTest {
             assertTrue(crypt1.length()==64);
             assertTrue(crypt2.length()==64);
             assertTrue(crypt3.length()==64);
-        }catch (GeneralAplicationException e) {
+        }catch (GeneralApplicationException e) {
             e.printStackTrace();
         }
     }

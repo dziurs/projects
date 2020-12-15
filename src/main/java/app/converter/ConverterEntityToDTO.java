@@ -18,8 +18,13 @@ public class ConverterEntityToDTO {
         return new DeveloperDTO(developer.getSurname(),developer.getFirstName(),developer.getCompanyName(),developer.getEmail().getEmail());
     }
     public static MeetingDTO convertMeetingToMeetingDTO(Meeting meeting){
-        return new MeetingDTO(meeting.getId(),meeting.getDate(),meeting.isAddedByUser(),
-                ConverterEntityToDTO.convertUserToUserDTO(meeting.getUser()));
+        MeetingDTO meetingDTO = new MeetingDTO();
+        meetingDTO.setDate(meeting.getDate());
+        meetingDTO.setAddedByUser(meeting.isAddedByUser());
+        if(meeting.getUser()==null) meetingDTO.setUser(null);
+        else meetingDTO.setUser(ConverterEntityToDTO.convertUserToUserDTO(meeting.getUser()));
+        return meetingDTO;
+
     }
     public static ReviewDTO convertReviewToReviewDTO(Review review){
         return new ReviewDTO(review.getId(),review.getTitle(),review.getArea(),review.getBuildingType(),review.getLivingSpace(),
@@ -31,7 +36,7 @@ public class ConverterEntityToDTO {
         accountDTO.setLogin(account.getLogin());
         accountDTO.setActivate(account.isActivate());
         accountDTO.setPid(account.getPid());
-        accountDTO.setRole(account.getRole());
+        accountDTO.setRole(account.getRole().name());
         return accountDTO;
     }
 }

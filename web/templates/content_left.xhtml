@@ -14,20 +14,21 @@
             <div class="input-group-prepend">
                 <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.main.content.left.form.city.label"]}</span>
             </div>
-            <p:inputText class="form-control" value="" a:placeholder= "${msg['page.buildingsales.main.content.left.form.city.placeholder']}"/>
+            <p:inputText class="form-control" value="#{reviewsSearchingController.city}" a:placeholder= "${msg['page.buildingsales.main.content.left.form.city.placeholder']}"/>
         </div>
         <div class="input-group mb-4">
             <div class="input-group-prepend">
                 <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.main.content.left.form.building.type.label"]}</span>
             </div>
-            <p:selectOneMenu value="" class="form-control">
-                <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.label']}" itemValue="" />
-                <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.land']}" itemValue="land" />
-                <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.flat']}" itemValue="flat" />
-                <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.house']}" itemValue="house" />
+            <p:selectOneMenu value="#{reviewsSearchingController.buildingType}" class="form-control">
+                <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.label']}" itemValue="none"/>
+                <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.land']}" itemValue="Land" />
+                <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.flat']}" itemValue="Flat" />
+                <f:selectItem itemLabel="${msg['page.buildingsales.main.content.left.form.building.type.menu.house']}" itemValue="House" />
             </p:selectOneMenu>
         </div>
-        <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.main.content.left.form.button']}" styleClass="btn btn-primary form-control"/>
+        <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.main.content.left.form.button']}" action="#{reviewsSearchingController.searchReviews}"
+                         styleClass="btn btn-primary form-control"/>
     </h:form>
 
 </ui:composition>

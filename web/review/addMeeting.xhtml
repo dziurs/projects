@@ -4,8 +4,116 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-<f:view>
-    <h:outputLabel value="Hello, world"/>
-</f:view>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../index.xhtml">
+    <ui:define name="content_left">
+        <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.display.review.content.left.title"]}</h2>
+        <p:graphicImage value="#{addMeetingController.streamedContent}" stream="false"
+                        class="img-fluid mx-auto d-block rounded" alt="#{addMeetingController.reviewDTO.buildingType} photo"/>
+    </ui:define>
+    <ui:define name="content">
+        <h:dataTable styleClass="table table-dark table-striped"  var="meeting" value="#{addMeetingController.meetingDTOList}">
+            <h:column>
+                <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.date']}</f:facet>
+                <h:outputText value="#{meeting.date}" styleClass="text-white">
+                    <f:convertDateTime pattern="yyyy/MM/dd HH:mm" />
+                </h:outputText>
+            </h:column>
+            <h:column >
+                <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.added']}</f:facet>
+                <ui:fragment rendered="#{meeting.addedByUser}">
+                    <h:outputText value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.true']}" styleClass="text-danger" />
+                </ui:fragment>
+                <ui:fragment rendered="#{not meeting.addedByUser}">
+                    <h:outputText value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.false']}" styleClass="text-danger" />
+                </ui:fragment>
+            </h:column>
+            <h:column >
+                <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.user']}</f:facet>
+                    <h:outputText value="#{meeting.user}" styleClass="text-danger" />
+            </h:column>
+        </h:dataTable>
+        <h:form>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.add.meeting.content.form.label.date"]}</span>
+                </div>
+                <p:inputText id="date" value="#{addMeetingController.date}" styleClass="form-control" converterMessage="${msg['date.converter.error.pattern']}">
+                    <f:convertDateTime pattern="yyyy/MM/dd HH:mm"/>
+                    <f:validator validatorId="dateValidator"/>
+                </p:inputText>
+                <!--<p:datePicker id="date" value="#{addMeetingController.meetingDTO.date}" readonlyInput="true" size="57" showTime="true">-->
+                    <!--<f:validator validatorId="dateValidator"/>-->
+                <!--</p:datePicker>-->
+                <p:message for="date" />
+            </div>
+            <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.add.review.content.form.button']}" action="#{addMeetingController.addMeeting}"
+                             styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "
+                             validateClient="true" />
+            <p><br /></p>
+        </h:form>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.title"]}</span>
+                </div>
+                <h:outputText id="title" class="form-control" value="${addMeetingController.reviewDTO.title}"/>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.area"]}</span>
+                </div>
+                <h:outputText id="area" class="form-control" value="#{addMeetingController.reviewDTO.area}"/>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.building.type"]}</span>
+                </div>
+                <ui:fragment rendered="#{addMeetingController.reviewDTO.buildingType eq 'Flat'}">
+                    <h:outputText id="buildingTypeFlat" class="form-control" value="${msg['page.buildingsales.display.review.content.form.label.review.building.flat']}" />
+                </ui:fragment>
+                <ui:fragment rendered="#{addMeetingController.reviewDTO.buildingType eq 'Land'}">
+                    <h:outputText id="buildingTypeLand" class="form-control" value="${msg['page.buildingsales.display.review.content.form.label.review.building.land']}" />
+                </ui:fragment>
+                <ui:fragment rendered="#{addMeetingController.reviewDTO.buildingType eq 'House'}">
+                    <h:outputText id="buildingTypeHouse" class="form-control" value="${msg['page.buildingsales.display.review.content.form.label.review.building.house']}" />
+                </ui:fragment>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.livingspace"]}</span>
+                </div>
+                <h:outputText id="livingspace" class="form-control" value="#{addMeetingController.reviewDTO.livingSpace}" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.garage"]}</span>
+                </div>
+                <ui:fragment rendered="#{addMeetingController.reviewDTO.garage}">
+                    <h:outputText id="garageTrue" class="form-control" value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.true']}" />
+                </ui:fragment>
+                <ui:fragment rendered="#{not addMeetingController.reviewDTO.garage}">
+                    <h:outputText id="garageFalse" class="form-control" value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.false']}" />
+                </ui:fragment>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.city"]}</span>
+                </div>
+                <h:outputText id="city" class="form-control" value="#{addMeetingController.reviewDTO.city}" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.street"]}</span>
+                </div>
+                <h:outputText id="street" class="form-control" value="#{addMeetingController.reviewDTO.street}" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.postcode"]}</span>
+                </div>
+                <h:outputText id="postcode" class="form-control" value="#{addMeetingController.reviewDTO.postCode}" />
+            </div>
+    </ui:define>
+</ui:composition>
 </html>

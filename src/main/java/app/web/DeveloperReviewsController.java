@@ -2,15 +2,15 @@ package app.web;
 
 import app.dto.ReviewDTO;
 import app.endpoints.BuildingSalesEndpoint;
-import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
-import app.exception.GeneralAplicationException;
-import org.primefaces.model.ByteArrayContent;
-import org.primefaces.model.StreamedContent;
+import app.exception.GeneralApplicationException;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.application.NavigationHandler;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.SecurityContext;
@@ -30,8 +30,7 @@ public class DeveloperReviewsController implements Serializable {
 
     private List<ReviewDTO> reviewDTOList;
 
-    private ResourceBundle bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
-            FacesContext.getCurrentInstance().getViewRoot().getLocale());
+    private ResourceBundle bundle;
 
     @Inject
     public DeveloperReviewsController(SecurityContext securityContext) {
@@ -41,7 +40,8 @@ public class DeveloperReviewsController implements Serializable {
     @PostConstruct
     public void init(){
         setReviewDTOList(endpoint.getDeveloperReviews(developerLogin));
-
+        this.bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
+              FacesContext.getCurrentInstance().getViewRoot().getLocale());
     }
 
     public List<ReviewDTO> getReviewDTOList() {
@@ -52,25 +52,45 @@ public class DeveloperReviewsController implements Serializable {
         this.reviewDTOList = reviewDTOList;
     }
 
-    public StreamedContent convertByteArrayToStreamedContent(byte [] image){
-        return new ByteArrayContent(image);
+    public void displayReview(ActionEvent event){
+        ReviewDTO reviewDTOFromAtribute = (ReviewDTO)event.getComponent().getAttributes().get("review");
+        Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+        flash.put("review",reviewDTOFromAtribute);
+        flash.setKeepMessages(true);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
+        navigationHandler.handleNavigation(facesContext,null,"reviewDisplaySite");
+    }
+    public void addMeeting(ActionEvent event){
+        ReviewDTO reviewDTOFromAtribute = (ReviewDTO)event.getComponent().getAttributes().get("addMeetingReview");
+        Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+        flash.put("addMeetingReview",reviewDTOFromAtribute);
+        flash.setKeepMessages(true);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
+        navigationHandler.handleNavigation(facesContext,null,"addMeetingToReview");
+    }
+
+    public void getReviewToEdit(ActionEvent event){
+        ReviewDTO reviewDTOFromAtributeToEdit = (ReviewDTO)event.getComponent().getAttributes().get("reviewToEdit");
+        Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
+        flash.put("reviewToEdit",reviewDTOFromAtributeToEdit);
+        flash.setKeepMessages(true);
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
+        navigationHandler.handleNavigation(facesContext,null,"editReview");
     }
 
     public String reviewDelete(ReviewDTO reviewDTO){
         try {
             endpoint.reviewDelete(reviewDTO);
             return "myReviews";
-        }catch (AccountException e){
-            addMessage(bundle.getString(e.getMessage()),null,FacesMessage.SEVERITY_ERROR);
-            saveMessageInFlashScope();
-            return "myReviews";
-        }catch (GeneralAplicationException ex){
+        }catch (GeneralApplicationException ex){
             addMessage(bundle.getString(ex.getMessage()),null,FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
             return "myReviews";
         }catch (BuildingSalesAppException ex){
-            Throwable cause = ex.getCause();
-            addMessage(bundle.getString(cause.getMessage()),null,FacesMessage.SEVERITY_ERROR);
+            addMessage(ex.getCause().getMessage(),null,FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
             return "myReviews";
         }

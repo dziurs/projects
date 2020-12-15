@@ -4,7 +4,7 @@ import app.dto.DeveloperDTO;
 import app.endpoints.BuildingSalesEndpoint;
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
-import app.exception.GeneralAplicationException;
+import app.exception.GeneralApplicationException;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -12,8 +12,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -30,8 +30,10 @@ public class RegisterDeveloperController implements Serializable {
 
     private DeveloperDTO developerDTO = new DeveloperDTO();
 
+    @Size(min = 8, max = 20)
     private String password;
 
+    @Size(min = 8, max = 20)
     private String passwordRepeat;
 
     private final String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
@@ -55,7 +57,7 @@ public class RegisterDeveloperController implements Serializable {
             addMessage(bundle.getString("register.developer.controller.success"),bundle.getString("register.developer.controller.success.detail"));
             saveMessageInFlashScope();
             return "index";
-        }catch (GeneralAplicationException e){
+        }catch (GeneralApplicationException e){
             if(!conversation.isTransient()) conversation.end();
             addWarningMessage(bundle.getString("register.developer.controller.password.convert"),bundle.getString("register.developer.controller.detail"));
             saveMessageInFlashScope();

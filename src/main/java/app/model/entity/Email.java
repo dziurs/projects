@@ -1,6 +1,8 @@
 package app.model.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 
 @Entity(name="Email")
@@ -20,6 +22,8 @@ public class Email implements Serializable {
     @Version
     private long version;
 
+    @Pattern(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
+    @Size(min = 3, max = 250)
     @Column(name = "email", nullable = false, length = 100, unique = true)
     private String email;
 

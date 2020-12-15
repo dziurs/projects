@@ -8,9 +8,11 @@ import app.dao.UserDAO;
 import app.dto.AccountDTO;
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
+import app.managers.AccountManager;
 import app.model.entity.Developer;
 import app.model.entity.User;
 import app.security.Account;
+import app.security.Crypter;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -26,10 +28,15 @@ public class AdministratorEndpoint {
 
     @Inject
     private AccountDAO accountDAO;
+
     @Inject
     private DeveloperDAO developerDAO;
+
     @Inject
     private UserDAO userDAO;
+
+    @Inject
+    private AccountManager accountManager;
 
     public List<AccountDTO> getUserAccounts(){
         List<Account> accounts = accountDAO.findByRole("USER");
@@ -76,6 +83,16 @@ public class AdministratorEndpoint {
         if(developers.size()==0)  throw new AccountException(AccountException.KEY_OPTIMISTIC_LOCK);
         Developer developer = developers.get(0);
         developerDAO.delete(developer);
+    }
+    public String findAccountPassByLogin(String login) throws BuildingSalesAppException {
+        Account account = accountManager.findAccountByLogin(login);
+        return account.getPassword();
+    }
+    public void setNewPasswordForAccount(String login, String newPassword) throws BuildingSalesAppException {
+        Account account = accountManager.findAccountByLogin(login);
+        String cryptedPass = Crypter.crypt(newPassword);
+        account.setPassword(cryptedPass);
+        accountManager.saveNewPassword(account);
     }
     private String deleteAccount(Account account) throws BuildingSalesAppException{
         String login = account.getLogin();

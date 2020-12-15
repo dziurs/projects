@@ -2,6 +2,7 @@ package app.dao;
 
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
+import app.model.enums.UserType;
 import app.security.Account;
 import org.eclipse.persistence.exceptions.DatabaseException;
 
@@ -67,7 +68,8 @@ public class AccountDAO extends GenericAbstractDAO<Account> {
     }
     public List<Account> findByRole(String role) {
         TypedQuery<Account> namedQuery = entityManager.createNamedQuery("Account.findByRole", Account.class);
-        namedQuery.setParameter("role", role);
+        UserType type = UserType.valueOf(role);
+        namedQuery.setParameter("role", type);
         return namedQuery.getResultList();
     }
 }

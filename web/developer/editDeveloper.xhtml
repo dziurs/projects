@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+
+<ui:composition template="../index.xhtml">
+    <ui:define name="content_left">
+        <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.edit.developer.content.left.title"]}</h2>
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="editDeveloper">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.edit.developer.content.form.label.developer.surname"]}</span>
+                </div>
+                <p:inputText id="surname" class="form-control" value="#{editDeveloperController.developerDTO.surname}" required="true" validatorMessage="${msg['page.buildingsales.register.developer.content.form.developer.error']}"
+                             a:placeholder= "${msg['page.buildingsales.register.developer.content.form.surname.placeholder']}">
+                    <f:validateLength minimum="3" maximum="250"/>
+                </p:inputText>
+                <p:message for="surname" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.edit.developer.content.form.label.developer.name"]}</span>
+                </div>
+                <p:inputText id="name" class="form-control" value="#{editDeveloperController.developerDTO.firstName}" required="true" validatorMessage="${msg['page.buildingsales.register.developer.content.form.developer.error']}"
+                             a:placeholder= "${msg['page.buildingsales.register.developer.content.form.name.placeholder']}">
+                    <f:validateLength maximum="250" minimum="3"/>
+                </p:inputText>
+                <p:message for="name"/>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.edit.developer.content.form.label.developer.companyname"]}</span>
+                </div>
+                <p:inputText id="company" class="form-control" value="#{editDeveloperController.developerDTO.companyName}" required="true" validatorMessage="${msg['page.buildingsales.register.developer.content.form.developer.error']}"
+                             a:placeholder= "${msg['page.buildingsales.register.developer.content.form.companyname.placeholder']}">
+                    <f:validateLength minimum="3" maximum="250"/>
+                </p:inputText>
+                <p:message for="company"/>
+            </div>
+            <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.edit.developer.content.form.button']}" action="#{editDeveloperController.saveEditedDeveloper}"
+                             styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "
+                             validateClient="true" />
+        </h:form>
+    </ui:define>
+</ui:composition>
+</html>

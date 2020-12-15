@@ -2,6 +2,8 @@ package app.security;
 
 import app.dao.AccountDAO;
 import app.exception.BuildingSalesAppException;
+import app.model.enums.UserType;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -25,7 +27,7 @@ public class AdminAccount {
         account.setPassword("240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9");
         account.setActivate(true);
         account.setPid(1);
-        account.setRole("ADMIN");
+        account.setRole(UserType.ADMIN);
         try {
             accountDAO.create(account);
         }catch (BuildingSalesAppException ex){

@@ -4,17 +4,17 @@ import app.dto.ReviewDTO;
 import app.endpoints.BuildingSalesEndpoint;
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
-import app.exception.GeneralAplicationException;
+import app.exception.GeneralApplicationException;
 import app.exception.ImegeFileIOException;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Part;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
@@ -34,13 +34,13 @@ public class ReviewAddingController implements Serializable {
 
     private ReviewDTO reviewDTO = new ReviewDTO();
 
+    @NotNull
     private String livingSpace;
 
+    @NotNull
     private String area;
 
     private Part file;
-
-    private String fileName = "none";
 
     private Principal principal;
 
@@ -62,11 +62,10 @@ public class ReviewAddingController implements Serializable {
         reviewDTO.setArea(Integer.parseInt(area));
         reviewDTO.setLivingSpace(Integer.parseInt(livingSpace));
         setTrigger(false);
-        try {
-            InputStream inputStream = file.getInputStream();
+        try (InputStream inputStream = file.getInputStream()){
             reviewDTO.setImage(inputStream.readAllBytes());
             endpoint.addReview(principal,reviewDTO);
-        }catch (GeneralAplicationException e){
+        }catch (GeneralApplicationException e){
             addMessage(e.getMessage(),null,FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
         }catch (AccountException e){
@@ -76,10 +75,9 @@ public class ReviewAddingController implements Serializable {
             addMessage(bundle.getString("file.upload.error"),bundle.getString("file.upload.error.detail"),FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
         }catch (BuildingSalesAppException e){
-            addMessage(bundle.getString(e.getMessage()),null,FacesMessage.SEVERITY_ERROR);
+            addMessage(e.getCause().getMessage(),null,FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
-        }
-        catch (IOException e){
+        }catch (IOException e){
             addMessage(bundle.getString("file.upload.error"),bundle.getString("file.upload.error.detail"),FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
         }
@@ -144,11 +142,4 @@ public class ReviewAddingController implements Serializable {
         return intRegex;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
 }

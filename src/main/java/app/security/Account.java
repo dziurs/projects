@@ -3,6 +3,7 @@ package app.security;
 import app.model.enums.UserType;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -22,6 +23,7 @@ public class Account implements Serializable {
     @Version
     private long version;
 
+    @Size(min = 3, max = 100)
     @Column(nullable = false, length = 100, unique = true)
     private String login;
 

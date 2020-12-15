@@ -3,6 +3,7 @@ package app.managers;
 import app.dao.AccountDAO;
 import app.dao.DeveloperDAO;
 import app.dao.UserDAO;
+import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import app.exception.EmailSendingException;
 import app.model.entity.Developer;
@@ -30,6 +31,12 @@ public class AccountManager {
 
     @Inject
     private AccountDAO accountDAO;
+
+    public Account findAccountByLogin(String login) throws BuildingSalesAppException{
+        List<Account> list = accountDAO.findByEmail(login);
+        if(list.size()==0)throw new AccountException(AccountException.LOGIN);
+        return list.get(0);
+    }
 
     public void registerDeveloper(Developer developer , String password) throws BuildingSalesAppException {
         Account account = new Account();
@@ -67,5 +74,9 @@ public class AccountManager {
         }else {
             throw new EmailSendingException(EmailSendingException.EMAIL_OR_PID_ERROR);
         }
+    }
+
+    public void saveNewPassword(Account account) throws BuildingSalesAppException {
+        accountDAO.update(account);
     }
 }

@@ -1,9 +1,7 @@
 package app.dao;
 
-import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
-import app.exception.GeneralAplicationException;
-import app.model.entity.Developer;
+import app.exception.GeneralApplicationException;
 import app.model.entity.Review;
 import app.model.enums.BuildingType;
 import org.eclipse.persistence.exceptions.DatabaseException;
@@ -13,6 +11,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
@@ -38,7 +40,7 @@ public class ReviewDAO extends GenericAbstractDAO<Review> {
             super.create(entity);
         }catch (PersistenceException ex){
             if (ex.getCause() instanceof DatabaseException && ex.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {
-                throw new GeneralAplicationException(GeneralAplicationException.KEY_OPTIMISTIC_LOCK,ex);
+                throw new GeneralApplicationException(GeneralApplicationException.KEY_OPTIMISTIC_LOCK,ex);
             } else {
                 throw ex;
             }
@@ -50,16 +52,24 @@ public class ReviewDAO extends GenericAbstractDAO<Review> {
         try{
             super.update(entity);
         }catch (OptimisticLockException e){
-            throw new GeneralAplicationException(GeneralAplicationException.KEY_OPTIMISTIC_LOCK,e);
+            throw new GeneralApplicationException(GeneralApplicationException.KEY_OPTIMISTIC_LOCK,e);
         }
     }
     public void delete(Review entity) throws BuildingSalesAppException {
         try{
             super.delete(entity);
         }catch (OptimisticLockException e){
-            throw new GeneralAplicationException(GeneralAplicationException.KEY_OPTIMISTIC_LOCK,e);
+            throw new GeneralApplicationException(GeneralApplicationException.KEY_OPTIMISTIC_LOCK,e);
         }
     }
+
+    @Override
+    public List<Review> readAll() {
+        TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findAll", Review.class);
+        return namedQuery.setFirstResult(0).setMaxResults(50).getResultList();
+
+    }
+
     public List<Review> findByTitle (String title){
         TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findByTitle", Review.class);
         namedQuery.setParameter("title", title);
@@ -73,7 +83,7 @@ public class ReviewDAO extends GenericAbstractDAO<Review> {
     public List<Review> findByBuildingType (BuildingType buildingType){
         TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findByBuildingType", Review.class);
         namedQuery.setParameter("buildingType", buildingType);
-        return namedQuery.getResultList();
+        return namedQuery.setFirstResult(0).setMaxResults(50).getResultList();
     }
     public List<Review> findByLivingSpace (int livingSpace){
         TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findByLivingSpace", Review.class);
@@ -88,6 +98,18 @@ public class ReviewDAO extends GenericAbstractDAO<Review> {
     public List<Review> findByCity (String city){
         TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findByCity", Review.class);
         namedQuery.setParameter("city", city);
-        return namedQuery.getResultList();
+        return namedQuery.setFirstResult(0).setMaxResults(50).getResultList();
+    }
+    public List<Review> findByCityAndBuildingType (String city, BuildingType buildingType){
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Review> criteria = criteriaBuilder.createQuery(Review.class);
+        Root<Review> root = criteria.from(Review.class);
+        Predicate predicate = criteriaBuilder.and(
+                criteriaBuilder.equal(root.get("city"), city),
+                criteriaBuilder.equal(root.get("buildingType"), buildingType));
+        criteria.select(root).where(predicate);
+        criteria.orderBy(criteriaBuilder.desc(root.get("creationDate")));
+        TypedQuery<Review> query = entityManager.createQuery(criteria);
+        return query.setFirstResult(0).setMaxResults(50).getResultList();
     }
 }

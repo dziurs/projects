@@ -3,9 +3,9 @@ package app.model.entity;
 import app.model.audit.Audit;
 import app.model.audit.AuditListener;
 import app.model.enums.BuildingType;
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.*;
 
@@ -16,10 +16,10 @@ import java.util.*;
         , @NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id")
         , @NamedQuery(name = "Review.findByTitle", query = "SELECT r FROM Review r WHERE r.title = :title")
         , @NamedQuery(name = "Review.findByArea", query = "SELECT r FROM Review r WHERE r.area = :area")
-        , @NamedQuery(name = "Review.findByBuildingType", query = "SELECT r FROM Review r WHERE r.buildingType = :buildingType")
+        , @NamedQuery(name = "Review.findByBuildingType", query = "SELECT r FROM Review r WHERE r.buildingType = :buildingType order by r.creationDate")
         , @NamedQuery(name = "Review.findByLivingSpace", query = "SELECT r FROM Review r WHERE r.livingSpace = :livingSpace")
         , @NamedQuery(name = "Review.findByGarage", query = "SELECT r FROM Review r WHERE r.garage = :garage")
-        , @NamedQuery(name = "Review.findByCity", query = "SELECT r FROM Review r WHERE r.city = :city")
+        , @NamedQuery(name = "Review.findByCity", query = "SELECT r FROM Review r WHERE r.city = :city order by r.creationDate")
 })
 @EntityListeners(value = AuditListener.class)
 public class Review implements Serializable, Audit {
@@ -32,9 +32,12 @@ public class Review implements Serializable, Audit {
     @Version
     private long version;
 
+    @Size(min = 3, max = 300)
     @Column(name = "title", nullable = false, length = 300)
     private String title;
 
+    @Digits(integer = 10, fraction = 0)
+    @Min(value = 1)
     @Column(name = "area", nullable = false, length = 10)
     private int area;
 
@@ -42,21 +45,29 @@ public class Review implements Serializable, Audit {
     @Enumerated(EnumType.STRING)
     private BuildingType buildingType;
 
+    @Digits(integer = 10, fraction = 0)
+    @Min(value = 1)
     @Column(name = "livingSpace", nullable = false, length = 10)
     private int livingSpace;
 
-    @Column(name = "garage", nullable = false, length = 10)
+    @NotNull
+    @Column(name = "garage", nullable = false, length = 5)
     private boolean garage;
 
+    @Size(min = 2, max = 50)
     @Column(name = "city", nullable = false, length = 50)
     private String city;
 
+    @Size(min = 2, max = 100)
     @Column(name = "street", nullable = false, length = 100)
     private String street;
 
+    @Pattern(regexp = "[0-9]{2}\\-[0-9]{3}")
+    @Size(min = 5, max = 6)
     @Column(name = "post_code", nullable = false , length = 6)
     private String postCode;
 
+    @NotNull
     @Lob
     @Basic(fetch = FetchType.LAZY)
     @Column(name="image", columnDefinition = "MEDIUMBLOB", length = 1048576, nullable = false)

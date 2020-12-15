@@ -64,6 +64,5 @@
             <artifactId>eclipselink</artifactId>
             <version>2.7.7</version>
         </dependency>
-
     </dependencies>
 </project>

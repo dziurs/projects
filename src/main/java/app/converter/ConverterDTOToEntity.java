@@ -4,6 +4,7 @@ import app.dao.*;
 import app.dto.*;
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
+import app.exception.GeneralApplicationException;
 import app.model.entity.*;
 import app.security.Account;
 
@@ -38,7 +39,7 @@ public class ConverterDTOToEntity {
         }
         else return byEmail.get(0);
     }
-    public static Meeting convertMeetinDTOToMeeting(MeetingDTO meeting, MeetingDAO meetingDAO){
+    public static Meeting convertMeetingDTOToMeeting(MeetingDTO meeting, MeetingDAO meetingDAO){
         Integer id = meeting.getId();
         if(id>0) {
             List<Meeting> byID = meetingDAO.findByID(id);
@@ -59,18 +60,52 @@ public class ConverterDTOToEntity {
             return byID.get(0);
         }else{
             Review r = new Review();
-            r.setTitle(review.getTitle());
-            r.setArea(review.getArea());
-            r.setLivingSpace(review.getLivingSpace());
-            r.setGarage(review.isGarage());
-            r.setCity(review.getCity());
-            r.setStreet(review.getStreet());
-            r.setPostCode(review.getPostCode());
-            r.setBuildingType(review.getBuildingType());
-            r.setImage(review.getImage());
+            simplyConvertReview(review,r);
             //r.setDeveloper(ConverterDTOToEntity.convertDeveloperDTOToDeveloper(review.getDeveloper(),developerDAO));
             return r;
         }
+    }
+    public static Review convertReviewDTOToReviewWithEdit(ReviewDTO review, ReviewDAO reviewDAO) throws GeneralApplicationException {
+            List<Review> byID = reviewDAO.findByID(review.getId());
+            if(byID.size()==0)throw new GeneralApplicationException(GeneralApplicationException.KEY_OPTIMISTIC_LOCK);
+            Review r = byID.get(0);
+            return simplyConvertReview(review,r);
+
+    }
+    public static Developer convertDeveloperDTOToDeveloperWithEdit(DeveloperDTO developerDTO , DeveloperDAO developerDAO) throws GeneralApplicationException {
+        List<Developer> list = developerDAO.findByEmail(developerDTO.getEmail());
+        if(list.size()==0)throw new GeneralApplicationException(GeneralApplicationException.KEY_OPTIMISTIC_LOCK);
+        Developer developer = list.get(0);
+        return simplyConvertDeveloper(developerDTO,developer);
+    }
+    public static User convertUserDTOToUserWithEdit(UserDTO userDTO, UserDAO userDAO) throws GeneralApplicationException {
+        List<User> list = userDAO.findByEmail(userDTO.getEmail());
+        if(list.size()==0)throw new GeneralApplicationException(GeneralApplicationException.KEY_OPTIMISTIC_LOCK);
+        User user = list.get(0);
+        return simplyConvertUser(userDTO,user);
+    }
+    private static Review simplyConvertReview(ReviewDTO reviewDTO, Review review){
+        review.setTitle(reviewDTO.getTitle());
+        review.setArea(reviewDTO.getArea());
+        review.setLivingSpace(reviewDTO.getLivingSpace());
+        review.setGarage(reviewDTO.isGarage());
+        review.setCity(reviewDTO.getCity());
+        review.setStreet(reviewDTO.getStreet());
+        review.setPostCode(reviewDTO.getPostCode());
+        review.setBuildingType(reviewDTO.getBuildingType());
+        review.setImage(reviewDTO.getImage());
+        return review;
+    }
+    private static Developer simplyConvertDeveloper(DeveloperDTO developerDTO, Developer developer){
+        developer.setFirstName(developerDTO.getFirstName());
+        developer.setSurname(developerDTO.getSurname());
+        developer.setCompanyName(developerDTO.getCompanyName());
+        return developer;
+    }
+    private static User simplyConvertUser(UserDTO userDTO, User user){
+        user.setFirstName(userDTO.getFirstName());
+        user.setSurname(userDTO.getSurname());
+        return user;
     }
     public static Account convertAccountDTOToAccount (AccountDTO accountDTO, AccountDAO accountDAO) throws BuildingSalesAppException {
         List<Account> list = accountDAO.findByEmail(accountDTO.getLogin());

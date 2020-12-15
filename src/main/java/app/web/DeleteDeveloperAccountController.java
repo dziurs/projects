@@ -2,6 +2,7 @@ package app.web;
 
 import app.dto.AccountDTO;
 import app.endpoints.AdministratorEndpoint;
+import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -40,8 +41,12 @@ public class DeleteDeveloperAccountController implements Serializable {
         try {
             endpoint.deleteDeveloperAccount(accountDTO);
             return "deleteAccount";
-        } catch (BuildingSalesAppException e) {
-            addMessage(bundle.getString(e.getMessage()),null, FacesMessage.SEVERITY_ERROR);
+        }catch (AccountException e) {
+            addMessage(bundle.getString(e.getMessage()), null, FacesMessage.SEVERITY_ERROR);
+            saveMessageInFlashScope();
+            return "deleteAccount";
+        }catch (BuildingSalesAppException e) {
+            addMessage(e.getCause().getMessage(),null, FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
             return "deleteAccount";
         }

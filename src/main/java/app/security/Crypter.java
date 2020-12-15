@@ -1,7 +1,7 @@
 package app.security;
 
 import app.exception.BuildingSalesAppException;
-import app.exception.GeneralAplicationException;
+import app.exception.GeneralApplicationException;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -25,7 +25,7 @@ public class Crypter {
             }
             return builder.toString();
         }catch (NoSuchAlgorithmException ex){
-            throw new GeneralAplicationException(GeneralAplicationException.CRYPTER, ex);
+            throw new GeneralApplicationException(GeneralApplicationException.CRYPTER, ex);
         }
     }
 }

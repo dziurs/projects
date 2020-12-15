@@ -1,7 +1,6 @@
 package app.security;
 
 import app.exception.BuildingSalesAppException;
-import app.exception.GeneralAplicationException;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;

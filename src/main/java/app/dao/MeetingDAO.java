@@ -2,15 +2,19 @@ package app.dao;
 
 import app.exception.AppDataBaseException;
 import app.exception.BuildingSalesAppException;
+import app.exception.GeneralApplicationException;
 import app.model.entity.Review;
 import app.model.entity.Meeting;
 import app.model.entity.User;
+import org.eclipse.persistence.exceptions.DatabaseException;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
+import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
 import java.util.List;
 
@@ -27,8 +31,12 @@ public class MeetingDAO extends GenericAbstractDAO {
     public void update(Object entity) throws BuildingSalesAppException {
         try{
             super.update(entity);
-        }catch (OptimisticLockException e){
-            throw new AppDataBaseException(e);
+        }catch (PersistenceException ex){
+            if (ex.getCause() instanceof DatabaseException && ex.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {
+                throw new AppDataBaseException(ex);
+            } else {
+                throw ex;
+            }
         }
     }
 

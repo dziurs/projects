@@ -10,6 +10,7 @@ import app.model.entity.Developer;
 import app.model.entity.Meeting;
 import app.model.entity.Review;
 import app.model.entity.User;
+import app.model.enums.BuildingType;
 import app.security.Account;
 import javax.annotation.security.PermitAll;
 import javax.ejb.Local;
@@ -36,6 +37,12 @@ public class BuildingSalesEndpoint implements Serializable {
     private ReviewManager reviewManager;
 
     @Inject
+    private DeveloperManager developerManager;
+
+    @Inject
+    private UserManager userManager;
+
+    @Inject
     private ReviewDAO reviewDAO;
 
     @Inject
@@ -50,7 +57,6 @@ public class BuildingSalesEndpoint implements Serializable {
     @Inject
     private AccountDAO accountDAO;
 
-    private ResourceBundle bundle = ResourceBundle.getBundle("i18n/messages");
 
 
     public void registerDeveloper(DeveloperDTO developerDTO,String password) throws BuildingSalesAppException {
@@ -75,7 +81,7 @@ public class BuildingSalesEndpoint implements Serializable {
     }
 
     public void addReview (Principal principal, ReviewDTO reviewDTO) throws BuildingSalesAppException{
-        if(principal==null) throw new GeneralAplicationException(GeneralAplicationException.PRINCIPAL);
+        if(principal==null) throw new GeneralApplicationException(GeneralApplicationException.PRINCIPAL);
         List<Developer> list = developerDAO.findByEmail(principal.getName());
         if(list.size()==0) throw new AccountException(AccountException.LOGIN);
         Developer developer = list.get(0);
@@ -86,22 +92,72 @@ public class BuildingSalesEndpoint implements Serializable {
         return reviewManager.getDeveloperReviews(developerLogin);
     }
 
+    public void editReviewByDeveloper(ReviewDTO reviewDTO) throws BuildingSalesAppException {
+        Review review = ConverterDTOToEntity.convertReviewDTOToReviewWithEdit(reviewDTO, reviewDAO);
+        reviewManager.editReview(review);
+    }
+
+    public ReviewDTO getReviewToDisplay(String id) throws BuildingSalesAppException{
+        int identificator = Integer.parseInt(id);
+        ReviewDTO reviewDTO = reviewManager.findReviewByID(identificator);
+        return reviewDTO;
+    }
+
     public void reviewDelete(ReviewDTO reviewDTO)throws BuildingSalesAppException{
         Integer id = reviewDTO.getId();
         List<Review> reviews = reviewDAO.findByID(id);
-        if(reviews.size()==0) throw new GeneralAplicationException(GeneralAplicationException.REVIEW);
+        if(reviews.size()==0) throw new GeneralApplicationException(GeneralApplicationException.REVIEW);
         Review review = reviews.get(0);
         reviewManager.reviewDelete(review);
     }
     public List<MeetingDTO> getMeetingList(ReviewDTO reviewDTO) throws BuildingSalesAppException {
         List<Review> list = reviewDAO.findByID(reviewDTO.getId());
-        if(list.size()==0) throw new GeneralAplicationException(GeneralAplicationException.REVIEW);
+        if(list.size()==0) throw new GeneralApplicationException(GeneralApplicationException.REVIEW);
         Review review = list.get(0);
         List<Meeting> meetingList = meetingManager.getMeetingList(review);
         List<MeetingDTO> meetingDTOList = meetingIterator(meetingList);
         return meetingDTOList;
     }
+    public DeveloperDTO findDeveloperByEmail(String email) throws BuildingSalesAppException{
+        Developer developer = developerManager.fingDeveloperByEmail(email);
+        DeveloperDTO developerDTO = ConverterEntityToDTO.convertDeveloperToDeveloperDTO(developer);
+        return developerDTO;
+    }
+    public void saveEditedDeveloper(DeveloperDTO developerDTO) throws BuildingSalesAppException {
+        Developer developer = ConverterDTOToEntity.convertDeveloperDTOToDeveloperWithEdit(developerDTO, developerDAO);
+        developerManager.saveEditedDeveloper(developer);
+    }
+    public UserDTO findUserByEmail(String email) throws BuildingSalesAppException {
+        User user = userManager.findUserByEmail(email);
+        UserDTO userDTO = ConverterEntityToDTO.convertUserToUserDTO(user);
+        return userDTO;
+    }
 
+    public void saveEditedUser(UserDTO userDTO) throws BuildingSalesAppException {
+        User user = ConverterDTOToEntity.convertUserDTOToUserWithEdit(userDTO, userDAO);
+        userManager.saveEditedUser(user);
+    }
+    public void addMeetingToReview(MeetingDTO meetingDTO, ReviewDTO reviewDTO) throws BuildingSalesAppException {
+        Review review = ConverterDTOToEntity.convertReviewDTOToReview(reviewDTO, reviewDAO);
+        Meeting meeting = ConverterDTOToEntity.convertMeetingDTOToMeeting(meetingDTO, meetingDAO);
+        meetingManager.addMeeting(meeting,review);
+    }
+
+    public List<ReviewDTO> findAll(){
+        return reviewManager.findAll();
+    }
+
+    public List<ReviewDTO> findAllByCity(String city){
+        return reviewManager.findAllByCity(city);
+    }
+
+    public List<ReviewDTO> findAllByBuildingType(BuildingType buildingType){
+        return reviewManager.findAllByBuildingType(buildingType);
+    }
+
+    public List<ReviewDTO> findAllByCityAndBuildingType(String city, BuildingType buildingType){
+        return reviewManager.findAllByCityAndBuildingType(city, buildingType);
+    }
 
     public List<ReviewDTO> getAllReviews(){
         List<Review> listFromDataBase = reviewDAO.readAll();
@@ -135,6 +191,11 @@ public class BuildingSalesEndpoint implements Serializable {
         }
         return meetingDTOList;
     }
+
+
+
+
+
 //    @DAOTransaction
 //    public void acceptMeetingEndpoint(UserDTO userDTO, MeetingDTO meetingDTO) throws BuildingSalesAppException {
 //        List<Meeting> meetings = meetingDAO.findByID(meetingDTO.getId());

@@ -4,6 +4,7 @@ import app.model.audit.Audit;
 import app.model.audit.AuditListener;
 import app.model.enums.UserType;
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -30,12 +31,15 @@ public class Developer implements Serializable, Audit {
     @Version
     private long version;
 
+    @Size(min = 3, max = 250)
     @Column(name = "surname",nullable = false)
     private String surname;
 
+    @Size(min = 3, max = 250)
     @Column(name = "firstname", nullable = false)
     private String firstName;
 
+    @Size(min = 3, max = 250)
     @Column(name = "company_name", nullable = false)
     private String companyName;
 
@@ -111,6 +115,9 @@ public class Developer implements Serializable, Audit {
 
     public Set<Review> getReviews() {
         return reviews;
+    }
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = reviews;
     }
 
     public boolean addReview(Review review){

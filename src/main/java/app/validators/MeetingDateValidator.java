@@ -6,23 +6,23 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import javax.servlet.http.Part;
+import java.util.Date;
 import java.util.ResourceBundle;
 
-@FacesValidator(value = "fileValidator")
-public class AppFileValidator implements Validator {
+@FacesValidator(value = "dateValidator")
+public class MeetingDateValidator implements Validator {
 
     private ResourceBundle bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
             FacesContext.getCurrentInstance().getViewRoot().getLocale());
     @Override
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object o) throws ValidatorException {
-        Part file = (Part)o;
-        if(file.getSize()>1048576||file.getSize()<204800){
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN ,bundle.getString("file.validation.error.size"),null);
-            throw new ValidatorException(message);
-        }
-        if((!"image/png".equals(file.getContentType()))&&(!"image/jpeg".equals(file.getContentType()))){
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, bundle.getString("file.validation.error.content"),null);
+        Date dateToValidation = (Date) o;
+        Date today = new Date();
+        long oneDay = 24 * 60 * 60 * 1000;
+        long tomorrowLong = today.getTime() + oneDay;
+        long longToValidation = dateToValidation.getTime();
+        if(longToValidation<=tomorrowLong){
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, bundle.getString("date.validation.error.tomorrow"),null);
             throw new ValidatorException(message);
         }
     }

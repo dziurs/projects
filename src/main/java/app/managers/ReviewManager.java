@@ -5,8 +5,11 @@ import app.dao.DeveloperDAO;
 import app.dao.ReviewDAO;
 import app.dto.ReviewDTO;
 import app.exception.BuildingSalesAppException;
+import app.exception.GeneralApplicationException;
 import app.model.entity.Developer;
 import app.model.entity.Review;
+import app.model.enums.BuildingType;
+
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -37,14 +40,8 @@ public class ReviewManager {
         List<Developer> list = developerDAO.findByEmail(developerLogin);
         Developer developer = list.get(0);
         Set<Review> reviews = developer.getReviews();
-        List<ReviewDTO> reviewDTOList = new ArrayList<>();
-        Iterator<Review> iterator = reviews.iterator();
-        if (iterator.hasNext()) {
-            Review review = iterator.next();
-            ReviewDTO reviewDTO = ConverterEntityToDTO.convertReviewToReviewDTO(review);
-            reviewDTOList.add(reviewDTO);
-        }
-        return reviewDTOList;
+        List<Review> reviewList = new ArrayList<>(reviews);
+        return addReviewDTO(reviewList);
     }
     public void reviewDelete(Review review) throws BuildingSalesAppException {
         Developer developer = review.getDeveloper();
@@ -52,4 +49,46 @@ public class ReviewManager {
         developerDAO.update(developer);
         reviewDAO.delete(review);
     }
+    public ReviewDTO findReviewByID(int id) throws BuildingSalesAppException {
+        List<Review> list = reviewDAO.findByID(id);
+        if (list.size()==0)throw new GeneralApplicationException(GeneralApplicationException.KEY_OPTIMISTIC_LOCK);
+        Review review = list.get(0);
+        ReviewDTO reviewDTO = ConverterEntityToDTO.convertReviewToReviewDTO(review);
+        return reviewDTO;
+    }
+
+    public void editReview(Review review) throws BuildingSalesAppException {
+        reviewDAO.update(review);
+    }
+
+    public List<ReviewDTO> findAll(){
+        List<Review> reviewList = reviewDAO.readAll();
+        return addReviewDTO(reviewList);
+    }
+
+    public List<ReviewDTO> findAllByCity(String city){
+        List<Review> reviewList = reviewDAO.findByCity(city);
+        return addReviewDTO(reviewList);
+    }
+
+    public List<ReviewDTO> findAllByBuildingType(BuildingType buildingType){
+        List<Review> reviewList = reviewDAO.findByBuildingType(buildingType);
+        return addReviewDTO(reviewList);
+    }
+
+    public List<ReviewDTO> findAllByCityAndBuildingType(String city, BuildingType buildingType){
+        List<Review> reviewList = reviewDAO.findByCityAndBuildingType(city,buildingType);
+        return addReviewDTO(reviewList);
+    }
+
+    private List<ReviewDTO> addReviewDTO(List<Review> reviewList){
+        List<ReviewDTO> reviewDTOList = new ArrayList<>();
+        Iterator<Review> iterator = reviewList.iterator();
+        while (iterator.hasNext()) {
+            ReviewDTO reviewDTO = ConverterEntityToDTO.convertReviewToReviewDTO(iterator.next());
+            reviewDTOList.add(reviewDTO);
+        }
+        return reviewDTOList;
+    }
+
 }

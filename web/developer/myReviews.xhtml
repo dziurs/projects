@@ -22,7 +22,15 @@
 
                 <h:column>
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.building.type']}</f:facet>
-                    <h:outputText value="#{review.buildingType}" styleClass="text-danger" />
+                    <ui:fragment rendered="#{review.buildingType eq 'Flat'}">
+                        <h:outputText id="buildingTypeFlat" styleClass="text-danger" value="${msg['page.buildingsales.display.review.content.form.label.review.building.flat']}" />
+                    </ui:fragment>
+                    <ui:fragment rendered="#{review.buildingType eq 'Land'}">
+                        <h:outputText id="buildingTypeLand" styleClass="text-danger" value="${msg['page.buildingsales.display.review.content.form.label.review.building.land']}" />
+                    </ui:fragment>
+                    <ui:fragment rendered="#{review.buildingType eq 'House'}">
+                        <h:outputText id="buildingTypeHouse" styleClass="text-danger" value="${msg['page.buildingsales.display.review.content.form.label.review.building.house']}" />
+                    </ui:fragment>
                 </h:column>
 
                 <h:column>
@@ -31,7 +39,12 @@
                 </h:column>
                 <h:column>
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.garage']}</f:facet>
-                    <h:outputText value="#{review.garage}" styleClass="text-danger"/>
+                    <ui:fragment rendered="#{review.garage}">
+                        <h:outputText id="garageTrue" value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.true']}" />
+                    </ui:fragment>
+                    <ui:fragment rendered="#{not review.garage}">
+                        <h:outputText id="garageFalse" value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.false']}" />
+                    </ui:fragment>
                 </h:column>
                 <h:column>
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.city']}</f:facet>
@@ -46,15 +59,12 @@
                     <h:outputText value="#{review.postCode}" />
                 </h:column>
                 <h:column>
-                    <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.image']}</f:facet>
-                    <p:graphicImage value="#{developerReviewsController.convertByteArrayToStreamedContent(review.image)}"
-                                    class="img-fluid mx-auto d-block rounded" alt="#{review.buildingType} photo"/>
-                </h:column>
-                <h:column>
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.button.edit']}</f:facet>
                     <p:commandLink value="#{msg['page.buildingsales.view.my.reviews.table.button.edit']}"
-
-                                   icon="pi pi-star" styleClass="btn btn btn-light form-control" immediate="true"/>
+                                   actionListener="#{developerReviewsController.getReviewToEdit}"
+                                   icon="pi pi-star" styleClass="btn btn btn-light form-control" immediate="true">
+                        <f:attribute name="reviewToEdit" value="#{review}"/>
+                    </p:commandLink>
                 </h:column>
                 <h:column>
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.button.delete']}</f:facet>
@@ -65,14 +75,18 @@
                 <h:column>
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.button.view']}</f:facet>
                     <p:commandLink value="#{msg['page.buildingsales.view.my.reviews.table.button.view']}"
-                                   action="#{displayReviewController.displayReview(review)}"
-                                   icon="pi pi-star" styleClass="btn btn btn-light form-control" immediate="true"/>
+                                   actionListener="#{developerReviewsController.displayReview}"
+                                   icon="pi pi-star" styleClass="btn btn btn-light form-control">
+                    <f:attribute name="review" value="#{review}"/>
+                    </p:commandLink>
                 </h:column>
                 <h:column>
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.button.addMeeting']}</f:facet>
                     <p:commandLink value="#{msg['page.buildingsales.view.my.reviews.table.button.addMeeting']}"
-                                   action="#{addMeetingController.addMeeting(review)}"
-                                   icon="pi pi-star" styleClass="btn btn btn-light form-control" immediate="true"/>
+                                   actionListener="#{developerReviewsController.addMeeting}"
+                                   icon="pi pi-star" styleClass="btn btn btn-light form-control">
+                        <f:attribute name="addMeetingReview" value="#{review}"/>
+                    </p:commandLink>
                 </h:column>
             </h:dataTable>
         </h:form>

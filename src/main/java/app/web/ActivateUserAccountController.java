@@ -2,6 +2,7 @@ package app.web;
 
 import app.dto.AccountDTO;
 import app.endpoints.AdministratorEndpoint;
+import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -41,8 +42,12 @@ public class ActivateUserAccountController implements Serializable {
             endpoint.activateAccount(a);
             return "activateUserAccount";
 
-        } catch (BuildingSalesAppException e) {
+        }catch (AccountException e) {
             addMessage(bundle.getString(e.getMessage()),null, FacesMessage.SEVERITY_ERROR);
+            saveMessageInFlashScope();
+            return "activateUserAccount";
+        }catch (BuildingSalesAppException e) {
+            addMessage(e.getCause().getMessage(),null, FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
             return "activateUserAccount";
         }
@@ -51,8 +56,12 @@ public class ActivateUserAccountController implements Serializable {
         try {
             endpoint.deactivateAccount(a);
             return "activateUserAccount";
-        } catch (BuildingSalesAppException e) {
+        }catch (AccountException e) {
             addMessage(bundle.getString(e.getMessage()),null, FacesMessage.SEVERITY_ERROR);
+            saveMessageInFlashScope();
+            return "activateUserAccount";
+        } catch (BuildingSalesAppException e) {
+            addMessage(e.getCause().getMessage(),null, FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
             return "activateUserAccount";
         }

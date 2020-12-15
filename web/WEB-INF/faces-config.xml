@@ -84,5 +84,35 @@
             <to-view-id>/review/addMeeting.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>editReview</from-outcome>
+            <to-view-id>/review/editReview.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editDeveloper</from-outcome>
+            <to-view-id>/developer/editDeveloper.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editUser</from-outcome>
+            <to-view-id>/user/editUser.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>passwordChange</from-outcome>
+            <to-view-id>/accounts/changePassword.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>displayResults</from-outcome>
+            <to-view-id>/search/displaySearchedResults.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>displaySelected</from-outcome>
+            <to-view-id>/search/displayingFoundReview.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

@@ -2,8 +2,9 @@ package app.model.entity;
 
 import app.model.audit.Audit;
 import app.model.audit.AuditListener;
-
 import javax.persistence.*;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -27,10 +28,12 @@ public class Meeting implements Serializable, Audit {
     @Version
     private long version;
 
+    @Future
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date", nullable = false)
     private Date date;
 
+    @NotNull
     @Column(name = "addedByUser", nullable = false, length = 10)
     private boolean addedByUser = false;
 
@@ -38,6 +41,7 @@ public class Meeting implements Serializable, Audit {
     @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     private Review review;
 

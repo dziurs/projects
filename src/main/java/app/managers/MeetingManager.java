@@ -40,4 +40,8 @@ public class MeetingManager {
     public List<Meeting> getMeetingList(Review review){
         return meetingDAO.findByReview(review);
     }
+    public void addMeeting(Meeting meeting, Review review) throws BuildingSalesAppException {
+        review.addMeeting(meeting);
+        reviewDAO.update(review);
+    }
 }

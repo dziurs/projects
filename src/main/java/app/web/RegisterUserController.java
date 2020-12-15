@@ -6,7 +6,7 @@ import app.endpoints.EmailSendingEndpoint;
 import app.exception.BuildingSalesAppException;
 import app.exception.EmailSendingException;
 import app.exception.AccountException;
-import app.exception.GeneralAplicationException;
+import app.exception.GeneralApplicationException;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -14,8 +14,8 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,10 +37,12 @@ public class RegisterUserController implements Serializable {
 
     private UserDTO userDTO = new UserDTO();
 
+    @Size(min = 8, max = 20)
     private String password;
 
     private StringBuilder builder;
 
+    @Size(min = 8, max = 20)
     private String passwordRepeat;
 
     private String emailParam;
@@ -82,7 +84,7 @@ public class RegisterUserController implements Serializable {
             builder.append(pid);
             return emailSending();
 
-        } catch (GeneralAplicationException e) {
+        } catch (GeneralApplicationException e) {
             if (!conversation.isTransient()) conversation.end();
             addMessage(bundle.getString("register.developer.controller.password.convert"), bundle.getString("register.developer.controller.detail"), FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();

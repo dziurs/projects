@@ -5,6 +5,7 @@ import app.model.audit.AuditListener;
 import app.model.enums.UserType;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -31,9 +32,11 @@ public class User implements Serializable, Audit {
     @Version
     private long version;
 
+    @Size(min = 3, max = 100)
     @Column(name = "surname",nullable = false, length = 100)
     private String surname;
 
+    @Size(min = 3, max = 100)
     @Column(name = "firstName", nullable = false, length = 100)
     private String firstName;
 
