@@ -53,11 +53,13 @@ public class DeveloperDAO extends GenericAbstractDAO <Developer>{
 
     @Override
     public List<Developer> findByID(int id) {
+        joinTransaction();
         TypedQuery<Developer> namedQuery = entityManager.createNamedQuery("Developer.findById", Developer.class);
         namedQuery.setParameter("id", id);
         return namedQuery.getResultList();
     }
     public List<Developer> findByEmail(String email){
+        joinTransaction();
         TypedQuery<Developer> namedQuery = entityManager.createNamedQuery("Developer.findByEmail", Developer.class);
         namedQuery.setParameter("email", email);
         return namedQuery.getResultList();

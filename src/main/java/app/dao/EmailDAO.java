@@ -17,12 +17,14 @@ public class EmailDAO extends GenericAbstractDAO {
 
     @Override
     public List<Email> findByID(int id){
+        joinTransaction();
         TypedQuery<Email> namedQuery = entityManager.createNamedQuery("Email.findById", Email.class);
         namedQuery.setParameter("id", id);
         return namedQuery.getResultList();
     }
 
     public List<Email> findByEmail(String email){
+        joinTransaction();
         TypedQuery<Email> namedQuery = entityManager.createNamedQuery("Email.findByEmail", Email.class);
         namedQuery.setParameter("email", email);
         return namedQuery.getResultList();

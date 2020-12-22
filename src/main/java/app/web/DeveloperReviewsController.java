@@ -8,9 +8,11 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.NavigationHandler;
+import javax.faces.component.UIData;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.security.enterprise.SecurityContext;
@@ -19,7 +21,7 @@ import java.security.Principal;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@RequestScoped
+@ViewScoped
 @Named(value = "developerReviewsController")
 public class DeveloperReviewsController implements Serializable {
 
@@ -32,6 +34,9 @@ public class DeveloperReviewsController implements Serializable {
 
     private ResourceBundle bundle;
 
+    private UIData table;
+
+
     @Inject
     public DeveloperReviewsController(SecurityContext securityContext) {
         Principal callerPrincipal = securityContext.getCallerPrincipal();
@@ -42,6 +47,14 @@ public class DeveloperReviewsController implements Serializable {
         setReviewDTOList(endpoint.getDeveloperReviews(developerLogin));
         this.bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
               FacesContext.getCurrentInstance().getViewRoot().getLocale());
+    }
+
+    public UIData getTable() {
+        return table;
+    }
+
+    public void setTable(UIData table) {
+        this.table = table;
     }
 
     public List<ReviewDTO> getReviewDTOList() {
@@ -81,9 +94,9 @@ public class DeveloperReviewsController implements Serializable {
         navigationHandler.handleNavigation(facesContext,null,"editReview");
     }
 
-    public String reviewDelete(ReviewDTO reviewDTO){
+    public String reviewDelete(Integer id){
         try {
-            endpoint.reviewDelete(reviewDTO);
+            endpoint.reviewDelete(id);
             return "myReviews";
         }catch (GeneralApplicationException ex){
             addMessage(bundle.getString(ex.getMessage()),null,FacesMessage.SEVERITY_ERROR);

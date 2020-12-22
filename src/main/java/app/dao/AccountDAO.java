@@ -5,7 +5,6 @@ import app.exception.BuildingSalesAppException;
 import app.model.enums.UserType;
 import app.security.Account;
 import org.eclipse.persistence.exceptions.DatabaseException;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
@@ -56,17 +55,20 @@ public class AccountDAO extends GenericAbstractDAO<Account> {
 
     @Override
     protected List<Account> findByID(int id) {
+        joinTransaction();
         TypedQuery<Account> namedQuery = entityManager.createNamedQuery("Account.findById", Account.class);
         namedQuery.setParameter("id", id);
         return namedQuery.getResultList();
     }
 
     public List<Account> findByEmail(String email) {
+        joinTransaction();
         TypedQuery<Account> namedQuery = entityManager.createNamedQuery("Account.findByEmail", Account.class);
         namedQuery.setParameter("login", email);
         return namedQuery.getResultList();
     }
     public List<Account> findByRole(String role) {
+        joinTransaction();
         TypedQuery<Account> namedQuery = entityManager.createNamedQuery("Account.findByRole", Account.class);
         UserType type = UserType.valueOf(role);
         namedQuery.setParameter("role", type);

@@ -8,13 +8,14 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@RequestScoped
+@ViewScoped
 @Named (value = "deleteUserAccountController")
 public class DeleteUserAccountController implements Serializable {
     @Inject

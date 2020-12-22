@@ -16,7 +16,7 @@ import java.util.Date;
         , @NamedQuery(name = "Meeting.findByDate", query = "SELECT m FROM Meeting m WHERE m.date = :date")
         , @NamedQuery(name = "Meeting.findByAddedByUser", query = "SELECT m FROM Meeting m WHERE m.addedByUser = :added")
         , @NamedQuery(name = "Meeting.findByUser", query = "SELECT m FROM Meeting m WHERE m.user = :user")
-        , @NamedQuery(name = "Meeting.findByReview", query = "SELECT m FROM Meeting m WHERE m.review = :review")})
+        , @NamedQuery(name = "Meeting.findByReview", query = "SELECT m FROM Meeting m WHERE m.review = :review order by m.date desc ")})
 @EntityListeners(value = AuditListener.class)
 public class Meeting implements Serializable, Audit {
 

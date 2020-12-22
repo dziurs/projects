@@ -2,7 +2,7 @@ package app.exception;
 
 public class AppDataBaseException extends BuildingSalesAppException {
 
-    static final public String KEY_OPTIMISTIC_LOCK = "exception.optimistic.lock";
+    static final private String KEY_OPTIMISTIC_LOCK = "exception.optimistic.lock";
 
     public AppDataBaseException() {
         super(KEY_OPTIMISTIC_LOCK);

@@ -16,17 +16,17 @@
                          rowsPerPageTemplate="5,10,15" value="#{reviewsSearchingController.reviewDTOList}"
                          paginatorPosition="bottom"
                          emptyMessage="#{msg['']}">
-                <p:column styleClass="table table-dark table-striped" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
+                <p:column styleClass="table table-dark table-striped text-warning" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.title']}</f:facet>
-                    <h:outputText value="#{review.title}" />
+                    <h:outputText value="#{review.title}" styleClass="text-white" />
                 </p:column>
 
-                <p:column styleClass="table table-dark table-striped" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
+                <p:column styleClass="table table-dark table-striped text-warning" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.area']}</f:facet>
                     <h:outputText value="#{review.area}" styleClass="text-white" />
                 </p:column>
 
-                <p:column styleClass="table table-dark table-striped" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
+                <p:column styleClass="table table-dark table-striped text-warning" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.building.type']}</f:facet>
                     <ui:fragment rendered="#{review.buildingType eq 'Flat'}">
                         <h:outputText id="buildingTypeFlat" styleClass="text-white" value="${msg['page.buildingsales.display.review.content.form.label.review.building.flat']}" />
@@ -39,37 +39,37 @@
                     </ui:fragment>
                 </p:column>
 
-                <p:column styleClass="table table-dark table-striped" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
+                <p:column styleClass="table table-dark table-striped text-warning" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.living.space']}</f:facet>
-                    <h:outputText value="#{review.livingSpace}" />
+                    <h:outputText value="#{review.livingSpace}" styleClass="text-white" />
                 </p:column>
 
-                <p:column styleClass="table table-dark table-striped" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
+                <p:column styleClass="table table-dark table-striped text-warning" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.garage']}</f:facet>
                     <ui:fragment rendered="#{review.garage}">
-                        <h:outputText id="garageTrue" value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.true']}" />
+                        <h:outputText id="garageTrue" value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.true']}" styleClass="text-white" />
                     </ui:fragment>
                     <ui:fragment rendered="#{not review.garage}">
-                        <h:outputText id="garageFalse" value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.false']}" />
+                        <h:outputText id="garageFalse" value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.false']}" styleClass="text-white" />
                     </ui:fragment>
                 </p:column>
 
-                <p:column styleClass="table table-dark table-striped" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
+                <p:column styleClass="table table-dark table-striped text-warning" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.city']}</f:facet>
-                    <h:outputText value="#{review.city}" />
+                    <h:outputText value="#{review.city}" styleClass="text-white"/>
                 </p:column>
 
-                <p:column styleClass="table table-dark table-striped" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
+                <p:column styleClass="table table-dark table-striped text-warning" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.street']}</f:facet>
-                    <h:outputText value="#{review.street}" />
+                    <h:outputText value="#{review.street}" styleClass="text-white"/>
                 </p:column>
 
-                <p:column styleClass="table table-dark table-striped" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
+                <p:column styleClass="table table-dark table-striped text-warning" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.post.code']}</f:facet>
-                    <h:outputText value="#{review.postCode}" />
+                    <h:outputText value="#{review.postCode}" styleClass="text-white" />
                 </p:column>
 
-                <p:column styleClass="table table-dark table-striped" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
+                <p:column styleClass="table table-dark table-striped text-warning" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.button.view']}</f:facet>
                     <p:commandLink value="#{msg['page.buildingsales.view.my.reviews.table.button.view']}"
                                    actionListener="#{reviewsSearchingController.displayReview}"

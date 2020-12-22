@@ -42,6 +42,7 @@ public class MeetingDAO extends GenericAbstractDAO {
 
     @Override
     public List<Meeting> findByID(int id) {
+        joinTransaction();
         TypedQuery<Meeting> namedQuery = entityManager.createNamedQuery("Meeting.findById", Meeting.class);
         namedQuery.setParameter("id", id);
         return namedQuery.getResultList();
@@ -62,6 +63,7 @@ public class MeetingDAO extends GenericAbstractDAO {
         return namedQuery.getResultList();
     }
     public List<Meeting> findByReview(Review review){
+        joinTransaction();
         TypedQuery<Meeting> namedQuery = entityManager.createNamedQuery("Meeting.findByReview", Meeting.class);
         namedQuery.setParameter("review", review);
         return namedQuery.getResultList();

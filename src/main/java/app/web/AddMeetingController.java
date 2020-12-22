@@ -16,13 +16,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 @RequestScoped
 @Named(value = "addMeetingController")
@@ -53,9 +47,9 @@ public class AddMeetingController{
         this.reviewDTO = reviewDTOFromFlash;
         this.streamedContent = convertByteArrayToStreamedContent(reviewDTOFromFlash.getImage());
         this.meetingDTO = new MeetingDTO();
-//        long oneDay = 24 * 60 * 60 * 1000;
+        long oneHour = 60 * 60 * 1000;
 //        this.tomorrowDate = new Date(new Date().getTime()+oneDay);
-        this.date = new Date();
+        this.date = new Date(new Date().getTime()+oneHour);
 
         try {
             this.meetingDTOList = endpoint.getMeetingList(reviewDTO);

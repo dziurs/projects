@@ -46,6 +46,7 @@ public abstract class GenericAbstractDAO<T> {
         }
 
         public T find(Object id) {
+            joinTransaction();
             return getEntityManager().find(entity, id);
         }
 

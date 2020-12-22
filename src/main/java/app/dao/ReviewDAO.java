@@ -65,6 +65,7 @@ public class ReviewDAO extends GenericAbstractDAO<Review> {
 
     @Override
     public List<Review> readAll() {
+        joinTransaction();
         TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findAll", Review.class);
         return namedQuery.setFirstResult(0).setMaxResults(50).getResultList();
 
@@ -81,6 +82,7 @@ public class ReviewDAO extends GenericAbstractDAO<Review> {
         return namedQuery.getResultList();
     }
     public List<Review> findByBuildingType (BuildingType buildingType){
+        joinTransaction();
         TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findByBuildingType", Review.class);
         namedQuery.setParameter("buildingType", buildingType);
         return namedQuery.setFirstResult(0).setMaxResults(50).getResultList();
@@ -96,11 +98,13 @@ public class ReviewDAO extends GenericAbstractDAO<Review> {
         return namedQuery.getResultList();
     }
     public List<Review> findByCity (String city){
+        joinTransaction();
         TypedQuery<Review> namedQuery = entityManager.createNamedQuery("Review.findByCity", Review.class);
         namedQuery.setParameter("city", city);
         return namedQuery.setFirstResult(0).setMaxResults(50).getResultList();
     }
     public List<Review> findByCityAndBuildingType (String city, BuildingType buildingType){
+        joinTransaction();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Review> criteria = criteriaBuilder.createQuery(Review.class);
         Root<Review> root = criteria.from(Review.class);

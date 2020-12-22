@@ -47,7 +47,7 @@ public class ReviewManager {
         Developer developer = review.getDeveloper();
         developer.removeReview(review);
         developerDAO.update(developer);
-        reviewDAO.delete(review);
+//        reviewDAO.delete(review);
     }
     public ReviewDTO findReviewByID(int id) throws BuildingSalesAppException {
         List<Review> list = reviewDAO.findByID(id);

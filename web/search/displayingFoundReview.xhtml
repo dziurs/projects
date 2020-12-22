@@ -77,13 +77,13 @@
             </div>
         </h:form>
         <h:dataTable styleClass="table table-dark table-striped" rendered="#{request.isUserInRole('User')}" var="meeting" value="#{displayReviewController.meetingDTOList}">
-            <h:column rendered="#{not meeting.addedByUser}">
+            <h:column>
                 <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.date']}</f:facet>
                     <h:outputText value="#{meeting.date}" styleClass="text-white">
                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
                     </h:outputText>
             </h:column>
-            <h:column rendered="#{not meeting.addedByUser}" >
+            <h:column>
                 <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.added']}</f:facet>
                     <ui:fragment rendered="#{meeting.addedByUser}">
                         <h:outputText value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.true']}" styleClass="text-danger" />
@@ -92,10 +92,13 @@
                         <h:outputText value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.false']}" styleClass="text-danger" />
                     </ui:fragment>
             </h:column>
-            <h:column rendered="#{not meeting.addedByUser}">
+            <h:column>
                 <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.acceptation']}</f:facet>
                 <p:commandLink value="#{msg['page.buildingsales.view.my.reviews.meeting.button.accept']}"
-                               icon="pi pi-star" styleClass="btn btn btn-light form-control"/>
+                               icon="pi pi-star" styleClass="btn btn btn-light form-control"
+                               action="#{meetingReservationController.acceptMeeting}" rendered="#{not meeting.addedByUser}">
+                    <f:setPropertyActionListener value="#{meeting}" target="#{meetingReservationController.meetingDTO}"/>
+                </p:commandLink>
             </h:column>
         </h:dataTable>
     </ui:define>

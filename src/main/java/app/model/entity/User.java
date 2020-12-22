@@ -40,8 +40,8 @@ public class User implements Serializable, Audit {
     @Column(name = "firstName", nullable = false, length = 100)
     private String firstName;
 
-    @Column(name = "user_type", nullable = false, length = 20)
     @Enumerated(EnumType.STRING)
+    @Column(name = "user_type", nullable = false, length = 20)
     private final UserType userType = UserType.USER;
 
     @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})

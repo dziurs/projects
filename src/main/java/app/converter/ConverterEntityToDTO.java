@@ -19,8 +19,10 @@ public class ConverterEntityToDTO {
     }
     public static MeetingDTO convertMeetingToMeetingDTO(Meeting meeting){
         MeetingDTO meetingDTO = new MeetingDTO();
+        meetingDTO.setId(meeting.getId());
         meetingDTO.setDate(meeting.getDate());
         meetingDTO.setAddedByUser(meeting.isAddedByUser());
+        meetingDTO.setReview(ConverterEntityToDTO.convertReviewToReviewDTO(meeting.getReview()));
         if(meeting.getUser()==null) meetingDTO.setUser(null);
         else meetingDTO.setUser(ConverterEntityToDTO.convertUserToUserDTO(meeting.getUser()));
         return meetingDTO;

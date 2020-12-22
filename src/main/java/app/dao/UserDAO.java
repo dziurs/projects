@@ -52,11 +52,13 @@ public class UserDAO extends GenericAbstractDAO <User>{
     }
     @Override
     public List<User> findByID(int id) {
+        joinTransaction();
         TypedQuery<User> namedQuery = entityManager.createNamedQuery("User.findById", User.class);
         namedQuery.setParameter("id", id);
         return namedQuery.getResultList();
     }
     public List<User> findByEmail(String email){
+        joinTransaction();
         TypedQuery<User> namedQuery = entityManager.createNamedQuery("User.findByEmail", User.class);
         namedQuery.setParameter("email", email);
         return namedQuery.getResultList();

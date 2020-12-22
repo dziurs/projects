@@ -114,5 +114,10 @@
             <to-view-id>/search/displayingFoundReview.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>myMeetings</from-outcome>
+            <to-view-id>/user/userMeetings.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

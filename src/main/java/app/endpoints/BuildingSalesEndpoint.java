@@ -103,8 +103,7 @@ public class BuildingSalesEndpoint implements Serializable {
         return reviewDTO;
     }
 
-    public void reviewDelete(ReviewDTO reviewDTO)throws BuildingSalesAppException{
-        Integer id = reviewDTO.getId();
+    public void reviewDelete(Integer id)throws BuildingSalesAppException{
         List<Review> reviews = reviewDAO.findByID(id);
         if(reviews.size()==0) throw new GeneralApplicationException(GeneralApplicationException.REVIEW);
         Review review = reviews.get(0);
@@ -159,6 +158,25 @@ public class BuildingSalesEndpoint implements Serializable {
         return reviewManager.findAllByCityAndBuildingType(city, buildingType);
     }
 
+    public ReviewDTO acceptMeetingByUser(MeetingDTO meetingDTO, String login) throws BuildingSalesAppException {
+        Meeting meeting = ConverterDTOToEntity.convertMeetingDTOToMeeting(meetingDTO, meetingDAO);
+        List<User> userList = userDAO.findByEmail(login);
+        if(userList.size()==0) throw new GeneralApplicationException(GeneralApplicationException.PRINCIPAL);
+        User user = userList.get(0);
+        meetingManager.acceptMeetingByUser(meeting,user);
+        Review review = meeting.getReview();
+        ReviewDTO reviewDTO = ConverterEntityToDTO.convertReviewToReviewDTO(review);
+        return reviewDTO;
+    }
+
+    public List<MeetingDTO> getMeetingsAcceptedByUser(String login) throws BuildingSalesAppException {
+        List<User> userList = userDAO.findByEmail(login);
+        if(userList.size()==0) throw new AccountException(AccountException.LOGIN);
+        User user = userList.get(0);
+        List<Meeting> meetingList = meetingManager.getMettingsAcceptedByUser(user);
+        return meetingIterator(meetingList);
+    }
+
     public List<ReviewDTO> getAllReviews(){
         List<Review> listFromDataBase = reviewDAO.readAll();
         List<ReviewDTO> listDTO = new ArrayList<>();
@@ -192,8 +210,10 @@ public class BuildingSalesEndpoint implements Serializable {
         return meetingDTOList;
     }
 
-
-
+    public void cancelMeeting(MeetingDTO meetingDTO) throws BuildingSalesAppException {
+        Meeting meeting = ConverterDTOToEntity.convertMeetingDTOToMeeting(meetingDTO, meetingDAO);
+        meetingManager.cancelMeeting(meeting);
+    }
 
 
 //    @DAOTransaction

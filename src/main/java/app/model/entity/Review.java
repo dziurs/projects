@@ -3,7 +3,6 @@ package app.model.entity;
 import app.model.audit.Audit;
 import app.model.audit.AuditListener;
 import app.model.enums.BuildingType;
-
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.io.Serializable;
@@ -16,10 +15,10 @@ import java.util.*;
         , @NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id")
         , @NamedQuery(name = "Review.findByTitle", query = "SELECT r FROM Review r WHERE r.title = :title")
         , @NamedQuery(name = "Review.findByArea", query = "SELECT r FROM Review r WHERE r.area = :area")
-        , @NamedQuery(name = "Review.findByBuildingType", query = "SELECT r FROM Review r WHERE r.buildingType = :buildingType order by r.creationDate")
+        , @NamedQuery(name = "Review.findByBuildingType", query = "SELECT r FROM Review r WHERE r.buildingType = :buildingType order by r.creationDate desc ")
         , @NamedQuery(name = "Review.findByLivingSpace", query = "SELECT r FROM Review r WHERE r.livingSpace = :livingSpace")
         , @NamedQuery(name = "Review.findByGarage", query = "SELECT r FROM Review r WHERE r.garage = :garage")
-        , @NamedQuery(name = "Review.findByCity", query = "SELECT r FROM Review r WHERE r.city = :city order by r.creationDate")
+        , @NamedQuery(name = "Review.findByCity", query = "SELECT r FROM Review r WHERE r.city = :city order by r.creationDate desc ")
 })
 @EntityListeners(value = AuditListener.class)
 public class Review implements Serializable, Audit {
@@ -198,7 +197,7 @@ public class Review implements Serializable, Audit {
     }
 
     public boolean addUser(User user){
-        if(user==null) throw new NullPointerException("meeting parameter is null");
+        if(user==null) throw new NullPointerException("user parameter is null");
         else {
             users.add(user);
             user.getReviews().add(this);
@@ -206,9 +205,9 @@ public class Review implements Serializable, Audit {
         }
     }
     public boolean removeUser(User user){
-        if (user==null) return false;
+        if (user==null) throw new NullPointerException("user parameter is null");
         else {
-            user.getReviews().remove(user);
+            user.getReviews().remove(this);
             return users.remove(user);
         }
     }

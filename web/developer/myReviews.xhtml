@@ -9,7 +9,7 @@
 <ui:composition template="../templates/reviewTemplate.xhtml">
     <ui:define name="content">
         <h:form>
-            <h:dataTable styleClass="table table-dark table-striped"  var="review" value="#{developerReviewsController.reviewDTOList}">
+            <h:dataTable styleClass="table table-dark table-striped" var="review" value="#{developerReviewsController.reviewDTOList}" >
                 <h:column>
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.title']}</f:facet>
                     <h:outputText value="#{review.title}" />
@@ -69,7 +69,7 @@
                 <h:column>
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.button.delete']}</f:facet>
                     <p:commandLink value="#{msg['page.buildingsales.view.my.reviews.table.button.delete']}"
-                                   action="#{developerReviewsController.reviewDelete(review)}"
+                                   action="#{developerReviewsController.reviewDelete(review.id)}"
                                    icon="pi pi-star" styleClass="btn btn btn-light form-control" immediate="true"/>
                 </h:column>
                 <h:column>
