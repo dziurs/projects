@@ -8,57 +8,71 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
-    <ui:composition template="../index.xhtml">
+<ui:composition template="../index.xhtml">
 
-        <ui:define name="content_left">
-            <f:subview id="loginViewLeftContent" rendered="#{empty request.remoteUser}">
-                <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.login..contentleft.title"]}</h2>
-            </f:subview>
-            <f:subview id="logoutViewLeftContent" rendered="#{not empty request.remoteUser}">
-                <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.logout.contentleft.title"]}</h2>
-            </f:subview>
+    <ui:define name="content_left">
+        <f:subview id="loginViewLeftContent" rendered="#{empty request.remoteUser}">
+            <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.login.contentleft.title"]}</h2>
+        </f:subview>
+        <f:subview id="logoutViewLeftContent" rendered="#{not empty request.remoteUser}">
+            <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.logout.contentleft.title"]}</h2>
+        </f:subview>
 
-        </ui:define>
+    </ui:define>
 
-        <ui:define name="content">
-            <f:subview id="loginView" rendered="#{empty request.remoteUser}">
-                <h:form id="loginForm">
-                    <div class="input-group mb-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.login.form.label.login"]}</span>
-                        </div>
-                        <p:inputText id="login" class="form-control" value="#{loginController.userName}" required="true"
-                                     validatorMessage="${msg['page.buildingsales.login.form.user.name.error']}"
-                                     a:placeholder= "${msg['page.buildingsales.login.form.label.login.placeholder']}">
-                            <f:validateLength minimum="5" maximum="50"/>
-                        </p:inputText>
-                        <p:message for="login" />
+    <ui:define name="content">
+        <f:subview id="loginView" rendered="#{empty request.remoteUser}">
+            <h:form id="loginForm">
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-secondary text-white"
+                              style="width: 250px">${msg["page.buildingsales.login.form.label.login"]}</span>
                     </div>
-                    <div class="input-group mb-4">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text bg-secondary text-white" style="width: 250px">${msg["page.buildingsales.login.form.label.password"]}</span>
-                        </div>
-                        <p:password id="password" class="form-control" value="#{loginController.password}" required="true" feedback="true"
-                                    a:placeholder= "${msg['page.buildingsales.login.form.label.password.placeholder']}"
-                                    validatorMessage="${msg['page.buildingsales.login.form.password.error']}">
-                            <f:validateLength minimum="8" maximum="20"/>
-                        </p:password>
-                        <p:message for="password"/>
+                    <p:inputText id="login" class="form-control" value="#{loginController.userName}" required="true"
+                                 validatorMessage="${msg['page.buildingsales.login.form.user.name.error']}"
+                                 a:placeholder="${msg['page.buildingsales.login.form.label.login.placeholder']}">
+                        <f:validateLength minimum="5" maximum="50"/>
+                    </p:inputText>
+                    <p:message for="login"/>
+                </div>
+                <div class="input-group mb-4">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-secondary text-white"
+                              style="width: 250px">${msg["page.buildingsales.login.form.label.password"]}</span>
                     </div>
-                    <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.login.form.button.login']}" action="#{loginController.login}"
-                                     styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "
-                                     validateClient="true" />
-                </h:form>
-            </f:subview>
-            <f:subview id="logoutView" rendered="#{not empty request.remoteUser}">
-                <h:form>
-                    <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.main.top.header.logout']}" action="#{loginController.logout}"
-                                     styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff " />
-                </h:form>
+                    <p:password id="password" class="form-control" value="#{loginController.password}" required="true"
+                                feedback="true"
+                                a:placeholder="${msg['page.buildingsales.login.form.label.password.placeholder']}"
+                                validatorMessage="${msg['page.buildingsales.login.form.password.error']}">
+                        <f:validateLength minimum="8" maximum="20"/>
+                    </p:password>
+                    <p:message for="password"/>
+                </div>
+                <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.login.form.button.login']}"
+                                 action="#{loginController.login}"
+                                 styleClass="btn btn-primary form-control text-white"
+                                 style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "
+                                 validateClient="true"/>
 
-            </f:subview>
-        </ui:define>
+            </h:form>
+            <div style="margin-top: 50px">
+                <p:linkButton icon="pi pi-star" value="${msg['page.buildingsales.password.reset.form.button.login']}"
+                              outcome="changePass"
+                              styleClass="btn btn-primary form-control text-white"
+                              style="padding-top: 5px; background-image: none; text-shadow: 0px 0px 0px #ffffff "/>
+            </div>
+        </f:subview>
+        <f:subview id="logoutView" rendered="#{not empty request.remoteUser}">
+            <h:form>
+                <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.main.top.header.logout']}"
+                                 action="#{loginController.logout}"
+                                 styleClass="btn btn-primary form-control text-white"
+                                 style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "/>
+            </h:form>
 
-    </ui:composition>
+        </f:subview>
+    </ui:define>
+
+</ui:composition>
 
 </html>

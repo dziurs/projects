@@ -5,6 +5,7 @@ import app.dto.ReviewDTO;
 import app.endpoints.BuildingSalesEndpoint;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
+import app.exception.NoKeyFlashException;
 import org.primefaces.model.ByteArrayContent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -17,6 +18,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +45,7 @@ public class DisplayReviewController implements Serializable {
         Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
         ReviewDTO reviewDTOFromFlash = (ReviewDTO)flash.get("review");
         setReviewDTO(reviewDTOFromFlash);
-        this.streamedContent = convertByteArrayToStreamedContent(reviewDTOFromFlash.getImage());
+        this.streamedContent = convertByteArrayToStreamedContent(reviewDTOFromFlash);
         try {
             this.meetingDTOList = endpoint.getMeetingList(reviewDTO);
         }catch (GeneralApplicationException ex) {
@@ -51,13 +53,18 @@ public class DisplayReviewController implements Serializable {
             saveMessageInFlashScope();
             FacesContext facesContext = FacesContext.getCurrentInstance();
             NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
-            navigationHandler.handleNavigation(facesContext,null,"reviewDisplaySite");
+            navigationHandler.handleNavigation(facesContext,null,"index");
+        }catch (NoKeyFlashException ex){
+            addMessage(bundle.getString(ex.getMessage()), null, FacesMessage.SEVERITY_ERROR);
+            saveMessageInFlashScope();
+            FacesContext facesContext = FacesContext.getCurrentInstance();
+            facesContext.getApplication().getNavigationHandler().handleNavigation(facesContext,null,"index");
         }catch (BuildingSalesAppException ex) {
             addMessage(ex.getCause().getMessage(), null, FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
             FacesContext facesContext = FacesContext.getCurrentInstance();
             NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();
-            navigationHandler.handleNavigation(facesContext,null,"reviewDisplaySite");
+            navigationHandler.handleNavigation(facesContext,null,"index");
         }
     }
 
@@ -77,8 +84,9 @@ public class DisplayReviewController implements Serializable {
         this.meetingDTOList = meetingDTOList;
     }
 
-    private StreamedContent convertByteArrayToStreamedContent(byte [] image){
-        return new ByteArrayContent(image);
+    private StreamedContent convertByteArrayToStreamedContent(ReviewDTO reviewDTO){
+        if(reviewDTO==null) return new ByteArrayContent(new byte[1]);
+        else return new ByteArrayContent(reviewDTO.getImage());
     }
 
     private void addMessage(String message, String detail, FacesMessage.Severity f){

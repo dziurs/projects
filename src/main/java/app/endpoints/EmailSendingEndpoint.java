@@ -39,6 +39,9 @@ public class EmailSendingEndpoint {
     public void sendEmail(String toUser, String link) throws EmailSendingException {
         emailService.sendEmail(email,param,serveSMTP,port,link,toUser);
     }
+    public void sendResetPasswordEmail(String toUser, String link) throws EmailSendingException {
+        emailService.sendPasswordReset(email,param,serveSMTP,port,link,toUser);
+    }
 
     public String getAppContext() {
         return appContext;

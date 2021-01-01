@@ -110,12 +110,15 @@ public class BuildingSalesEndpoint implements Serializable {
         reviewManager.reviewDelete(review);
     }
     public List<MeetingDTO> getMeetingList(ReviewDTO reviewDTO) throws BuildingSalesAppException {
-        List<Review> list = reviewDAO.findByID(reviewDTO.getId());
-        if(list.size()==0) throw new GeneralApplicationException(GeneralApplicationException.REVIEW);
-        Review review = list.get(0);
-        List<Meeting> meetingList = meetingManager.getMeetingList(review);
-        List<MeetingDTO> meetingDTOList = meetingIterator(meetingList);
-        return meetingDTOList;
+        if(reviewDTO!=null) {
+            List<Review> list = reviewDAO.findByID(reviewDTO.getId());
+            if (list.size() == 0) throw new GeneralApplicationException(GeneralApplicationException.REVIEW);
+            Review review = list.get(0);
+            List<Meeting> meetingList = meetingManager.getMeetingList(review);
+            List<MeetingDTO> meetingDTOList = meetingIterator(meetingList);
+            return meetingDTOList;
+        }
+        else throw new NoKeyFlashException(NoKeyFlashException.EMPTY_FLASH);
     }
     public DeveloperDTO findDeveloperByEmail(String email) throws BuildingSalesAppException{
         Developer developer = developerManager.fingDeveloperByEmail(email);
@@ -175,6 +178,16 @@ public class BuildingSalesEndpoint implements Serializable {
         User user = userList.get(0);
         List<Meeting> meetingList = meetingManager.getMettingsAcceptedByUser(user);
         return meetingIterator(meetingList);
+    }
+
+    public List<MeetingDTO> getDeveloperMeetingsAcceptedByUsers(String login) throws BuildingSalesAppException {
+        if(login==null) throw new GeneralApplicationException(GeneralApplicationException.PRINCIPAL);
+        List<Developer> developerList = developerDAO.findByEmail(login);
+        if(developerList.size()==0) throw new AccountException(AccountException.LOGIN);
+        Developer developer = developerList.get(0);
+        List<Meeting> acceptedList = meetingManager.getDeveloperMeetingsAcceptedList(developer);
+        List<MeetingDTO> meetingDTOList = meetingIterator(acceptedList);
+        return meetingDTOList;
     }
 
     public List<ReviewDTO> getAllReviews(){

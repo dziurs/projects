@@ -4,6 +4,7 @@ import app.dao.MeetingDAO;
 import app.dao.ReviewDAO;
 import app.exception.AppDataBaseException;
 import app.exception.BuildingSalesAppException;
+import app.model.entity.Developer;
 import app.model.entity.Meeting;
 import app.model.entity.Review;
 import app.model.entity.User;
@@ -68,5 +69,8 @@ public class MeetingManager {
     }
     public List<Meeting> getMettingsAcceptedByUser(User user){
         return meetingDAO.findByUser(user);
+    }
+    public List<Meeting> getDeveloperMeetingsAcceptedList(Developer developer){
+        return meetingDAO.findDevelopersMeetingsAcceptedByUser(developer);
     }
 }

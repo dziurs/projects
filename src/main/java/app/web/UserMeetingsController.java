@@ -46,8 +46,7 @@ public class UserMeetingsController implements Serializable {
 
     @PostConstruct
     public void init(){
-        long oneHour = 60 * 60 * 1000;
-        this.now = new Date(new Date().getTime()+oneHour);
+        this.now = new Date();
         try {
             setMeetingDTOList(endpoint.getMeetingsAcceptedByUser(principal.getName()));
         }catch (AccountException e) {
@@ -60,17 +59,14 @@ public class UserMeetingsController implements Serializable {
     }
     public void cancelMeeting(ActionEvent event){
         MeetingDTO meetingDTO = (MeetingDTO) event.getComponent().getAttributes().get("meetingToCancel");
-        System.out.println("id meeting "+meetingDTO.getId());
         try {
             Date meetingDTODate = meetingDTO.getDate();
             long twoDays = 2 * 24 * 60 * 60 * 1000;
             if(now.getTime()+twoDays<meetingDTODate.getTime()){
                 endpoint.cancelMeeting(meetingDTO);
-                System.out.println("to się wykonało ");
             }
             else {
                 addMessage(bundle.getString("page.buildingsales.cancel.meeting.by.user.48.hours"),bundle.getString("page.buildingsales.cancel.meeting.by.user.48.hours.details"),FacesMessage.SEVERITY_WARN);
-                System.out.println("to sie nie wykonało");
             }
             FacesContext facesContext = FacesContext.getCurrentInstance();
             NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();

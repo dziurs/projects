@@ -29,8 +29,6 @@ public class AddMeetingController{
 
     private MeetingDTO meetingDTO;
 
-//    private Date tomorrowDate;
-
     private Date date;
 
     private StreamedContent streamedContent;
@@ -47,9 +45,7 @@ public class AddMeetingController{
         this.reviewDTO = reviewDTOFromFlash;
         this.streamedContent = convertByteArrayToStreamedContent(reviewDTOFromFlash.getImage());
         this.meetingDTO = new MeetingDTO();
-        long oneHour = 60 * 60 * 1000;
-//        this.tomorrowDate = new Date(new Date().getTime()+oneDay);
-        this.date = new Date(new Date().getTime()+oneHour);
+        this.date = new Date();
 
         try {
             this.meetingDTOList = endpoint.getMeetingList(reviewDTO);

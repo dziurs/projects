@@ -3,16 +3,20 @@ package app.dao;
 import app.exception.AppDataBaseException;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
+import app.model.entity.Developer;
 import app.model.entity.Review;
 import app.model.entity.Meeting;
 import app.model.entity.User;
 import org.eclipse.persistence.exceptions.DatabaseException;
-
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
@@ -67,5 +71,18 @@ public class MeetingDAO extends GenericAbstractDAO {
         TypedQuery<Meeting> namedQuery = entityManager.createNamedQuery("Meeting.findByReview", Meeting.class);
         namedQuery.setParameter("review", review);
         return namedQuery.getResultList();
+    }
+    public List<Meeting> findDevelopersMeetingsAcceptedByUser (Developer developer){
+        joinTransaction();
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Meeting> criteria = criteriaBuilder.createQuery(Meeting.class);
+        Root<Meeting> root = criteria.from(Meeting.class);
+        Predicate predicate = criteriaBuilder.and(
+                criteriaBuilder.equal(root.get("review").get("developer"), developer),
+                criteriaBuilder.equal(root.get("addedByUser"), true));
+        criteria.select(root).where(predicate);
+        criteria.orderBy(criteriaBuilder.desc(root.get("creationDate")));
+        TypedQuery<Meeting> query = entityManager.createQuery(criteria);
+        return query.getResultList();
     }
 }

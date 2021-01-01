@@ -21,6 +21,12 @@ public class EmailService {
                 "<p><a href=\""+url+"\">"+bundle.getString("email.message.click")+"</a></p></body>";
         prepareEmail(text,mainEmail,param,server,port,clientEmail);
     }
+    public void sendPasswordReset(String mainEmail, String param, String server, String port, String url, String clientEmail) throws EmailSendingException {
+        String text = "<!doctype html> <html lang=\"pl\"><head> <meta charset=\"utf-8\"> " +
+                "</head> <body> <p>"+bundle.getString("reset.password.email.message")+"</p><br />" +
+                "<p><a href=\""+url+"\">"+bundle.getString("email.message.click")+"</a></p></body>";
+        prepareEmail(text,mainEmail,param,server,port,clientEmail);
+    }
     private void prepareEmail(String text, String mainEmail, String param, String server, String port, String clientEmail) throws EmailSendingException {
         Properties properties = new Properties();
         properties.put("mail.smtp.auth", "true");

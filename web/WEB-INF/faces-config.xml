@@ -119,5 +119,20 @@
             <to-view-id>/user/userMeetings.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>developerMeetings</from-outcome>
+            <to-view-id>/developer/myMeetingsWithUsers.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>changePass</from-outcome>
+            <to-view-id>/login/changePassword.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>insertNewPass</from-outcome>
+            <to-view-id>/accounts/insertNewPassword.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>

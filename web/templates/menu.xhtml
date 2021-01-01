@@ -20,6 +20,7 @@
             </p:submenu>
             <p:menuitem value="${msg['page.buildingsales.main.top.header.addReview']}" rendered="#{request.isUserInRole('Developer')}" outcome="addReview" icon="pi pi-cog" styleClass="text-white" />
             <p:menuitem value="${msg['page.buildingsales.main.top.header.myReview']}" rendered="#{request.isUserInRole('Developer')}" outcome="myReviews" icon="pi pi-cog" styleClass="text-white" />
+            <p:menuitem value="${msg['page.buildingsales.main.top.header.developer.meetings']}" rendered="#{request.isUserInRole('Developer')}" outcome="developerMeetings" icon="pi pi-cog" styleClass="text-white" />
             <p:menuitem value="${msg['page.buildingsales.main.top.header.edit.developer']}" rendered="#{request.isUserInRole('Developer')}" outcome="editDeveloper" icon="pi pi-cog" styleClass="nav-link text-white"/>
             <p:menuitem value="${msg['page.buildingsales.main.top.header.edit.user']}" rendered="#{request.isUserInRole('User')}" outcome="editUser" icon="pi pi-cog" styleClass="nav-link text-white"/>
             <p:menuitem value="${msg['page.buildingsales.main.top.header.meetings.user']}" rendered="#{request.isUserInRole('User')}" outcome="myMeetings" icon="pi pi-cog" styleClass="nav-link text-white"/>

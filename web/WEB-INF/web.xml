@@ -47,10 +47,14 @@
         <param-name>port</param-name>
         <param-value>587</param-value>
     </context-param>
+    <context-param>
+        <param-name>javax.faces.DATETIMECONVERTER_DEFAULT_TIMEZONE_IS_SYSTEM_TIMEZONE</param-name>
+        <param-value>true</param-value>
+    </context-param>
 
     <session-config>
         <session-timeout>
-            2
+            10
         </session-timeout>
     </session-config>
 

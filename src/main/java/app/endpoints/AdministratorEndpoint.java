@@ -18,13 +18,14 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
 @Local
 @Transactional(value = Transactional.TxType.REQUIRES_NEW)
-public class AdministratorEndpoint {
+public class AdministratorEndpoint implements Serializable {
 
     @Inject
     private AccountDAO accountDAO;
