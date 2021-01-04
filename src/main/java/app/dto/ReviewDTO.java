@@ -3,6 +3,8 @@ package app.dto;
 import app.dto.DeveloperDTO;
 import app.model.enums.BuildingType;
 
+import java.util.Arrays;
+
 public class ReviewDTO {
     /* if You create ReviewDTO from web page input, set 'id' less than zero, in the other case ConverterDTOToEntity
     should not work correctly */
@@ -121,4 +123,19 @@ public class ReviewDTO {
         this.developer = developer;
     }
 
+    @Override
+    public String toString() {
+        return "ReviewDTO{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", area=" + area +
+                ", buildingType=" + buildingType +
+                ", livingSpace=" + livingSpace +
+                ", garage=" + garage +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", postCode='" + postCode + '\'' +
+                ", developer=" + developer +
+                '}';
+    }
 }

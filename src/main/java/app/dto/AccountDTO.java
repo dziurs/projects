@@ -38,4 +38,14 @@ public class AccountDTO {
     public void setRole(String role) {
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return "AccountDTO{" +
+                "login='" + login + '\'' +
+                ", activate=" + activate +
+                ", pid=" + pid +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }

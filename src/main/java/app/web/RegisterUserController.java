@@ -7,6 +7,7 @@ import app.exception.BuildingSalesAppException;
 import app.exception.EmailSendingException;
 import app.exception.AccountException;
 import app.exception.GeneralApplicationException;
+import app.security.Crypter;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -76,7 +77,7 @@ public class RegisterUserController implements Serializable {
 
     public String registered() {
         try {
-            int pid = endpoint.registerUser(getUserDTO(), getPassword());
+            int pid = endpoint.registerUser(getUserDTO(), Crypter.crypt(getPassword()));
             builder = new StringBuilder(emailSendingEndpoint.getAppContext());
             builder.append("/accounts/activateUser.xhtml?emailparam=");
             builder.append(userDTO.getEmail());

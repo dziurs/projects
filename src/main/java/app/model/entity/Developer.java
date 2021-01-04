@@ -150,6 +150,24 @@ public class Developer implements Serializable, Audit {
         result = 31 * result + email.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Developer{" +
+                "id=" + id +
+                ", version=" + version +
+                ", surname='" + surname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", userType=" + userType +
+                ", email=" + email +
+                ", creationUserLogin='" + creationUserLogin + '\'' +
+                ", modificationUserLogin='" + modificationUserLogin + '\'' +
+                ", creationDate=" + creationDate +
+                ", modificationDate=" + modificationDate +
+                '}';
+    }
+
     @Override
     public Date getCreationDate() {
         return creationDate;

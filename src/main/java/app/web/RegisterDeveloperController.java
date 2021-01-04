@@ -5,6 +5,7 @@ import app.endpoints.BuildingSalesEndpoint;
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
+import app.security.Crypter;
 
 import javax.enterprise.context.Conversation;
 import javax.enterprise.context.ConversationScoped;
@@ -52,7 +53,7 @@ public class RegisterDeveloperController implements Serializable {
     }
     public String registered(){
         try {
-            endpoint.registerDeveloper(developerDTO, password);
+            endpoint.registerDeveloper(developerDTO, Crypter.crypt(password));
             if(!conversation.isTransient()) conversation.end();
             addMessage(bundle.getString("register.developer.controller.success"),bundle.getString("register.developer.controller.success.detail"));
             saveMessageInFlashScope();

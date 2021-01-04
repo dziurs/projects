@@ -1,10 +1,11 @@
 package app.interceptor;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import javax.security.enterprise.SecurityContext;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,8 +14,8 @@ import java.util.logging.Logger;
 @Log
 public class LogInterceptor {
 
-    @Inject
-    SecurityContext securityContext;
+    @Resource
+    private SessionContext sessionContext;
 
     private Logger logger;
 
@@ -29,18 +30,17 @@ public class LogInterceptor {
         builder = new StringBuilder("Registration of the use of the business method ");
         builder.append(context.getMethod().getName());
         builder.append(" from the class ");
-        builder.append(context.getMethod().getClass().getName());
+        builder.append(context.getMethod().getDeclaringClass().getName());
         builder.append(" invoked by ");
-        builder.append(securityContext.getCallerPrincipal().getName());
+        builder.append(sessionContext.getCallerPrincipal().getName());
         builder.append(" at time " + new Date().toString());
         Object[] parameters = context.getParameters();
         if (null != parameters) {
             for (Object o : parameters) {
-                if (o != null) {
-                    builder.append(" with parameter ").append(o.getClass().getName()).append('=').append(o);
-                } else {
-                    builder.append(" without value - (null)");
-                }
+                if (null != o) {
+                    builder.append(" with parameter ").append(o.getClass().getName()).append('=').append(o.toString());
+
+                }else builder.append(" without value - (null)");
             }
         }
         logger = Logger.getLogger(getClass().getName());
@@ -54,8 +54,8 @@ public class LogInterceptor {
             }
             return proceed;
         }catch (Exception e){
-            logger.log(Level.SEVERE, "can't invoke bussines method class name " + context.getMethod().getClass().getName() + " method name " + context.getMethod().getName()
-            +" invoked by " +securityContext.getCallerPrincipal().getName()+ " at time " + new Date().toString());
+            logger.log(Level.SEVERE, "can't invoke bussines method class name " + context.getMethod().getDeclaringClass().getName() + " method name " + context.getMethod().getName()
+            +" invoked by " + sessionContext.getCallerPrincipal().getName()+ " at time " + new Date().toString());
             throw e;
         }
         finally {

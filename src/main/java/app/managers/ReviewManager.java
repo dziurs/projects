@@ -6,10 +6,10 @@ import app.dao.ReviewDAO;
 import app.dto.ReviewDTO;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
+import app.interceptor.Log;
 import app.model.entity.Developer;
 import app.model.entity.Review;
 import app.model.enums.BuildingType;
-
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -30,12 +30,15 @@ public class ReviewManager {
     @Inject
     private DeveloperDAO developerDAO;
 
+    @Log
     public void addReview(Developer developer, Review review) throws BuildingSalesAppException {
         review.setDeveloper(developer);
         developer.addReview(review);
         reviewDAO.create(review);
         developerDAO.update(developer);
     }
+
+    @Log
     public List<ReviewDTO> getDeveloperReviews(String developerLogin) {
         List<Developer> list = developerDAO.findByEmail(developerLogin);
         Developer developer = list.get(0);
@@ -43,12 +46,16 @@ public class ReviewManager {
         List<Review> reviewList = new ArrayList<>(reviews);
         return addReviewDTO(reviewList);
     }
+
+    @Log
     public void reviewDelete(Review review) throws BuildingSalesAppException {
         Developer developer = review.getDeveloper();
         developer.removeReview(review);
         developerDAO.update(developer);
 //        reviewDAO.delete(review);
     }
+
+    @Log
     public ReviewDTO findReviewByID(int id) throws BuildingSalesAppException {
         List<Review> list = reviewDAO.findByID(id);
         if (list.size()==0)throw new GeneralApplicationException(GeneralApplicationException.KEY_OPTIMISTIC_LOCK);
@@ -57,30 +64,36 @@ public class ReviewManager {
         return reviewDTO;
     }
 
+    @Log
     public void editReview(Review review) throws BuildingSalesAppException {
         reviewDAO.update(review);
     }
 
+    @Log
     public List<ReviewDTO> findAll(){
         List<Review> reviewList = reviewDAO.readAll();
         return addReviewDTO(reviewList);
     }
 
+    @Log
     public List<ReviewDTO> findAllByCity(String city){
         List<Review> reviewList = reviewDAO.findByCity(city);
         return addReviewDTO(reviewList);
     }
 
+    @Log
     public List<ReviewDTO> findAllByBuildingType(BuildingType buildingType){
         List<Review> reviewList = reviewDAO.findByBuildingType(buildingType);
         return addReviewDTO(reviewList);
     }
 
+    @Log
     public List<ReviewDTO> findAllByCityAndBuildingType(String city, BuildingType buildingType){
         List<Review> reviewList = reviewDAO.findByCityAndBuildingType(city,buildingType);
         return addReviewDTO(reviewList);
     }
 
+    @Log
     private List<ReviewDTO> addReviewDTO(List<Review> reviewList){
         List<ReviewDTO> reviewDTOList = new ArrayList<>();
         Iterator<Review> iterator = reviewList.iterator();

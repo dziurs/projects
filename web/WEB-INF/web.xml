@@ -56,6 +56,7 @@
         <session-timeout>
             10
         </session-timeout>
+        <tracking-mode>URL</tracking-mode>
     </session-config>
 
     <error-page>
@@ -68,7 +69,7 @@
     </error-page>
     <error-page>
         <error-code>500</error-code>
-        <location>/error/error.xhtml</location>
+        <location>/error/error500.xhtml</location>
     </error-page>
     <error-page>
         <exception-type>java.lang.RuntimeException</exception-type>
@@ -96,7 +97,7 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>developer_resources</web-resource-name>
+            <web-resource-name>developer</web-resource-name>
             <url-pattern>/developer/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
@@ -118,7 +119,7 @@
 
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>developer_resources</web-resource-name>
+            <web-resource-name>admin</web-resource-name>
             <url-pattern>/admin/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
@@ -132,6 +133,72 @@
         <auth-constraint>
             <role-name>Administrator</role-name>
         </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>reviews</web-resource-name>
+            <url-pattern>/rewiew/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>DELETE</http-method>
+            <http-method>CONNECT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>Developer</role-name>
+            <role-name>User</role-name>
+            <role-name>Administrator</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>user</web-resource-name>
+            <url-pattern>/user/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>DELETE</http-method>
+            <http-method>CONNECT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>User</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <description/>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>searched</web-resource-name>
+            <url-pattern>/search/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>PUT</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>DELETE</http-method>
+            <http-method>CONNECT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+        </web-resource-collection>
         <user-data-constraint>
             <description/>
             <transport-guarantee>CONFIDENTIAL</transport-guarantee>

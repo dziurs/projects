@@ -132,6 +132,22 @@ public class User implements Serializable, Audit {
     }
 
     @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", version=" + version +
+                ", surname='" + surname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", userType=" + userType +
+                ", email=" + email +
+                ", creationUserLogin='" + creationUserLogin + '\'' +
+                ", modificationUserLogin='" + modificationUserLogin + '\'' +
+                ", creationDate=" + creationDate +
+                ", modificationDate=" + modificationDate +
+                '}';
+    }
+
+    @Override
     public Date getCreationDate() {
         return creationDate;
     }

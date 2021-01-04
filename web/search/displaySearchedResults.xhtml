@@ -14,8 +14,9 @@
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          currentPageReportTemplate="{startRecord}-{endRecord} ${msg['page.buildingsales.search.pagination.of']} {totalRecords} ${msg['page.buildingsales.search.pagination.records']}"
                          rowsPerPageTemplate="5,10,15" value="#{reviewsSearchingController.reviewDTOList}"
+                         rows="5"
                          paginatorPosition="bottom"
-                         emptyMessage="#{msg['']}">
+                         emptyMessage="#{msg['page.buildingsales.search.pagination.empty']}">
                 <p:column styleClass="table table-dark table-striped text-warning" style="background-image: none; text-shadow: 0px 0px 0px #ffffff">
                     <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.title']}</f:facet>
                     <h:outputText value="#{review.title}" styleClass="text-white" />

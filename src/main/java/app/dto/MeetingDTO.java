@@ -62,4 +62,15 @@ public class MeetingDTO {
     public void setAddedByUser(boolean addedByUser) {
         this.addedByUser = addedByUser;
     }
+
+    @Override
+    public String toString() {
+        return "MeetingDTO{" +
+                "id=" + id +
+                ", date=" + date +
+                ", addedByUser=" + addedByUser +
+                ", user=" + user +
+                ", review=" + review +
+                '}';
+    }
 }

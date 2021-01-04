@@ -118,6 +118,23 @@ public class Meeting implements Serializable, Audit {
         result = 31 * result + review.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Meeting{" +
+                "id=" + id +
+                ", version=" + version +
+                ", date=" + date +
+                ", addedByUser=" + addedByUser +
+                ", user=" + user +
+                ", review=" + review +
+                ", creationUserLogin='" + creationUserLogin + '\'' +
+                ", modificationUserLogin='" + modificationUserLogin + '\'' +
+                ", creationDate=" + creationDate +
+                ", modificationDate=" + modificationDate +
+                '}';
+    }
+
     @Override
     public Date getCreationDate() {
         return creationDate;

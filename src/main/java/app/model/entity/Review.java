@@ -293,6 +293,28 @@ public class Review implements Serializable, Audit {
         result = 31 * result + developer.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", version=" + version +
+                ", title='" + title + '\'' +
+                ", area=" + area +
+                ", buildingType=" + buildingType +
+                ", livingSpace=" + livingSpace +
+                ", garage=" + garage +
+                ", city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", postCode='" + postCode + '\'' +
+                ", developer=" + developer +
+                ", creationUserLogin='" + creationUserLogin + '\'' +
+                ", modificationUserLogin='" + modificationUserLogin + '\'' +
+                ", creationDate=" + creationDate +
+                ", modificationDate=" + modificationDate +
+                '}';
+    }
+
     @Override
     public Date getCreationDate() {
         return creationDate;

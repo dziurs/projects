@@ -96,4 +96,15 @@ public class Account implements Serializable {
     public int hashCode() {
         return Objects.hash(getLogin(), getPassword());
     }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "version=" + version +
+                ", login='" + login + '\'' +
+                ", activate=" + activate +
+                ", pid=" + pid +
+                ", role=" + role +
+                '}';
+    }
 }

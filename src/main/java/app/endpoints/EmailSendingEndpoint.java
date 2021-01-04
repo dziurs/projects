@@ -2,14 +2,14 @@ package app.endpoints;
 
 import app.exception.EmailSendingException;
 import app.services.EmailService;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import java.io.Serializable;
 
 @ApplicationScoped
-public class EmailSendingEndpoint {
+public class EmailSendingEndpoint implements Serializable {
 
     @Inject
     private EmailService emailService;
@@ -39,6 +39,7 @@ public class EmailSendingEndpoint {
     public void sendEmail(String toUser, String link) throws EmailSendingException {
         emailService.sendEmail(email,param,serveSMTP,port,link,toUser);
     }
+
     public void sendResetPasswordEmail(String toUser, String link) throws EmailSendingException {
         emailService.sendPasswordReset(email,param,serveSMTP,port,link,toUser);
     }

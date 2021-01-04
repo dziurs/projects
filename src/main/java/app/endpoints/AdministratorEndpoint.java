@@ -8,6 +8,7 @@ import app.dao.UserDAO;
 import app.dto.AccountDTO;
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
+import app.interceptor.Log;
 import app.managers.AccountManager;
 import app.model.entity.Developer;
 import app.model.entity.User;
@@ -20,6 +21,7 @@ import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @Stateless
@@ -39,6 +41,7 @@ public class AdministratorEndpoint implements Serializable {
     @Inject
     private AccountManager accountManager;
 
+    @Log
     public List<AccountDTO> getUserAccounts(){
         List<Account> accounts = accountDAO.findByRole("USER");
         List<AccountDTO> accountDTOList = new ArrayList<>();
@@ -49,26 +52,35 @@ public class AdministratorEndpoint implements Serializable {
         }
         return accountDTOList;
     }
+
+    @Log
     public List<AccountDTO> getDeveloperAccounts(){
         List<Account> accounts = accountDAO.findByRole("DEVELOPER");
         List<AccountDTO> accountDTOList = new ArrayList<>();
-        for (Account a: accounts) {
-            AccountDTO accountDTO = ConverterEntityToDTO.convertAccountToAccountDTO(a);
+        Iterator<Account> iterator = accounts.iterator();
+        while (iterator.hasNext()){
+            Account next = iterator.next();
+            AccountDTO accountDTO = ConverterEntityToDTO.convertAccountToAccountDTO(next);
             accountDTOList.add(accountDTO);
-
         }
         return accountDTOList;
     }
+
+    @Log
     public void activateAccount(AccountDTO accountDTO) throws BuildingSalesAppException {
         Account account = ConverterDTOToEntity.convertAccountDTOToAccount(accountDTO, accountDAO);
         account.setActivate(true);
         accountDAO.update(account);
     }
+
+    @Log
     public void deactivateAccount(AccountDTO accountDTO) throws BuildingSalesAppException {
         Account account = ConverterDTOToEntity.convertAccountDTOToAccount(accountDTO, accountDAO);
         account.setActivate(false);
         accountDAO.update(account);
     }
+
+    @Log
     public void deleteUserAccount(AccountDTO accountDTO) throws BuildingSalesAppException {
         Account account = ConverterDTOToEntity.convertAccountDTOToAccount(accountDTO, accountDAO);
         String email = deleteAccount(account);
@@ -77,6 +89,8 @@ public class AdministratorEndpoint implements Serializable {
         User user = users.get(0);
         userDAO.delete(user);
     }
+
+    @Log
     public void deleteDeveloperAccount(AccountDTO accountDTO) throws BuildingSalesAppException {
         Account account = ConverterDTOToEntity.convertAccountDTOToAccount(accountDTO, accountDAO);
         String login = deleteAccount(account);
@@ -85,16 +99,22 @@ public class AdministratorEndpoint implements Serializable {
         Developer developer = developers.get(0);
         developerDAO.delete(developer);
     }
+
+    @Log
     public String findAccountPassByLogin(String login) throws BuildingSalesAppException {
         Account account = accountManager.findAccountByLogin(login);
         return account.getPassword();
     }
+
+    @Log
     public void setNewPasswordForAccount(String login, String newPassword) throws BuildingSalesAppException {
         Account account = accountManager.findAccountByLogin(login);
         String cryptedPass = Crypter.crypt(newPassword);
         account.setPassword(cryptedPass);
         accountManager.saveNewPassword(account);
     }
+
+    @Log
     private String deleteAccount(Account account) throws BuildingSalesAppException{
         String login = account.getLogin();
         accountDAO.delete(account);

@@ -46,4 +46,14 @@ public class DeveloperDTO {
     public String getEmail() {
         return email;
     }
+
+    @Override
+    public String toString() {
+        return "DeveloperDTO{" +
+                "surname='" + surname + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", companyName='" + companyName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

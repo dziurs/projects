@@ -4,6 +4,7 @@ import app.dao.MeetingDAO;
 import app.dao.ReviewDAO;
 import app.exception.AppDataBaseException;
 import app.exception.BuildingSalesAppException;
+import app.interceptor.Log;
 import app.model.entity.Developer;
 import app.model.entity.Meeting;
 import app.model.entity.Review;
@@ -23,28 +24,19 @@ public class MeetingManager {
     private ReviewDAO reviewDAO;
     @Inject
     private MeetingDAO meetingDAO;
-//
-//    public void acceptMeeting(User user, Meeting meeting) throws BuildingSalesAppException {
-//        if(!meeting.isAddedByUser()){
-//            meeting.setUser(user);
-//            meeting.setAddedByUser(true);
-//            Review review = meeting.getReview();
-//            review.addUser(user);
-//            meetingDAO.joinTransaction();
-//            meetingDAO.update(meeting);
-//            reviewDAO.update(review);
-//        }else {
-//            throw new AppDataBaseException();
-//        }
-//
-//    }
+
+    @Log
     public List<Meeting> getMeetingList(Review review){
         return meetingDAO.findByReview(review);
     }
+
+    @Log
     public void addMeeting(Meeting meeting, Review review) throws BuildingSalesAppException {
         review.addMeeting(meeting);
         reviewDAO.update(review);
     }
+
+    @Log
     public void acceptMeetingByUser(Meeting meeting, User user) throws BuildingSalesAppException {
         if(!meeting.isAddedByUser()){
         meeting.setUser(user);
@@ -58,6 +50,7 @@ public class MeetingManager {
         }
     }
 
+    @Log
     public void cancelMeeting(Meeting meeting) throws BuildingSalesAppException{
         meeting.setAddedByUser(false);
         User user = meeting.getUser();
@@ -67,9 +60,13 @@ public class MeetingManager {
         reviewDAO.update(review);
         meetingDAO.update(meeting);
     }
+
+    @Log
     public List<Meeting> getMettingsAcceptedByUser(User user){
         return meetingDAO.findByUser(user);
     }
+
+    @Log
     public List<Meeting> getDeveloperMeetingsAcceptedList(Developer developer){
         return meetingDAO.findDevelopersMeetingsAcceptedByUser(developer);
     }

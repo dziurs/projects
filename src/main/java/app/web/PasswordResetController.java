@@ -74,6 +74,8 @@ public class PasswordResetController implements Serializable {
             builder.append(pid);
             String url = builder.toString();
             emailSendingEndpoint.sendResetPasswordEmail(login, url);
+            addMessage(bundle.getString("page.buildingsales.password.reset.email.send"), bundle.getString("page.buildingsales.password.reset.email.send.details"), FacesMessage.SEVERITY_INFO);
+            saveMessageInFlashScope();
             return "index";
         } catch (AccountException ex) {
             addMessage(bundle.getString(ex.getMessage()), null, FacesMessage.SEVERITY_ERROR);
@@ -194,7 +196,7 @@ public class PasswordResetController implements Serializable {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         HttpSession session = (HttpSession) facesContext.getExternalContext().getSession(false);
         if (session != null) session.invalidate();
-        addMessage(bundle.getString(bundle.getString("page.buildingsales.password.reset.success")), bundle.getString("page.buildingsales.password.reset.success.details"), FacesMessage.SEVERITY_INFO);
+        addMessage(bundle.getString("page.buildingsales.password.reset.success"), bundle.getString("page.buildingsales.password.reset.success.details"), FacesMessage.SEVERITY_INFO);
         saveMessageInFlashScope();
         return "index";
     }

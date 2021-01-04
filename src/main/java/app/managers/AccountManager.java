@@ -6,6 +6,7 @@ import app.dao.UserDAO;
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import app.exception.EmailSendingException;
+import app.interceptor.Log;
 import app.model.entity.Developer;
 import app.model.entity.User;
 import app.model.enums.UserType;
@@ -32,34 +33,40 @@ public class AccountManager {
     @Inject
     private AccountDAO accountDAO;
 
+    @Log
     public Account findAccountByLogin(String login) throws BuildingSalesAppException{
         List<Account> list = accountDAO.findByEmail(login);
         if(list.size()==0)throw new AccountException(AccountException.LOGIN);
         return list.get(0);
     }
 
+    @Log
     public void registerDeveloper(Developer developer , String password) throws BuildingSalesAppException {
         Account account = new Account();
         account.setLogin(developer.getEmail().getEmail());
         account.setActivate(false);
         account.setPid(new Random().nextInt(100000));
-        account.setPassword(Crypter.crypt(password));
+        account.setPassword(password);
         account.setRole(UserType.DEVELOPER);
         developerDAO.create(developer);
         accountDAO.create(account);
     }
+
+    @Log
     public int registerUser(User user, String password) throws BuildingSalesAppException {
         Account account = new Account();
         account.setLogin(user.getEmail().getEmail());
         account.setActivate(false);
         int pid = new Random().nextInt(100000);
         account.setPid(pid);
-        account.setPassword(Crypter.crypt(password));
+        account.setPassword(password);
         account.setRole(UserType.USER);
         userDAO.create(user);
         accountDAO.create(account);
         return pid;
     }
+
+    @Log
     public void activateUserAccount(String login, String pid) throws EmailSendingException {
         List<Account> list = accountDAO.findByEmail(login);
         if(list.size()==1){
@@ -76,6 +83,7 @@ public class AccountManager {
         }
     }
 
+    @Log
     public void saveNewPassword(Account account) throws BuildingSalesAppException {
         accountDAO.update(account);
     }

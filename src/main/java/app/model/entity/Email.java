@@ -63,4 +63,12 @@ public class Email implements Serializable {
         result = 31 * result + email.hashCode();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Email{" +
+                "version=" + version +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
