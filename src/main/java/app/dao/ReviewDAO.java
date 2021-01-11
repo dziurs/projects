@@ -16,6 +16,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
@@ -38,6 +39,8 @@ public class ReviewDAO extends GenericAbstractDAO<Review> {
     public void create(Review entity) throws BuildingSalesAppException {
         try {
             super.create(entity);
+        }catch (ConstraintViolationException e){
+            throw new GeneralApplicationException(GeneralApplicationException.CONSTRAINT_VIOLATION,e);
         }catch (PersistenceException ex){
             if (ex.getCause() instanceof DatabaseException && ex.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {
                 throw new GeneralApplicationException(GeneralApplicationException.KEY_OPTIMISTIC_LOCK,ex);
@@ -51,6 +54,8 @@ public class ReviewDAO extends GenericAbstractDAO<Review> {
     public void update(Review entity) throws BuildingSalesAppException {
         try{
             super.update(entity);
+        }catch (ConstraintViolationException e){
+            throw new GeneralApplicationException(GeneralApplicationException.CONSTRAINT_VIOLATION,e);
         }catch (OptimisticLockException e){
             throw new GeneralApplicationException(GeneralApplicationException.KEY_OPTIMISTIC_LOCK,e);
         }

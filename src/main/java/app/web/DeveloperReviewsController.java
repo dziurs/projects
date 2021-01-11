@@ -4,6 +4,8 @@ import app.dto.ReviewDTO;
 import app.endpoints.BuildingSalesEndpoint;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
+import app.security.SessionAccount;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -28,6 +30,9 @@ public class DeveloperReviewsController implements Serializable {
     @Inject
     BuildingSalesEndpoint endpoint;
 
+    @Inject
+    private SessionAccount sessionAccount;
+
     private String developerLogin;
 
     private List<ReviewDTO> reviewDTOList;
@@ -36,14 +41,12 @@ public class DeveloperReviewsController implements Serializable {
 
     private UIData table;
 
-
-    @Inject
-    public DeveloperReviewsController(SecurityContext securityContext) {
-        Principal callerPrincipal = securityContext.getCallerPrincipal();
-        developerLogin= callerPrincipal.getName();
+    public DeveloperReviewsController() {
     }
+
     @PostConstruct
     public void init(){
+        this.developerLogin = sessionAccount.getLogin();
         setReviewDTOList(endpoint.getDeveloperReviews(developerLogin));
         this.bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
               FacesContext.getCurrentInstance().getViewRoot().getLocale());

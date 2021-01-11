@@ -45,7 +45,7 @@ public class Developer implements Serializable, Audit {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", nullable = false)
-    private final UserType userType = UserType.DEVELOPER;
+    private UserType userType = UserType.DEVELOPER;
 
     @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name = "email_id", unique = true, nullable = false)

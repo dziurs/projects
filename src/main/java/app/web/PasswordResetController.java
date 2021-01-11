@@ -7,6 +7,8 @@ import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import app.exception.EmailSendingException;
 import app.security.Account;
+import app.security.Crypter;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -73,7 +75,8 @@ public class PasswordResetController implements Serializable {
             builder.append("&pidparam=");
             builder.append(pid);
             String url = builder.toString();
-            emailSendingEndpoint.sendResetPasswordEmail(login, url);
+            if(login.equals("admin")) emailSendingEndpoint.sendResetPasswordEmail("buildingSalesApp@gmail.com", url);
+            else emailSendingEndpoint.sendResetPasswordEmail(login, url);
             addMessage(bundle.getString("page.buildingsales.password.reset.email.send"), bundle.getString("page.buildingsales.password.reset.email.send.details"), FacesMessage.SEVERITY_INFO);
             saveMessageInFlashScope();
             return "index";
@@ -113,7 +116,8 @@ public class PasswordResetController implements Serializable {
         }else{
             if(validatePasswords(password,passwordRepeat)){
                 try{
-                    administratorEndpoint.setNewPasswordForAccount(login,password);
+                    String cryptedPass = Crypter.crypt(password);
+                    administratorEndpoint.setNewPasswordForAccount(login,cryptedPass);
                     return killSessionAndSendMessage();
                 }catch(AccountException ex){
                     return killSessionDuringExceptionAndSendMessage(ex);

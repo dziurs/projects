@@ -13,9 +13,10 @@ import app.managers.AccountManager;
 import app.model.entity.Developer;
 import app.model.entity.User;
 import app.security.Account;
-import app.security.Crypter;
 
-import javax.ejb.Local;
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -24,8 +25,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+
 @Stateless
-@Local
+@LocalBean
+@RolesAllowed("Administrator")
 @Transactional(value = Transactional.TxType.REQUIRES_NEW)
 public class AdministratorEndpoint implements Serializable {
 
@@ -100,18 +103,17 @@ public class AdministratorEndpoint implements Serializable {
         developerDAO.delete(developer);
     }
 
+    @PermitAll
     @Log
     public String findAccountPassByLogin(String login) throws BuildingSalesAppException {
         Account account = accountManager.findAccountByLogin(login);
         return account.getPassword();
     }
-
+    @PermitAll
     @Log
     public void setNewPasswordForAccount(String login, String newPassword) throws BuildingSalesAppException {
         Account account = accountManager.findAccountByLogin(login);
-        String cryptedPass = Crypter.crypt(newPassword);
-        account.setPassword(cryptedPass);
-        accountManager.saveNewPassword(account);
+        accountManager.saveNewPassword(account, newPassword);
     }
 
     @Log

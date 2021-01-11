@@ -6,6 +6,7 @@ import app.exception.GeneralApplicationException;
 import app.interceptor.Log;
 import app.model.entity.User;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @Stateless
 @Local
+@RolesAllowed("User")
 @Transactional(value = Transactional.TxType.MANDATORY)
 public class UserManager {
 

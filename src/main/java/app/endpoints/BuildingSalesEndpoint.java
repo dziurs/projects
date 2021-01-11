@@ -14,16 +14,16 @@ import app.model.entity.User;
 import app.model.enums.BuildingType;
 import app.security.Account;
 import javax.annotation.security.PermitAll;
-import javax.ejb.Local;
+import javax.annotation.security.RolesAllowed;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.*;
 
 @Stateless
-@Local
+@LocalBean
 @PermitAll
 @Transactional(Transactional.TxType.REQUIRES_NEW)
 public class BuildingSalesEndpoint implements Serializable {
@@ -85,21 +85,24 @@ public class BuildingSalesEndpoint implements Serializable {
         else return byEmail.get(0);
     }
 
+    @RolesAllowed("Developer")
     @Log
-    public void addReview (Principal principal, ReviewDTO reviewDTO) throws BuildingSalesAppException{
+    public void addReview (String principal, ReviewDTO reviewDTO) throws BuildingSalesAppException{
         if(principal==null) throw new GeneralApplicationException(GeneralApplicationException.PRINCIPAL);
-        List<Developer> list = developerDAO.findByEmail(principal.getName());
+        List<Developer> list = developerDAO.findByEmail(principal);
         if(list.size()==0) throw new AccountException(AccountException.LOGIN);
         Developer developer = list.get(0);
         Review review = ConverterDTOToEntity.convertReviewDTOToReview(reviewDTO, reviewDAO);
         reviewManager.addReview(developer,review);
     }
 
+    @RolesAllowed("Developer")
     @Log
     public List<ReviewDTO> getDeveloperReviews(String developerLogin){
         return reviewManager.getDeveloperReviews(developerLogin);
     }
 
+    @RolesAllowed("Developer")
     @Log
     public void editReviewByDeveloper(ReviewDTO reviewDTO) throws BuildingSalesAppException {
         Review review = ConverterDTOToEntity.convertReviewDTOToReviewWithEdit(reviewDTO, reviewDAO);
@@ -113,6 +116,7 @@ public class BuildingSalesEndpoint implements Serializable {
         return reviewDTO;
     }
 
+    @RolesAllowed("Developer")
     @Log
     public void reviewDelete(Integer id)throws BuildingSalesAppException{
         List<Review> reviews = reviewDAO.findByID(id);
@@ -134,19 +138,22 @@ public class BuildingSalesEndpoint implements Serializable {
         else throw new NoKeyFlashException(NoKeyFlashException.EMPTY_FLASH);
     }
 
+    @RolesAllowed("Developer")
     @Log
     public DeveloperDTO findDeveloperByEmail(String email) throws BuildingSalesAppException{
-        Developer developer = developerManager.fingDeveloperByEmail(email);
+        Developer developer = developerManager.findDeveloperByEmail(email);
         DeveloperDTO developerDTO = ConverterEntityToDTO.convertDeveloperToDeveloperDTO(developer);
         return developerDTO;
     }
 
+    @RolesAllowed("Developer")
     @Log
     public void saveEditedDeveloper(DeveloperDTO developerDTO) throws BuildingSalesAppException {
         Developer developer = ConverterDTOToEntity.convertDeveloperDTOToDeveloperWithEdit(developerDTO, developerDAO);
         developerManager.saveEditedDeveloper(developer);
     }
 
+    @RolesAllowed("User")
     @Log
     public UserDTO findUserByEmail(String email) throws BuildingSalesAppException {
         User user = userManager.findUserByEmail(email);
@@ -154,6 +161,7 @@ public class BuildingSalesEndpoint implements Serializable {
         return userDTO;
     }
 
+    @RolesAllowed("User")
     @Log
     public void saveEditedUser(UserDTO userDTO) throws BuildingSalesAppException {
         User user = ConverterDTOToEntity.convertUserDTOToUserWithEdit(userDTO, userDAO);
@@ -187,6 +195,7 @@ public class BuildingSalesEndpoint implements Serializable {
         return reviewManager.findAllByCityAndBuildingType(city, buildingType);
     }
 
+    @RolesAllowed("User")
     @Log
     public ReviewDTO acceptMeetingByUser(MeetingDTO meetingDTO, String login) throws BuildingSalesAppException {
         Meeting meeting = ConverterDTOToEntity.convertMeetingDTOToMeeting(meetingDTO, meetingDAO);
@@ -199,6 +208,7 @@ public class BuildingSalesEndpoint implements Serializable {
         return reviewDTO;
     }
 
+    @RolesAllowed("User")
     @Log
     public List<MeetingDTO> getMeetingsAcceptedByUser(String login) throws BuildingSalesAppException {
         List<User> userList = userDAO.findByEmail(login);
@@ -208,6 +218,7 @@ public class BuildingSalesEndpoint implements Serializable {
         return meetingIterator(meetingList);
     }
 
+    @RolesAllowed("Developer")
     @Log
     public List<MeetingDTO> getDeveloperMeetingsAcceptedByUsers(String login) throws BuildingSalesAppException {
         if(login==null) throw new GeneralApplicationException(GeneralApplicationException.PRINCIPAL);
@@ -256,6 +267,7 @@ public class BuildingSalesEndpoint implements Serializable {
         return meetingDTOList;
     }
 
+    @RolesAllowed("User")
     @Log
     public void cancelMeeting(MeetingDTO meetingDTO) throws BuildingSalesAppException {
         Meeting meeting = ConverterDTOToEntity.convertMeetingDTOToMeeting(meetingDTO, meetingDAO);

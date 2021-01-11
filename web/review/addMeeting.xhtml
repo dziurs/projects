@@ -31,7 +31,7 @@
             </h:column>
             <h:column >
                 <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.user']}</f:facet>
-                    <h:outputText value="#{meeting.user}" styleClass="text-danger" />
+                    <h:outputText value="#{meeting.user.email}" styleClass="text-danger" />
             </h:column>
         </h:dataTable>
         <h:form>
@@ -48,7 +48,7 @@
                 <!--</p:datePicker>-->
                 <p:message for="date" />
             </div>
-            <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.add.review.content.form.button']}" action="#{addMeetingController.addMeeting}"
+            <p:commandButton icon="pi pi-star" value="${msg['page.buildingsales.add.meeting.content.form.button']}" action="#{addMeetingController.addMeeting}"
                              styleClass="btn btn-primary form-control text-white" style=" background-image: none; text-shadow: 0px 0px 0px #ffffff "
                              validateClient="true" />
             <p><br /></p>

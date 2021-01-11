@@ -198,6 +198,7 @@ public class Review implements Serializable, Audit {
 
     public boolean addUser(User user){
         if(user==null) throw new NullPointerException("user parameter is null");
+        if(users.contains(user))return false;
         else {
             users.add(user);
             user.getReviews().add(this);

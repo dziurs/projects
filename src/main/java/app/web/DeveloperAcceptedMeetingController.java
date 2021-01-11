@@ -5,6 +5,7 @@ import app.endpoints.BuildingSalesEndpoint;
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
+import app.security.SessionAccount;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -25,23 +26,26 @@ public class DeveloperAcceptedMeetingController implements Serializable {
     @Inject
     private BuildingSalesEndpoint endpoint;
 
-    private Principal principal;
+    @Inject
+    private SessionAccount sessionAccount;
+
+    private String principal;
 
     private List<MeetingDTO> meetingDTOList;
 
     private ResourceBundle bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
             FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
-    @Inject
-    public DeveloperAcceptedMeetingController(SecurityContext securityContext){
-        this.principal = securityContext.getCallerPrincipal();
+    public DeveloperAcceptedMeetingController(){
+
     }
 
     @PostConstruct
     public void init(){
         try {
+            this.principal = sessionAccount.getLogin();
             if(principal==null) throw new GeneralApplicationException(GeneralApplicationException.PRINCIPAL);
-            this.meetingDTOList= endpoint.getDeveloperMeetingsAcceptedByUsers(principal.getName());
+            this.meetingDTOList= endpoint.getDeveloperMeetingsAcceptedByUsers(principal);
         }catch (AccountException e) {
             addMessage(bundle.getString(e.getMessage()), null, FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();

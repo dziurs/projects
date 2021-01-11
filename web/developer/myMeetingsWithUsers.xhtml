@@ -23,6 +23,11 @@
             </h:column>
 
             <h:column>
+                <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.user']}</f:facet>
+                <h:outputText value="#{meeting.user.email}" styleClass="text-white"/>
+            </h:column>
+
+            <h:column>
                 <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.table.area']}</f:facet>
                 <h:outputText value="#{meeting.review.area}" styleClass="text-danger"/>
             </h:column>

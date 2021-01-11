@@ -5,7 +5,9 @@ import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
 import app.security.Crypter;
+import app.security.SessionAccount;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -18,6 +20,12 @@ import java.util.ResourceBundle;
 @Named(value = "changePasswordController")
 public class AccountChangePasswordController {
 
+    @Inject
+    private AdministratorEndpoint endpoint;
+
+    @Inject
+    private SessionAccount sessionAccount;
+
     private String login;
 
     private String oldPassword;
@@ -28,12 +36,12 @@ public class AccountChangePasswordController {
 
     private ResourceBundle bundle;
 
-    @Inject
-    private AdministratorEndpoint endpoint;
+    public AccountChangePasswordController() {
 
-    @Inject
-    public AccountChangePasswordController(SecurityContext securityContext) {
-        this.login = securityContext.getCallerPrincipal().getName();
+    }
+    @PostConstruct
+    public void init(){
+        this.login = sessionAccount.getLogin();
         this.bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
                 FacesContext.getCurrentInstance().getViewRoot().getLocale());
     }
@@ -48,7 +56,7 @@ public class AccountChangePasswordController {
             String passOldFromDatabase = endpoint.findAccountPassByLogin(login);
             String oldPassFromForm = Crypter.crypt(oldPassword);
             if(passOldFromDatabase.equals(oldPassFromForm)){
-                endpoint.setNewPasswordForAccount(login,newPassword);
+                endpoint.setNewPasswordForAccount(login, Crypter.crypt(newPassword));
                 addMessage(bundle.getString("page.buildingsales.account.password.changed"),bundle.getString("page.buildingsales.account.password.changed.details"),FacesMessage.SEVERITY_INFO);
                 saveMessageInFlashScope();
                 return "passwordChange";

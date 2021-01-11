@@ -18,6 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Date;
 import java.util.List;
@@ -32,15 +33,43 @@ public class MeetingDAO extends GenericAbstractDAO {
 
 
     @Override
-    public void update(Object entity) throws BuildingSalesAppException {
-        try{
-            super.update(entity);
+    public void create(Object entity) throws BuildingSalesAppException {
+        try {
+            super.create(entity);
+        }catch (ConstraintViolationException e){
+            throw new GeneralApplicationException(GeneralApplicationException.CONSTRAINT_VIOLATION,e);
         }catch (PersistenceException ex){
             if (ex.getCause() instanceof DatabaseException && ex.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {
                 throw new AppDataBaseException(ex);
             } else {
                 throw ex;
             }
+        }
+    }
+
+    @Override
+    public void update(Object entity) throws BuildingSalesAppException {
+        try{
+            super.update(entity);
+        }catch (ConstraintViolationException e){
+            throw new GeneralApplicationException(GeneralApplicationException.CONSTRAINT_VIOLATION,e);
+        }catch (OptimisticLockException e){
+            throw new AppDataBaseException(e);
+        }catch (PersistenceException ex){
+            if (ex.getCause() instanceof DatabaseException && ex.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {
+                throw new AppDataBaseException(ex);
+            } else {
+                throw ex;
+            }
+        }
+    }
+
+    @Override
+    public void delete(Object entity) throws BuildingSalesAppException {
+        try{
+            super.delete(entity);
+        }catch (OptimisticLockException e){
+            throw new AppDataBaseException(e);
         }
     }
 

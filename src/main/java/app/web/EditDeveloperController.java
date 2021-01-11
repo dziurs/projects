@@ -5,6 +5,7 @@ import app.endpoints.BuildingSalesEndpoint;
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
+import app.security.SessionAccount;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -24,23 +25,26 @@ public class EditDeveloperController implements Serializable {
     @Inject
     private BuildingSalesEndpoint endpoint;
 
-    private Principal principal;
+    @Inject
+    private SessionAccount sessionAccount;
+
+    private String principal;
 
     private ResourceBundle bundle;
 
     private DeveloperDTO developerDTO;
 
-    @Inject
-    public EditDeveloperController(SecurityContext securityContext) {
-        this.principal = securityContext.getCallerPrincipal();
+    public EditDeveloperController() {
+
     }
 
     @PostConstruct
     public void init(){
+        this.principal = sessionAccount.getLogin();
         this.bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
                 FacesContext.getCurrentInstance().getViewRoot().getLocale());
         try {
-            this.developerDTO = endpoint.findDeveloperByEmail(principal.getName());
+            this.developerDTO = endpoint.findDeveloperByEmail(principal);
         } catch (GeneralApplicationException e) {
             addMessage(bundle.getString(e.getMessage()),null, FacesMessage.SEVERITY_ERROR);
         }catch (BuildingSalesAppException e) {

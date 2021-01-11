@@ -6,6 +6,10 @@ import app.endpoints.BuildingSalesEndpoint;
 import app.exception.AppDataBaseException;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
+import app.security.SessionAccount;
+
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -24,21 +28,24 @@ public class MeetingReservationController implements Serializable {
     @Inject
     private BuildingSalesEndpoint endpoint;
 
+    @Inject
+    private SessionAccount sessionAccount;
+
     private MeetingDTO meetingDTO;
 
-    private Principal principal;
+    private String principal;
 
     private ResourceBundle bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
             FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
-    @Inject
-    public MeetingReservationController(SecurityContext securityContext){
-        this.principal = securityContext.getCallerPrincipal();
+    public MeetingReservationController(){
+
     }
 
     public String acceptMeeting(){
         try {
-            ReviewDTO reviewDTO = endpoint.acceptMeetingByUser(meetingDTO, principal.getName());
+            this.principal = sessionAccount.getLogin();
+            ReviewDTO reviewDTO = endpoint.acceptMeetingByUser(meetingDTO, principal);
             Flash flash = FacesContext.getCurrentInstance().getExternalContext().getFlash();
             flash.put("review", reviewDTO);
             flash.setKeepMessages(true);

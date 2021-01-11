@@ -6,6 +6,8 @@ import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
 import app.exception.ImegeFileIOException;
+import app.security.SessionAccount;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -28,6 +30,9 @@ public class ReviewAddingController implements Serializable {
     @Inject
     BuildingSalesEndpoint endpoint;
 
+    @Inject
+    private SessionAccount sessionAccount;
+
     private final String postCodeRegex ="[0-9]{2}\\-[0-9]{3}";
 
     private final String intRegex = "[0-9]+";
@@ -42,16 +47,21 @@ public class ReviewAddingController implements Serializable {
 
     private Part file;
 
-    private Principal principal;
+    private String principal;
+
+    private boolean trigger = false;
+
+    private ResourceBundle bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
+            FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
     @PostConstruct
     public void init(){
-        this.principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal();
+        //this.principal = FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
+        this.principal = sessionAccount.getLogin();
     }
 
-    private boolean trigger = false;
-    private ResourceBundle bundle = ResourceBundle.getBundle(FacesContext.getCurrentInstance().getExternalContext().getInitParameter("resourceBundle.path"),
-            FacesContext.getCurrentInstance().getViewRoot().getLocale());
+
+
 
     public String getPostCodeRegex() {
         return postCodeRegex;

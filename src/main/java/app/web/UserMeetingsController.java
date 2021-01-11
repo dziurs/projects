@@ -6,6 +6,7 @@ import app.exception.AccountException;
 import app.exception.AppDataBaseException;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
+import app.security.SessionAccount;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
@@ -29,9 +30,12 @@ public class UserMeetingsController implements Serializable {
     @Inject
     private BuildingSalesEndpoint endpoint;
 
+    @Inject
+    private SessionAccount sessionAccount;
+
     private List<MeetingDTO> meetingDTOList;
 
-    private Principal principal;
+    private String principal;
 
     private Date now ;
 
@@ -39,16 +43,15 @@ public class UserMeetingsController implements Serializable {
             FacesContext.getCurrentInstance().getViewRoot().getLocale());
 
 
-    @Inject
-    public UserMeetingsController(SecurityContext securityContext){
-        this.principal = securityContext.getCallerPrincipal();
+    public UserMeetingsController(){
     }
 
     @PostConstruct
     public void init(){
+        this.principal = sessionAccount.getLogin();
         this.now = new Date();
         try {
-            setMeetingDTOList(endpoint.getMeetingsAcceptedByUser(principal.getName()));
+            setMeetingDTOList(endpoint.getMeetingsAcceptedByUser(principal));
         }catch (AccountException e) {
             addMessage(bundle.getString(e.getMessage()),null,FacesMessage.SEVERITY_ERROR);
             getNavigationHandler().handleNavigation(getFacesContext(),null,"myMeetings");
@@ -67,6 +70,7 @@ public class UserMeetingsController implements Serializable {
             }
             else {
                 addMessage(bundle.getString("page.buildingsales.cancel.meeting.by.user.48.hours"),bundle.getString("page.buildingsales.cancel.meeting.by.user.48.hours.details"),FacesMessage.SEVERITY_WARN);
+                saveMessageInFlashScope();
             }
             FacesContext facesContext = FacesContext.getCurrentInstance();
             NavigationHandler navigationHandler = facesContext.getApplication().getNavigationHandler();

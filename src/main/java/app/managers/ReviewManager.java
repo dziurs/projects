@@ -93,7 +93,7 @@ public class ReviewManager {
         return addReviewDTO(reviewList);
     }
 
-    @Log
+
     private List<ReviewDTO> addReviewDTO(List<Review> reviewList){
         List<ReviewDTO> reviewDTOList = new ArrayList<>();
         Iterator<Review> iterator = reviewList.iterator();

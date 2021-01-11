@@ -16,7 +16,7 @@ import java.util.Set;
 public class AppIdentityStore implements IdentityStore {
 
     @Inject
-    BuildingSalesEndpoint endpoint;
+    private BuildingSalesEndpoint endpoint;
 
     @Override
     public CredentialValidationResult validate(Credential credential) {

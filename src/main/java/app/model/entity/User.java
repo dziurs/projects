@@ -42,7 +42,7 @@ public class User implements Serializable, Audit {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_type", nullable = false, length = 20)
-    private final UserType userType = UserType.USER;
+    private UserType userType = UserType.USER;
 
     @OneToOne(fetch = FetchType.EAGER, optional = false, cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @JoinColumn(name = "email_id",nullable = false, unique = true)
@@ -138,8 +138,8 @@ public class User implements Serializable, Audit {
                 ", version=" + version +
                 ", surname='" + surname + '\'' +
                 ", firstName='" + firstName + '\'' +
-                ", userType=" + userType +
-                ", email=" + email +
+                ", userType=" + userType.name() +
+                ", email=" + email.getEmail() +
                 ", creationUserLogin='" + creationUserLogin + '\'' +
                 ", modificationUserLogin='" + modificationUserLogin + '\'' +
                 ", creationDate=" + creationDate +

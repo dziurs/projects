@@ -12,6 +12,8 @@ import app.model.entity.User;
 import app.model.enums.UserType;
 import app.security.Account;
 import app.security.Crypter;
+
+import javax.annotation.security.PermitAll;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -19,6 +21,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Random;
 
+@PermitAll
 @Stateless
 @Local
 @Transactional(value = Transactional.TxType.MANDATORY)
@@ -73,6 +76,8 @@ public class AccountManager {
             Account account = list.get(0);
             int pidFromDatabase = account.getPid();
             if(pid.equals(String.valueOf(pidFromDatabase))){
+                int newPid = new Random().nextInt(100000);
+                account.setPid(newPid);
                 account.setActivate(true);
             }
             else {
@@ -84,7 +89,10 @@ public class AccountManager {
     }
 
     @Log
-    public void saveNewPassword(Account account) throws BuildingSalesAppException {
+    public void saveNewPassword(Account account, String newPassword) throws BuildingSalesAppException {
+        account.setPassword(newPassword);
+        int newPid = new Random().nextInt(100000);
+        account.setPid(newPid);
         accountDAO.update(account);
     }
 }

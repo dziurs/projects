@@ -42,6 +42,10 @@
                     </div>
                     <p:password id="password" class="form-control" value="#{loginController.password}" required="true"
                                 feedback="true"
+                                promptLabel="${msg['page.buildingsales.register.content.form.label.password']}"
+                                weakLabel="${msg['primefaces.label.weak']}"
+                                goodLabel="${msg['primefaces.label.good']}"
+                                strongLabel="${msg['primefaces.label.strong']}"
                                 a:placeholder="${msg['page.buildingsales.login.form.label.password.placeholder']}"
                                 validatorMessage="${msg['page.buildingsales.login.form.password.error']}">
                         <f:validateLength minimum="8" maximum="20"/>

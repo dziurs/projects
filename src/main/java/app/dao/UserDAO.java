@@ -2,6 +2,7 @@ package app.dao;
 
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
+import app.exception.GeneralApplicationException;
 import app.model.entity.User;
 import org.eclipse.persistence.exceptions.DatabaseException;
 
@@ -11,6 +12,7 @@ import javax.persistence.OptimisticLockException;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
@@ -26,6 +28,8 @@ public class UserDAO extends GenericAbstractDAO <User>{
     public void create(User entity) throws BuildingSalesAppException {
         try {
             super.create(entity);
+        }catch (ConstraintViolationException e){
+            throw new GeneralApplicationException(GeneralApplicationException.CONSTRAINT_VIOLATION,e);
         }catch (PersistenceException e){
             if (e.getCause() instanceof DatabaseException && e.getCause().getCause() instanceof SQLIntegrityConstraintViolationException) {
                 throw new AccountException(AccountException.EMAIL_WAS_USED);
@@ -39,6 +43,8 @@ public class UserDAO extends GenericAbstractDAO <User>{
     public void update(User entity) throws BuildingSalesAppException {
         try{
             super.update(entity);
+        }catch (ConstraintViolationException e){
+            throw new GeneralApplicationException(GeneralApplicationException.CONSTRAINT_VIOLATION,e);
         }catch (OptimisticLockException e){
             throw new AccountException(AccountException.KEY_OPTIMISTIC_LOCK,e);
         }
