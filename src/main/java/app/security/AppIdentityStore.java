@@ -26,12 +26,10 @@ public class AppIdentityStore implements IdentityStore {
                 Account account = endpoint.findAccountByLogin(usernamePasswordCredential.getCaller());
                 UserType userType = account.getRole();
                 String role = userType.name();
-                //if(account.isActivate()){TODO potem usuń komentarz na bloku if
-                if (usernamePasswordCredential.compareTo(account.getLogin(), account.getPassword())) {
+                if (usernamePasswordCredential.compareTo(account.getLogin(), account.getPassword()) && account.isActivate()) {
                     return new CredentialValidationResult(account.getLogin(), new HashSet<>(Arrays.asList(role)));
                 }
-                //}
-            }catch (BuildingSalesAppException e){
+            } catch (BuildingSalesAppException e) {
                 return CredentialValidationResult.INVALID_RESULT;
             }
         }

@@ -10,7 +10,7 @@ import app.interceptor.Log;
 import app.model.entity.Developer;
 import app.model.entity.Review;
 import app.model.enums.BuildingType;
-import javax.ejb.Local;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 @Stateless
-@Local
+@LocalBean
 @Transactional(value = Transactional.TxType.MANDATORY)
 public class ReviewManager {
 

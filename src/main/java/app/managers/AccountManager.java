@@ -11,10 +11,8 @@ import app.model.entity.Developer;
 import app.model.entity.User;
 import app.model.enums.UserType;
 import app.security.Account;
-import app.security.Crypter;
-
 import javax.annotation.security.PermitAll;
-import javax.ejb.Local;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -23,7 +21,7 @@ import java.util.Random;
 
 @PermitAll
 @Stateless
-@Local
+@LocalBean
 @Transactional(value = Transactional.TxType.MANDATORY)
 public class AccountManager {
 

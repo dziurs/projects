@@ -88,10 +88,4 @@ public class LoginController {
     private void addMessage(String message, String detail){
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, message,detail));
     }
-
-
-
-
-
-
 }

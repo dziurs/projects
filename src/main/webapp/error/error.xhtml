@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<ui:composition template="../index.xhtml">
+    <ui:define name="content_left">
+        <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.error.runtime.exception.title"]}</h2>
+    </ui:define>
+    <ui:define name="content">
+        <div class="alert alert-danger">
+            <h3>${msg["page.buildingsales.error.runtime.exception.content"]}</h3>
+        </div>
+    </ui:define>
+</ui:composition>
+</html>

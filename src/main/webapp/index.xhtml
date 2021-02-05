@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+
+  <h:head>
+      <meta content="text/html; charset=UTF-8" http-equiv="Content-type"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1"/>
+      <title>${msg["page.buildingsales.main.titlepage"]}</title>
+      <h:outputScript name="js/bootstrap.min.js"/>
+      <h:outputStylesheet name="css/bootstrap.min.css"/>
+      <h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>
+      <style type="text/css">
+          .text-white .ui-menuitem-link{color: white; margin-left: 8px;}
+          .text-white .ui-menuitem-text{color:white;  margin-left: 8px;}
+          .text-white .ui-menu-child{background: #007bff;}
+          .ui-icon {
+              background-image: url("#{resource['primefaces-aristo:images/ui-icons_ffffff_256x240.png']}") !important;
+              }
+      </style>
+  </h:head>
+    <h:body>
+        <div class="jumbotron text-center bg-primary text-white pt-2 pb-2" style="">
+        <ui:insert name="header">
+            <ui:include src="templates/top.xhtml"/>
+        </ui:insert>
+        <ui:insert name="menu">
+            <ui:include src="templates/menu.xhtml"/>
+        </ui:insert>
+        </div>
+        <div class="container-lg bg-light">
+            <p:messages id="messages" showDetail="true" closable="true">
+                <p:autoUpdate/>
+            </p:messages>
+        </div>
+        <div class="container-lg bg-light">
+
+            <div class="row">
+                <div class="col-4">
+                    <ui:insert name="content_left">
+                        <ui:include src="templates/content_left.xhtml"/>
+                    </ui:insert>
+                </div>
+                <div class="col-8">
+                    <ui:insert name="content">
+                        <ui:include src="templates/content.xhtml"/>
+                    </ui:insert>
+                </div>
+            </div>
+            <div class="mt-5 mb-3 p-2 pt-3 text-center bg-primary text-white rounded">
+                <ui:insert name="footer">
+                    <ui:include src="templates/footer.xhtml"/>
+                </ui:insert>
+            </div>
+        </div>
+    </h:body>
+</html>

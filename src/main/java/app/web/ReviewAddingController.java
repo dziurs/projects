@@ -5,7 +5,7 @@ import app.endpoints.BuildingSalesEndpoint;
 import app.exception.AccountException;
 import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
-import app.exception.ImegeFileIOException;
+import app.exception.ImageFileIOException;
 import app.security.SessionAccount;
 
 import javax.annotation.PostConstruct;
@@ -20,7 +20,6 @@ import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.ResourceBundle;
 
 @ViewScoped
@@ -81,7 +80,7 @@ public class ReviewAddingController implements Serializable {
         }catch (AccountException e){
             addMessage(e.getMessage(),null, FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
-        }catch (ImegeFileIOException e){
+        }catch (ImageFileIOException e){
             addMessage(bundle.getString("file.upload.error"),bundle.getString("file.upload.error.detail"),FacesMessage.SEVERITY_ERROR);
             saveMessageInFlashScope();
         }catch (BuildingSalesAppException e){

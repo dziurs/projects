@@ -10,17 +10,16 @@ import app.model.entity.Developer;
 import app.model.entity.Meeting;
 import app.model.entity.Review;
 import app.model.entity.User;
-
 import javax.annotation.security.PermitAll;
 import javax.annotation.security.RolesAllowed;
-import javax.ejb.Local;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Stateless
-@Local
+@LocalBean
 @RolesAllowed({"Developer","User"})
 @Transactional(value = Transactional.TxType.MANDATORY)
 public class MeetingManager {

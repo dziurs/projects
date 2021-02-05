@@ -5,16 +5,15 @@ import app.exception.BuildingSalesAppException;
 import app.exception.GeneralApplicationException;
 import app.interceptor.Log;
 import app.model.entity.Developer;
-
 import javax.annotation.security.RolesAllowed;
-import javax.ejb.Local;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
 
 @Stateless
-@Local
+@LocalBean
 @RolesAllowed("Developer")
 @Transactional(value = Transactional.TxType.MANDATORY)
 public class DeveloperManager {

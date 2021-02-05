@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<ui:composition template="../index.xhtml">
+    <ui:define name="content_left">
+        <h2 class="font-weight-bold text-center bg-dark text-white rounded">${msg["page.buildingsales.display.review.content.left.title"]}</h2>
+        <p:graphicImage value="#{displayReviewController.streamedContent}" stream="false"
+                        class="img-fluid mx-auto d-block rounded" alt="#{displayReviewController.reviewDTO.buildingType} photo"/>
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="review">
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.title"]}</span>
+                </div>
+                <h:outputText id="title" class="form-control" value="${displayReviewController.reviewDTO.title}"/>
+                </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.area"]}</span>
+                </div>
+                <h:outputText id="area" class="form-control" value="#{displayReviewController.reviewDTO.area}"/>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.building.type"]}</span>
+                </div>
+                <ui:fragment rendered="#{displayReviewController.reviewDTO.buildingType eq 'Flat'}">
+                    <h:outputText id="buildingTypeFlat" class="form-control" value="${msg['page.buildingsales.display.review.content.form.label.review.building.flat']}" />
+                </ui:fragment>
+                <ui:fragment rendered="#{displayReviewController.reviewDTO.buildingType eq 'Land'}">
+                    <h:outputText id="buildingTypeLand" class="form-control" value="${msg['page.buildingsales.display.review.content.form.label.review.building.land']}" />
+                </ui:fragment>
+                <ui:fragment rendered="#{displayReviewController.reviewDTO.buildingType eq 'House'}">
+                    <h:outputText id="buildingTypeHouse" class="form-control" value="${msg['page.buildingsales.display.review.content.form.label.review.building.house']}" />
+                </ui:fragment>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.livingspace"]}</span>
+                </div>
+                <h:outputText id="livingspace" class="form-control" value="#{displayReviewController.reviewDTO.livingSpace}" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.garage"]}</span>
+                </div>
+                <ui:fragment rendered="#{displayReviewController.reviewDTO.garage}">
+                    <h:outputText id="garageTrue" class="form-control" value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.true']}" />
+                </ui:fragment>
+                <ui:fragment rendered="#{not displayReviewController.reviewDTO.garage}">
+                    <h:outputText id="garageFalse" class="form-control" value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.false']}" />
+                </ui:fragment>
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.city"]}</span>
+                </div>
+                <h:outputText id="city" class="form-control" value="#{displayReviewController.reviewDTO.city}" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.street"]}</span>
+                </div>
+                <h:outputText id="street" class="form-control" value="#{displayReviewController.reviewDTO.street}" />
+            </div>
+            <div class="input-group mb-4">
+                <div class="input-group-prepend">
+                    <span class="input-group-text bg-secondary text-white">${msg["page.buildingsales.display.review.content.form.label.review.postcode"]}</span>
+                </div>
+                <h:outputText id="postcode" class="form-control" value="#{displayReviewController.reviewDTO.postCode}" />
+            </div>
+        </h:form>
+        <h:dataTable styleClass="table table-dark table-striped" rendered="#{request.isUserInRole('Developer')}" var="meeting" value="#{displayReviewController.meetingDTOList}">
+            <h:column>
+                <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.date']}</f:facet>
+                    <h:outputText value="#{meeting.date}" styleClass="text-white">
+                        <f:convertDateTime pattern="yyyy/MM/dd HH:mm" />
+                    </h:outputText>
+            </h:column>
+            <h:column >
+                <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.added']}</f:facet>
+                    <ui:fragment rendered="#{meeting.addedByUser}">
+                        <h:outputText value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.true']}" styleClass="text-danger" />
+                    </ui:fragment>
+                    <ui:fragment rendered="#{not meeting.addedByUser}">
+                        <h:outputText value="#{msg['page.buildingsales.display.review.content.form.label.review.garage.false']}" styleClass="text-danger" />
+                    </ui:fragment>
+            </h:column>
+            <h:column  >
+                <f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.user']}</f:facet>
+                    <h:outputText value="#{meeting.user.email}" styleClass="text-danger" />
+            </h:column>
+            <!--<h:column rendered="#{request.isUserInRole('User') and not meeting.addedByUser}">-->
+                <!--<f:facet name="header">#{msg['page.buildingsales.view.my.reviews.meeting.acceptation']}</f:facet>-->
+                <!--<p:commandLink value="#{msg['page.buildingsales.view.my.reviews.meeting.button.accept']}"-->
+                <!--icon="pi pi-star" styleClass="btn btn btn-light form-control" immediate="true"/>-->
+            <!--</h:column>-->
+        </h:dataTable>
+    </ui:define>
+</ui:composition>
+</html>
