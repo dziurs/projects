@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context path="/spring">
+    <GlobalNamingResources>
+        <Resource name="jdbc/SpringMySQL_DB" auth="Container" type="javax.sql.DataSource"
+              maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+              username="springUser" password="springPass" driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/springdatabase"
+              factory = "org.apache.tomcat.jdbc.pool.DataSourceFactory"/>
+    </GlobalNamingResources>
+
+    <ResourceLink name="springAppResource" global="jdbc/SpringMySQL_DB" type="javax.sql.DataSource" factory="org.apache.naming.factory.DataSourceLinkFactory"/>
+
+</Context>
+
+<!--this won't work with embedded tomcat container -->

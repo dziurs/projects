@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title th:text="#{spring.title.page}">Spring aplication</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div th:fragment="message" th:switch="${alert}">
+        <div th:case="successUser" class="container alert alert-success pt-3 pb-3 mb-1 mt-1" >
+            <strong th:text="#{spring.message.user.added}" >...</strong> <p style="display: inline" th:text="#{spring.message.user.added.text}">...</p>
+        </div>
+        <div th:case="failUser" class="container alert alert-warning pt-3 pb-3 mb-1 mt-1" >
+            <strong th:text="#{spring.message.user.dont.added}" >...</strong> <p style="display: inline" th:text="#{spring.message.user.dont.added.text}">...</p>
+        </div>
+        <div th:case="editUser" class="container alert alert-success pt-3 pb-3 mb-1 mt-1" >
+            <strong th:text="#{spring.message.user.edited}" >...</strong> <p style="display: inline" th:text="#{spring.message.user.edited.text}">...</p>
+        </div>
+        <div th:case="deleteUser" class="container alert alert-success pt-3 pb-3 mb-1 mt-1" >
+            <strong th:text="#{spring.message.user.deleted}" >...</strong> <p style="display: inline" th:text="#{spring.message.user.deleted.text}">...</p>
+        </div>
+    </div>
+</body>
+</html>

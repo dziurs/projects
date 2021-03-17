@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{spring.title.page}">Spring aplication</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+    <div th:fragment="header" class="jumbotron text-center bg-success text-white pt-2 pb-1 mb-0" >
+        <img th:src="@{/images/spring.jpg}" class="float-left img-thumbnail w-25" alt="Picture"/>
+        <H1 th:text="#{spring.header.big.title}">Przykładowa aplikacja w SpringBoot</H1>
+        <H2 th:text="#{spring.header.small.title}">Celem tego projektu jest prezentacja prostego CRUD dla jednej lub dwóch powiązanych ze sobą encji</H2>
+        <p th:text="#{spring.header.intro}">Wykorzystam system uwierzytelniania dostępny we frameworku Spring z customowymi elementami logowania, a mianowicie
+            zdefiniowanie encji służącej do uwierzytelniania oraz customowym formularzem logowania</p>
+
+    </div>
+
+</html>

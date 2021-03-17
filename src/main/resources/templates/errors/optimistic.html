@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{spring.title.page}">Spring aplication</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div th:replace="/fragments/header :: header" >...</div>
+    <div th:replace="/fragments/menu :: menu">...</div>
+    <div th:replace="/fragments/error_content :: optimistic">...</div>
+</body>
+</html>

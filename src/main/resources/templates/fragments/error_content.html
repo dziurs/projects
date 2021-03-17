@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="#{spring.title.page}">Spring aplication</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}"/>
+    <script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+    <div th:fragment="constraint" class="container text-justify pt-2 pb-2 mb-0" >
+        <H1 th:text="#{spring.content.big.title.error.constraint}" class="text-white-50 bg-dark text-center p-2 rounded" >Przykładowa aplikacja w SpringBoot</H1>
+        <div class="alert alert-danger">
+            <strong th:text="#{spring.content.error.constraint.strong}" >...</strong> <p style="display: inline" th:text="#{spring.content.error.constraint.text}">...</p>
+        </div>
+        <div th:replace="fragments/footer :: footer">..</div>
+    </div>
+    <div th:fragment="optimistic" class="container text-justify pt-2 pb-2 mb-0" >
+        <H1 th:text="#{spring.content.big.title.error.optimistic}" class="text-white-50 bg-dark text-center p-2 rounded" >Przykładowa aplikacja w SpringBoot</H1>
+        <div class="alert alert-danger">
+            <strong th:text="#{spring.content.error.optimistic.strong}" >...</strong> <p style="display: inline" th:text="#{spring.content.error.optimistic.text}">...</p>
+        </div>
+        <div th:replace="fragments/footer :: footer">..</div>
+    </div>
+    <div th:fragment="runtime" class="container text-justify pt-2 pb-2 mb-0" >
+        <H1 th:text="#{spring.content.big.title.error.runtime}" class="text-white-50 bg-dark text-center p-2 rounded" >Przykładowa aplikacja w SpringBoot</H1>
+        <div class="alert alert-danger">
+            <strong th:text="#{spring.content.error.runtime.strong}" >...</strong> <p style="display: inline" th:text="#{spring.content.error.runtime.text}">...</p>
+        </div>
+        <div th:replace="fragments/footer :: footer">..</div>
+    </div>
+    <div th:fragment="error403" class="container text-justify pt-2 pb-2 mb-0" >
+        <H1 th:text="#{spring.content.big.title.error.http.forbidden}" class="text-white-50 bg-dark text-center p-2 rounded" >Przykładowa aplikacja w SpringBoot</H1>
+        <div class="alert alert-danger">
+            <strong th:text="#{spring.content.error.http.forbidden.strong}" >...</strong> <p style="display: inline" th:text="#{spring.content.error.http.forbidden.text}">...</p>
+        </div>
+        <div th:replace="fragments/footer :: footer">..</div>
+    </div>
+    <div th:fragment="error404" class="container text-justify pt-2 pb-2 mb-0" >
+        <H1 th:text="#{spring.content.big.title.error.http.notfound}" class="text-white-50 bg-dark text-center p-2 rounded" >Przykładowa aplikacja w SpringBoot</H1>
+        <div class="alert alert-danger">
+            <strong th:text="#{spring.content.error.http.ntofound.strong}" >...</strong> <p style="display: inline" th:text="#{spring.content.error.http.notfound.text}">...</p>
+        </div>
+        <div th:replace="fragments/footer :: footer">..</div>
+    </div>
+    <div th:fragment="error409" class="container text-justify pt-2 pb-2 mb-0" >
+        <H1 th:text="#{spring.content.big.title.error.http.conflict}" class="text-white-50 bg-dark text-center p-2 rounded" >Przykładowa aplikacja w SpringBoot</H1>
+        <div class="alert alert-danger">
+            <strong th:text="#{spring.content.error.http.conflict.strong}" >...</strong> <p style="display: inline" th:text="#{spring.content.error.http.conflict.text}">...</p>
+        </div>
+        <div th:replace="fragments/footer :: footer">..</div>
+    </div>
+    <div th:fragment="error500" class="container text-justify pt-2 pb-2 mb-0" >
+        <H1 th:text="#{spring.content.big.title.error.http.internal}" class="text-white-50 bg-dark text-center p-2 rounded" >Przykładowa aplikacja w SpringBoot</H1>
+        <div class="alert alert-danger">
+            <strong th:text="#{spring.content.error.http.internal.strong}" >...</strong> <p style="display: inline" th:text="#{spring.content.error.http.internal.text}">...</p>
+        </div>
+        <div th:replace="fragments/footer :: footer">..</div>
+    </div>
+</body>
+</html>
