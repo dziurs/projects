@@ -31,4 +31,5 @@ public class EntityManagerProducer {
     public void disposeEM(@Disposes EntityManager entityManager){
         if(entityManager.isOpen())entityManager.close();
     }
+
 }
