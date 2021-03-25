@@ -2,10 +2,10 @@
 
 w notatniku wkleić poniższe komendy sql :
 
-create user user_database identified by 'buildingSalesApp';
-create database buildingsales;
-use buildingsales;
-grant all privileges on buildingsales.* to user_database;
+    create user user_database identified by 'buildingSalesApp';
+    create database buildingsales;
+    use buildingsales;  
+    grant all privileges on buildingsales.* to user_database;
 
 nastepnie zapisać jako plik deploy_sql_buildingSalesApp.sql
 
@@ -15,6 +15,7 @@ Według wstepnych założeń, baza danych musi działać na serwerze o adresie  
 z uprawnieniami do tego zasobu oraz hasłem  buildingSalesApp. Plik  deploy_sql_buildingSalesApp.sql, dołączony do aplikacji, 
 zawiera niezbędne komendy sql, które tworzą schemat oraz użytkownika, posiadającego uprawnienia do tego zasobu,
 z odpowiednim hasłem dostępu. Po pomyślnym zainstalowaniu MySQL Community w systemie Windows 7 należy :
+
     1. nacisnąć  przycisk ‘start’ ,
     2. w polu wyszukiwania wpisać słowo ‘workbench.
     3. system Windows 7 wyświetli program do uruchomienia o nazwie MySQL Workbench 8.0 CE
@@ -33,7 +34,7 @@ z odpowiednim hasłem dostępu. Po pomyślnym zainstalowaniu MySQL Community w s
     13. z rozwijanej listy Stored Connection należy wybrać zapisany w punkcie 11 profil połączenia, a następnie kliknąć przycisk OK,
     od tej pory baza danych jest gotowa do współpracy z aplikacją.
     
-    kompilacja przy użyciu maven war plugin
+ kompilacja przy użyciu maven war plugin
     
     Opis umieszczenia i uruchomienia aplikacji BuildingSalesApp na serwerze aplikacyjnym Payara. 
     Jeżeli serwer nie został wystartowany należy wykonać następujące czynności :
@@ -45,6 +46,7 @@ Jeżeli serwer aplikacyjny został wystartowany pomyślnie, należy otworzyć pr
 adres : http://localhost:4848/ . Numer portu 4848 jest domyślnym portem konsoli administracyjnej serwera Payara.
 Należy uwierzytelnić się używając loginu i hasła (domyślne admin/admin). 
 Aby umieścić aplikację na serwerze aplikacyjnym należy wykonać następujące czynności :
+
     1. z prawego menu konsoli administracyjnej wybrać Applications,
     2. następnie po wyświetleniu się strony Applications należy kliknąć przycisk Deploy… ,
     3. dalej należy nacisnąć przycisk Wybierz plik i wybrać BuildingSalesApp.war,
