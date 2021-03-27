@@ -6,6 +6,7 @@ import app.exceptions.AppDatabaseException;
 import app.managers.UserManager;
 import app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@Secured(value = "ROLE_ADMIN")
 @Controller
 @RequestMapping(value = "/allUsers")
 public class UsersAccountsController {

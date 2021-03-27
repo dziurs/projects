@@ -6,6 +6,7 @@ import app.exceptions.AppDatabaseException;
 import app.managers.UserManager;
 import app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -15,6 +16,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 
 @Controller
+@Secured(value = "ROLE_USER")
 @RequestMapping(value = "/editUser")
 @SessionAttributes(names = "sessionUser")
 public class EditUserController {

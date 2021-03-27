@@ -6,6 +6,7 @@ import app.exceptions.AppDatabaseException;
 import app.managers.UserManager;
 import app.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
 
 @Controller
+@Secured(value = "ROLE_USER")
 @RequestMapping(value = "/deleteUser")
 @SessionAttributes(names = "deleteUser")
 public class DeleteUserController {
