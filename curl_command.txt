@@ -1,0 +1,4 @@
+curl -d {\"firstName\":\"Radek\",\"surname\":\"Radekrest\",\"email\":{\"email\":\"radek@rest.com.pl\"}} -H "Content-Type: application/json" -X POST http://localhost:8080/restapp/person
+curl -H "Content-Type: application/json" -X GET http://localhost:8080/restapp/person
+curl -H "Content-Type: application/json" -X GET http://localhost:8080/restapp/person/1
+curl -H "Content-Type: application/json" -X DELETE http://localhost:8080/restapp/person/2
